@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINGH KAIZEN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 1. Basic Setup & Variables --- */
+        :root {
+            --cream-bg: #f1ebeb;
+            --light-mint-bg: #d9f9e2;
+            --dark-navy-bg: #0d1b2a;
+            --accent-blue: #0077cc;
+            --accent-blue-hover: #005fa3;
+            --text-dark: #0d1b2a;
+            --text-light: #ffffff;
+            --font-serif: 'Lora', serif;
+            --font-sans: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background-color: #f5f5f5;
+            color: var(--text-dark);
+            overflow-x: hidden; 
+            transition: background-color 0.4s ease, color 0.4s ease; /* Added for smooth theme change */
+        }
+        
+        /* --- Pre-loader Style --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: #ffffff;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.7s ease, visibility 0.7s ease;
+        }
+        #preloader img {
+            width: 250px;
+            animation: pulse 1.5s infinite ease-in-out;
+           /* filter: brightness(0) invert(1); /* प्रीलोडर के लोगो को सफ़ेद करता है */
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); }
+        }
+        #preloader.fade-out { opacity: 0; visibility: hidden; }
+
+        /* --- 2. Header --- */
+        header {
+            background-color: transparent !important;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: none !important;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .header-logo img { 
+            height: 86px; 
+            /* filter: brightness(0) invert(1); /* हेडर के लोगो को सफ़ेद करता है */
+        }
+        
+        .header-right-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #theme-toggle {
+            font-size: 20px;
+            background: none;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: transform 0.3s ease, opacity 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--text-dark);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        #theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        #theme-toggle.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #theme-toggle .fa-moon { display: none; }
+        #theme-toggle .fa-sun { display: block; }
+        
+        /* --- Sidebar Navigation --- */
+        .sidebar {
+            height: 100%; width: 0; position: fixed;
+            z-index: 1001; top: 0; right: 0;
+            background-color: #011111;
+            overflow-x: hidden;
+            transition: 0.5s ease-in-out;
+            padding-top: 60px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: flex-start;
+        }
+        .sidebar .closebtn {
+            position: absolute; top: 20px; right: 25px;
+            font-size: 28px; color: #f1f1f1;
+            text-decoration: none; cursor: pointer;
+            transition: opacity 0.3s ease;
+            border: 2px solid #f1f1f1;
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .sidebar .closebtn:hover { opacity: 0.7; }
+        .sidebar-links {
+            list-style: none; padding: 0;
+            margin-top: 80px; text-align: center; width: 100%;
+        }
+        .sidebar-links li { margin: 15px 0; }
+        .sidebar-links a {
+            text-decoration: none; font-size: 2.0rem; color: #f1f1f1;
+            display: inline-block; transition: 0.3s ease;
+            position: relative; font-family: var(--font-sans);
+            font-weight: 500; text-transform: none;
+            padding: 10px 25px; border-radius: 50px;
+            border: 2px solid transparent;
+        }
+        .sidebar-links a:hover { border-color: #f1f1f1; }
+        .sidebar-links .connect-btn-sidebar {
+            background-color: #f8e4e4; color: black;
+            padding: 15px 30px; border-radius: 5px;
+            text-decoration: none; font-size: 1.1rem; font-weight: 800;
+            margin-top: 40px; display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .sidebar-links .connect-btn-sidebar:hover {
+            background-color: #312f34;
+            transform: translateY(-2px);
+            border-color: transparent;
+        }
+        .hamburger-menu {
+            font-size: 24px; background: none; cursor: pointer;
+            color: var(--text-dark); transition: transform 0.3s ease, color 0.4s ease, border-color 0.4s ease;
+            border-radius: 50%; width: 45px; height: 45px;
+            display: flex; align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            border: 2px solid var(--text-dark);
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .hamburger-menu:hover { transform: scale(1.1); }
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-dark);
+            border-radius: 3px;
+            transition: background-color 0.4s ease;
+        }
+
+        /* --- 3. Hero Section --- */
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        #home {
+            min-height: 80vh; padding: 40px 5%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; position: relative;
+            background-image: url('imagee/Gemini_Generated_image_iph0usiph0-Photaroom.png');
+            background-size: contain; background-position: center;
+            animation: slideDown 1s ease-out forwards;
+        }
+        #home::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color:#eae9dd;
+            z-index: 1;
+            transition: background-color 0.4s ease;
+        }
+        #home > * { position: relative; z-index: 2; }
+        .hero-logo { 
+            max-width: 350px; 
+            margin-bottom: 50px;
+           /* filter: brightness(0) invert(1); /* हीरो सेक्शन के मुख्य लोगो को सफ़ेद करता है */
+        }
+        .hero-title {
+            font-family: var(--font-serif); font-size: 4rem;
+            color: var(--text-dark); line-height: 1.2; margin: 10px 0;
+        }
+        .hero-subtitle {
+            max-width: 600px; font-size: 1.1rem;
+            margin: 20px 0 30px 0; line-height: 1.6;
+        }
+        .notify-btn {
+            background-color: var(--accent-blue); color: var(--text-light);
+            padding: 15px 35px; border-radius: 5px;
+            text-decoration: none; font-size: 1.1rem; font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .notify-btn:hover { background-color: var(--accent-blue-hover); transform: translateY(-2px); }
+        .home-extra-content {
+            display: flex; align-items: center;
+            gap: 40px; margin-top: 100px; padding-top: 60px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            max-width: 1100px; text-align: left;
+            transition: border-color 0.4s ease;
+        }
+        .home-extra-content img {
+            max-width: 400px; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            filter: grayscale(100%); /* हीरो सेक्शन की अतिरिक्त इमेज को ब्लैक एंड व्हाइट (ग्रेस्केल) करता है */
+        }
+        .home-extra-content h2 { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 15px; }
+        .home-extra-content p { line-height: 1.7; }
+
+        /* --- 4. About Us Section --- */
+        #about { padding: 80px 5%; background-color: var(--text-light); transition: background-color 0.4s ease; }
+        .section-title {
+            font-family: var(--font-serif); font-size: 3rem;
+            color: var(--text-dark); margin-bottom: 50px; text-align: center;
+        }
+        .about-content {
+            display: flex; align-items: center; gap: 50px;
+            max-width: 1200px; margin: 0 auto 70px auto; text-align: left;
+        }
+        .about-image-container, .about-text-container {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .about-image-container.visible, .about-text-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about-image-container { flex: 0 0 40%; }
+        .about-image-container img {
+            width: 100%; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            filter: sepia(80%); /* 'हमारे बारे में' सेक्शन की इमेज को एक पुराना, भूरा रंग (सेपिया) देता है */
+        }
+        .about-text-container { flex: 1; }
+        .about-intro { font-size: 1.1rem; line-height: 1.7; margin: 0; }
+        .commitments-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .commitment-card {
+            background-color: #172a3a; color: var(--text-light);
+            padding: 30px; border-radius: 15px;
+            flex: 1; min-width: 280px; max-width: 350px;
+            text-align: left; border: 1px solid transparent;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+        }
+        .commitment-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .commitment-card.highlight { border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(0, 119, 204, 0.3); }
+        .commitment-card .icon { font-size: 2.5rem; color: #2a9d8f; margin-bottom: 15px; }
+        .commitment-card h3 { font-family: var(--font-serif); font-size: 1.8rem; margin: 0 0 15px 0; }
+        .commitment-card p { line-height: 1.6; opacity: 0.8; }
+
+        /* --- 4.5 Our Services Section --- */
+        #services { padding: 80px 5%; text-align: center; background-color: var(--cream-bg); transition: background-color 0.4s ease; }
+        .service-intro {
+            max-width: 800px; margin: 0 auto 50px auto;
+            font-size: 1.1rem; line-height: 1.7;
+        }
+        .service-gallery {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; margin-top: 40px; max-width: 1200px;
+            margin-left: auto; margin-right: auto;
+        }
+        .gallery-item {
+            position: relative; overflow: hidden;
+            border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform 0.4s ease, filter 0.4s ease; /* फ़िल्टर ट्रांजीशन जोड़ा गया */
+            filter: grayscale(100%) brightness(0.7); /* सर्विस गैलरी की सभी इमेज को ब्लैक एंड व्हाइट और थोड़ा गहरा दिखाता है */
+        }
+        .gallery-item:hover img { 
+            transform: scale(1.1);
+            filter: grayscale(0%) brightness(1); /* होवर करने पर इमेज को रंगीन और पूरी चमक में दिखाता है */
+        }
+        .gallery-caption {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+            color: white; padding: 40px 20px 20px 20px; box-sizing: border-box;
+        }
+        .gallery-caption h3 {
+            margin: 0; font-family: var(--font-serif);
+            font-size: 1.5rem; transform: translateY(20px); opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        .gallery-item:hover .gallery-caption h3 { transform: translateY(0); opacity: 1; }
+
+        /* --- 5. FAQ Section --- */
+        #faq { padding: 80px 5%; max-width: 800px; margin: 0 auto; background-color: transparent; }
+        .faq-item {
+            background-color: #ffffff; margin-bottom: 15px;
+            border-radius: 10px; border: 1px solid #d4e0c9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+        .faq-question {
+            width: 100%; background: none; border: none; text-align: left;
+            padding: 20px; font-size: 1.2rem; font-weight: 600;
+            font-family: var(--font-sans); cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            color: var(--text-dark); /* Inherit color */
+            transition: color 0.4s ease;
+        }
+        .faq-question i { transition: transform 0.3s ease; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-answer p { padding: 0 20px 20px 20px; margin: 0; line-height: 1.6; }
+        .faq-button {
+            display: inline-block; background-color: rgb(43, 157, 113);
+            color: black; padding: 10px 25px;
+            border-radius: 5px; text-decoration: none; font-weight: 500;
+            margin: 10px 20px 0px 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .faq-button:hover { background-color: lightskyblue; transform: translateY(-2px); }
+        .faq-item.active .faq-answer { max-height: 200px; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        
+        /* --- 6. Contact Section (UPDATED) --- */
+        #contact {
+            display: none; /* Hidden by default */
+            background: radial-gradient(circle, #3a3a3a, #111111); /* Premium gradient background */
+            color: var(--text-light);
+        }
+
+        body.contact-lock-mode header,
+        body.contact-lock-mode main,
+        body.contact-lock-mode footer {
+            display: none;
+        }
+        body.contact-lock-mode #contact {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px 5%;
+            box-sizing: border-box;
+        }
+        
+        /* Shared styles for content inside contact lock mode */
+        .contact-content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        #contact .section-title { color: var(--text-light); margin-bottom: 20px; }
+        
+        /* Styles for the new options container */
+        #contact-options { text-align: center; width: 100%; }
+        #contact-options p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
+        
+        .contact-choice-btn {
+            display: block; width: 100%; padding: 20px; margin-bottom: 20px;
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px; font-size: 1.3rem; font-weight: 500; cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            text-align: center; box-sizing: border-box;
+        }
+        .contact-choice-btn:hover {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            transform: translateY(-5px);
+        }
+        .contact-choice-btn i { margin-right: 15px; }
+
+        .contact-form { width: 100%; }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1); color: var(--text-light);
+            font-family: var(--font-sans); font-size: 1rem;
+            box-sizing: border-box; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .contact-form input:focus, .contact-form textarea:focus, .phone-group select:focus {
+            outline: none; border-color: var(--text-light);
+            box-shadow: 0 0 10px rgba(232, 235, 237, 0.5);
+        }
+        .phone-group { display: flex; gap: 10px; }
+        .phone-group select {
+            flex-basis: 35%; width: 100%; padding: 15px; margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1); color: var(--text-light);
+            font-family: var(--font-sans); font-size: 1rem;
+            box-sizing: border-box; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .phone-group input { flex-basis: 65%; margin-bottom: 20px; }
+        .contact-form button[type="submit"] {
+            background-color: #3a3a3a; color: var(--text-light);
+            border: none; padding: 15px 30px; border-radius: 5px;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            width: 100%; transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .contact-form button[type="submit"]:hover { background-color: #ffffff; transform: translateY(-2px); }
+        
+        #back-to-site-btn {
+            background: none; color: var(--text-light);
+            border: 1px solid var(--text-light);
+            padding: 10px 25px; border-radius: 5px;
+            font-size: 1rem; font-weight: 500; cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        #back-to-site-btn:hover { background-color: var(--text-light); color: var(--text-dark); }
+        #thank-you-message { display: none; text-align: center; font-size: 1.5rem; margin-top: 30px; }
+        
+        /* --- 7. Footer --- */
+        footer {
+            background-color: #181717; color: #fffefe;
+            padding: 60px 5%; border-top: 1px solid #444;
+        }
+        .footer-content {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto;
+        }
+        .footer-col { flex: 1; min-width: 250px; }
+        .footer-social-icons a {
+            color: #fff; font-size: 24px; margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+        .footer-social-icons a:hover { color: #f9fd09; }
+        .footer-center { text-align: center; }
+        .footer-center .footer-logo {
+            height: 60px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1); /* फुटर के लोगो को सफ़ेद करता है */
+        }
+        .footer-links a {
+            display: block; color: #fff; text-decoration: none;
+            margin-bottom: 10px; font-size: 14px; letter-spacing: 1px;
+            text-transform: uppercase; transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: #c9ff07; }
+        .footer-newsletter h4 {
+            font-size: 16px; font-weight: 500; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .newsletter-form { position: relative; }
+        .newsletter-form input {
+            width: 100%; padding: 12px 40px 12px 15px;
+            background-color: white; border: 1px solid #fff;
+            color: #000000; box-sizing: border-box;
+        }
+        .newsletter-form input::placeholder { color: #000000; }
+        .newsletter-form button {
+            position: absolute; right: 0; top: 0; height: 100%;
+            background: white; border: none; color: #000000;
+            padding: 0 15px; cursor: pointer; font-size: 18px;
+        }
+        .copyright {
+            text-align: center; margin-top: 50px; padding-top: 20px;
+            border-top: 1px solid #fbfbfb; color: #ffffff; font-size: 14px;
+        }
+
+        /* --- 8. Dark Mode Styles --- */
+        body.dark-mode {
+            --cream-bg: #1a1a1a;
+            --light-mint-bg: #1f2b38;
+            --accent-blue: #008cff;
+            --accent-blue-hover: #0077cc;
+            --text-dark: #f0f0f0;
+            --text-light: #0d1b2a;
+
+            background-color: #121212;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode #preloader {
+            background-color: #121212;
+        }
+        body.dark-mode #home::before {
+            background-color: #121212;
+        }
+        body.dark-mode .hamburger-menu {
+            color: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+        body.dark-mode .hamburger-menu span {
+            background-color: var(--text-dark);
+        }
+        body.dark-mode #theme-toggle {
+            color: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+        body.dark-mode #theme-toggle .fa-moon { display: block; }
+        body.dark-mode #theme-toggle .fa-sun { display: none; }
+        body.dark-mode .home-extra-content {
+            border-top-color: rgba(255,255,255,0.1);
+        }
+        body.dark-mode #about {
+            background-color: #1c1c1c;
+        }
+        body.dark-mode .commitment-card {
+            background-color: #1f2b38;
+        }
+        body.dark-mode .gallery-item img {
+            filter: grayscale(100%) brightness(0.8);
+        }
+        body.dark-mode .gallery-item:hover img {
+            filter: grayscale(0%) brightness(1);
+        }
+        body.dark-mode .faq-item {
+            background-color: #2c2c2c;
+            border-color: #444;
+        }
+        body.dark-mode .faq-question {
+            color: var(--text-dark);
+        }
+        body.dark-mode .faq-button {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+        }
+        body.dark-mode .faq-button:hover {
+            background-color: var(--accent-blue-hover);
+        }
+
+        /* --- 9. Responsive Design --- */
+        @media (max-width: 768px) {
+            header { padding: 10px 20px; }
+            .header-logo img { height: 70px; }
+            .sidebar-links a { font-size: 1.8rem; }
+            .sidebar-links .connect-btn-sidebar { font-size: 1rem; padding: 12px 25px; margin-top: 30px; }
+            .hero-title { font-size: 2.8rem; }
+            .home-extra-content { flex-direction: column; text-align: center; margin-top: 60px; padding-top: 40px; }
+            .home-extra-content img { max-width: 80%; }
+            .section-title { font-size: 2.5rem; }
+            .about-content { flex-direction: column; text-align: center; }
+            .footer-content { flex-direction: column; align-items: center; text-align: center; }
+            .footer-col { min-width: 100%; margin-bottom: 30px; }
+            .footer-social-icons a { margin: 0 10px; }
+            .copyright { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <img src="imagee/resize-jagur.png" alt="Loading...">
+    </div>
+
+    <header>
+        <a href="#home" class="header-logo">
+            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo">
+        </a>
+        <div class="header-right-controls">
+            <button id="theme-toggle" title="Toggle dark mode">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="hamburger-menu" onclick="openNav()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <ul class="sidebar-links">
+            <li><a href="#home" onclick="closeNav()">Home</a></li>
+            <li><a href="#about" onclick="closeNav()">About Us</a></li>
+            <li><a href="#services" onclick="closeNav()">Our Services</a></li>
+            <li><a href="#faq" onclick="closeNav()">FAQ</a></li>
+            <li><a href="javascript:void(0);" onclick="showContactLock()">Contact</a></li>
+            <li><a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="connect-btn-sidebar" onclick="closeNav()">Follow on Social Media</a></li>
+             
+        </ul>
+    </div>
+
+    <main>
+        <section id="home">
+            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Main Logo" class="hero-logo">
+            <h1 class="hero-title"> Excellence is Arriving Soon</h1>
+            
+            <p class="hero-subtitle">"The wait is almost over. We aren't just launching a brand; we're setting a new standard. Get ready to enter a new era of excellence with Singh Kaizen. Be the first to receive exclusive updates."</p>
+            <a href="javascript:void(0);" onclick="showContactLock()" class="notify-btn">Notify Me</a>
+            <div class="home-extra-content">
+                <img src="imagee/Screenshot 2025-08-28 213518.png" alt="Launch Countdown Concept">
+                <div>
+                    <h2>The Final Countdown is ON</h2>
+                    <p>We're meticulously perfecting every detail to bring you an unparalleled digital experience. Our official launch is just around the corner, promising to deliver innovation, excellence, and a fresh perspective directly to you. Get ready to witness the next chapter unfold.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">About Us</h2>
+            <div class="about-content">
+                <div class="about-image-container">
+                    <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="Singh Kaizen Team Collaboration">
+                </div>
+                <div class="about-text-container">
+                     <p class="about-intro">The future isn't something you wait for; it's something you build. At Singh Kaizen, we are the architects of that future.
+
+We were founded on a simple yet powerful belief: that ambition combined with relentless innovation can solve any challenge. Our name is our promise. 'Kaizen'—the principle of continuous improvement—is embedded in everything we do. We don't just solve problems; we push boundaries and challenge the status quo to engineer unparalleled results for our clients and partners.</p>
+                </div>
+            </div>
+            <div class="commitments-grid">
+                <div class="commitment-card">
+                    <div class="icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To architect a future of limitless potential.
+
+Where others see complexity, we see patterns. Where they see obstacles, we see opportunities. Our vision is to pioneer the foundational solutions of tomorrow, turning complex challenges into breakthrough successes for our clients.</p>
+                </div>
+                <div class="commitment-card highlight">
+                    <div class="icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Our Methodology</h3>
+                    <p>Our approach is a deliberate synthesis of meticulous analysis and bold strategy. We deconstruct challenges to their absolute core, allowing us to engineer bespoke pathways to success. Every action is calculated, every solution is custom-built, and every outcome is designed for maximum impact.</p>
+                </div>
+                <div class="commitment-card">
+                    <div class="icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Our Commitment</h3>
+                    <p>Your success is our legacy.Our work isn't transactional; it's transformational. Our commitment goes far beyond delivering a final product. We are dedicated to building a legacy of trust with every partner. We forge lasting relationships founded on absolute transparency, unwavering integrity, and a shared drive for mutual success. When you succeed, we succeed.
+</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2 class="section-title">Our Services</h2>
+            <p class="service-intro">We don't just offer services; we craft solutions that redefine what's possible. At Singh Kaizen, we provide a meticulously curated suite of expertise designed to empower your boldest visions. From cutting-edge Strategic Consulting to the development of bespoke Technological Solutions, our approach is always deeply tailored, relentlessly data-driven, and intensely results-oriented. Discover how our unique blend of innovation and precision can propel you towards unparalleled excellence.</p>
+            <div class="service-gallery">
+                <div class="gallery-item">
+                    <img src="imagee/Gemini_Generated_Image_6q89126q89126q89.png" alt="Strategic Consulting">
+                    <div class="gallery-caption"><h3>Innovation</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imagee/othertina.jpg" alt="Tech Solutions">
+                    <div class="gallery-caption"><h3>Transformed</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imagee/Gemini_Generated_Image_d79m5id79m5id79m.png" alt="Data Analytics">
+                    <div class="gallery-caption"><h3>Clarity</h3></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imagee/Gemini_Generated_Image_lfmaqrlfmaqrlfma.png" alt="Brand Development">
+                    <div class="gallery-caption"><h3>Brand Development</h3></div>
+                </div>
+                 <div class="gallery-item">
+                    <img src="imagee/Gemini_Generated_Image_w052ksw052ksw052.png" alt="Digital Marketing">
+                    <div class="gallery-caption"><h3>Insights</h3></div>
+                </div>
+                 <div class="gallery-item">
+                    <img src="imagee/New-Range-Rover-Sport-SV-Edition-Two-Blue-Nebula.jpg" alt="User Experience Design">
+                    <div class="gallery-caption"><h3>Automobile</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What is the mission behind SINGH KAIZEN?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our mission is to redefine the standards of excellence in our industry. The name 'Kaizen' represents our core belief in continuous improvement. We are committed to delivering exceptional value and innovative solutions that evolve with the needs of our clients, ensuring we always stay ahead of the curve.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What makes SINGH KAIZEN different?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our key differentiator is our bespoke methodology. We don't believe in one-size-fits-all solutions. We meticulously analyze each challenge and engineer unique pathways to success, ensuring that every action is deliberate, strategic, and impactful.</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Where can I find Singh Kaizen's social media accounts?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can find us on all our social media platforms. Click the button below to follow us..</p>
+                        <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="faq-button">Find on Social Media</a>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How can I contact your customer care?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>To contact our customer care, please click the 'Contact Us' button and fill in all the mandatory information</p>
+                         <a href="javascript:void(0);" onclick="showContactLock()" class="faq-button">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="contact">
+        <div class="contact-content-container">
+            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="hero-logo" style="max-width: 250px; margin: 0 auto 30px auto; display: block;">
+            
+            <div id="contact-options">
+                <h2 class="section-title">Connect With Us</h2>
+                <p>How would you like to get in touch?</p>
+                <button id="show-form-btn" class="contact-choice-btn"><i class="fas fa-envelope"></i> Send a Message</button>
+                <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" target="_blank" class="contact-choice-btn"><i class="fas fa-users"></i> Follow on Social Media</a>
+            </div>
+
+            <div class="contact-form" style="display: none;">
+                <h2 class="section-title">Send Us a Message</h2>
+                <form id="contactForm" action="https://formspree.io/f/mwpnkrbv" method="POST">
+                    <input type="email" name="email" placeholder="Email address *" required>
+                    <input type="text" name="name" placeholder="Name *" required>
+                    <div class="phone-group">
+                        <select id="country-code" name="country-code" required></select>
+                        <input type="tel" name="phone" placeholder="Phone number" required pattern="[0-9]{7,15}" title="Please enter a valid phone number (7-15 digits).">
+                    </div>
+                    <textarea name="message" rows="5" placeholder="Message *" required></textarea>
+                    <button type="submit">Send</button>
+                </form>
+                <p id="thank-you-message">Thank you for your message!</p>
+            </div>
+        </div>
+        <button id="back-to-site-btn">← Back to Site</button>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col footer-socials">
+                <div class="footer-social-icons">
+                    <a href="https://www.facebook.com/share/1TiP8cwq89/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/singhkaizenofficial?igsh=MW5odWVuYzEyYjA3aw=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/SinghKaizen?t=I4wp7Jt_BJVSQ4fMkHjfDw&s=09"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/@SinghKaizen"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/singh-kaizen-22557837a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://t.me/singhkaizen"><i class="fab fa-telegram"></i></a>
+                    <a href="https://bsky.app/profile/singhkaizen.bsky.social"><i class="fab fa-bluesky"></i></a>
+                 </div>
+            </div>
+            
+            <div class="footer-col footer-center">
+                <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="footer-logo">
+                <div class="footer-links">
+                     <a href="javascript:void(0);" onclick="showContactLock()">CONTACT US</a>
+                     <a href="#">PRIVACY POLICY</a>
+                     <a href="#">TERMS & CONDITIONS</a>
+                </div>
+            </div>
+
+            <div class="footer-col footer-newsletter">
+                <h4>Sign Up For Newsletters And Latest Updates</h4>
+                <form class="newsletter-form" action="https://formspree.io/f/mwpnkrbv" method="POST">
+                    <input type="email" name="email" placeholder="EMAIL" required>
+                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 SINGH KAIZEN. All rights reserved.
+        </div>
+    </footer>
+
+
+    <script>
+        // --- Pre-loader Script ---
+        window.onload = function() {
+            document.getElementById('preloader').classList.add('fade-out');
+        }
+
+        // --- Sidebar Navigation Script ---
+        function openNav() { document.getElementById("mySidebar").style.width = "100%"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('mySidebar');
+            const hamburger = document.querySelector('.hamburger-menu');
+            if (sidebar.style.width === "100%" && !sidebar.contains(event.target) && !hamburger.contains(event.target)) {
+                closeNav();
+            }
+        });
+
+        // --- FAQ Accordion Script ---
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(otherItem => otherItem.classList.remove('active'));
+                if (!isActive) { item.classList.toggle('active'); }
+            });
+        });
+
+        // --- UPDATED Contact Lock Logic ---
+        const contactOptions = document.getElementById('contact-options');
+        const contactForm = document.querySelector('#contact .contact-form');
+
+        function showContactLock() {
+            document.body.classList.add('contact-lock-mode');
+            window.scrollTo(0, 0);
+            closeNav();
+        }
+
+        function hideContactLock() {
+            document.body.classList.remove('contact-lock-mode');
+            // Reset the view to show options and hide form for next time
+            setTimeout(() => {
+                contactOptions.style.display = 'block';
+                contactForm.style.display = 'none';
+            }, 300); // Small delay to prevent flash
+        }
+
+        // --- Country Code and Initial Page Setup Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('back-to-site-btn').addEventListener('click', hideContactLock);
+            
+            // New event listener for showing the form
+            document.getElementById('show-form-btn').addEventListener('click', () => {
+                contactOptions.style.display = 'none';
+                contactForm.style.display = 'block';
+            });
+
+            // --- Intersection Observer for animations on scroll ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 }); 
+
+            observer.observe(document.querySelector('.about-image-container'));
+            observer.observe(document.querySelector('.about-text-container'));
+
+
+            // --- Country Code Logic ---
+            const countryData = [
+                {name: "India", code: "+91"}, {name: "Afghanistan", code: "+93"}, {name: "Albania", code: "+355"}, {name: "Algeria", code: "+213"},
+                {name: "American Samoa", code: "+1-684"}, {name: "Andorra", code: "+376"}, {name: "Angola", code: "+244"},
+                {name: "Anguilla", code: "+1-264"}, {name: "Antarctica", code: "+672"}, {name: "Antigua and Barbuda", code: "+1-268"},
+                {name: "Argentina", code: "+54"}, {name: "Armenia", code: "+374"}, {name: "Aruba", code: "+297"}, {name: "Australia", code: "+61"},
+                {name: "Austria", code: "+43"}, {name: "Azerbaijan", code: "+994"}, {name: "Bahamas", code: "+1-242"}, {name: "Bahrain", code: "+973"},
+                {name: "Bangladesh", code: "+880"}, {name: "Barbados", code: "+1-246"}, {name: "Belarus", code: "+375"}, {name: "Belgium", code: "+32"},
+                {name: "Belize", code: "+501"}, {name: "Benin", code: "+229"}, {name: "Bermuda", code: "+1-441"}, {name: "Bhutan", code: "+975"},
+                {name: "Bolivia", code: "+591"}, {name: "Bosnia and Herzegovina", code: "+387"}, {name: "Botswana", code: "+267"},
+                {name: "Brazil", code: "+55"}, {name: "British Indian Ocean Territory", code: "+246"}, {name: "British Virgin Islands", code: "+1-284"},
+                {name: "Brunei", code: "+673"}, {name: "Bulgaria", code: "+359"}, {name: "Burkina Faso", code: "+226"}, {name: "Burundi", code: "+257"},
+                {name: "Cambodia", code: "+855"}, {name: "Cameroon", code: "+237"}, {name: "Canada", code: "+1"}, {name: "Cape Verde", code: "+238"},
+                {name: "Cayman Islands", code: "+1-345"}, {name: "Central African Republic", code: "+236"}, {name: "Chad", code: "+235"},
+                {name: "Chile", code: "+56"}, {name: "China", code: "+86"}, {name: "Colombia", code: "+57"}, {name: "Comoros", code: "+269"},
+                {name: "Congo", code: "+242"}, {name: "Cook Islands", code: "+682"}, {name: "Costa Rica", code: "+506"},
+                {name: "Croatia", code: "+385"}, {name: "Cuba", code: "+53"}, {name: "Cyprus", code: "+357"}, {name: "Czech Republic", code: "+420"},
+                {name: "Denmark", code: "+45"}, {name: "Djibouti", code: "+253"}, {name: "Dominica", code: "+1-767"},
+                {name: "Dominican Republic", code: "+1-809"}, {name: "Ecuador", code: "+593"}, {name: "Egypt", code: "+20"},
+                {name: "El Salvador", code: "+503"}, {name: "Equatorial Guinea", code: "+240"}, {name: "Eritrea", code: "+291"},
+                {name: "Estonia", code: "+372"}, {name: "Ethiopia", code: "+251"}, {name: "Fiji", code: "+679"}, {name: "Finland", code: "+358"},
+                {name: "France", code: "+33"}, {name: "Gabon", code: "+241"}, {name: "Gambia", code: "+220"}, {name: "Georgia", code: "+995"},
+                {name: "Germany", code: "+49"}, {name: "Ghana", code: "+233"}, {name: "Greece", code: "+30"}, {name: "Greenland", code: "+299"},
+                {name: "Grenada", code: "+1-473"}, {name: "Guam", code: "+1-671"}, {name: "Guatemala", code: "+502"}, {name: "Guinea", code: "+224"},
+                {name: "Guyana", code: "+592"}, {name: "Haiti", code: "+509"}, {name: "Honduras", code: "+504"}, {name: "Hong Kong", code: "+852"},
+                {name: "Hungary", code: "+36"}, {name: "Iceland", code: "+354"}, {name: "India", code: "+91"}, {name: "Indonesia", code: "+62"}, {name: "Iran", code: "+98"},
+                {name: "Iraq", code: "+964"}, {name: "Ireland", code: "+353"}, {name: "Israel", code: "+972"}, {name: "Italy", code: "+39"},
+                {name: "Jamaica", code: "+1-876"}, {name: "Japan", code: "+81"}, {name: "Jordan", code: "+962"}, {name: "Kazakhstan", code: "+7"},
+                {name: "Kenya", code: "+254"}, {name: "Kuwait", code: "+965"}, {name: "Kyrgyzstan", code: "+996"}, {name: "Laos", code: "+856"},
+                {name: "Latvia", code: "+371"}, {name: "Lebanon", code: "+961"}, {name: "Lesotho", code: "+266"}, {name: "Liberia", code: "+231"},
+                {name: "Libya", code: "+218"}, {name: "Liechtenstein", code: "+423"}, {name: "Lithuania", code: "+370"}, {name: "Luxembourg", code: "+352"},
+                {name: "Macau", code: "+853"}, {name: "Macedonia", code: "+389"}, {name: "Madagascar", code: "+261"}, {name: "Malawi", code: "+265"},
+                {name: "Malaysia", code: "+60"}, {name: "Maldives", code: "+960"}, {name: "Mali", code: "+223"}, {name: "Malta", code: "+356"},
+                {name: "Mauritius", code: "+230"}, {name: "Mexico", code: "+52"}, {name: "Moldova", code: "+373"}, {name: "Monaco", code: "+377"},
+                {name: "Mongolia", code: "+976"}, {name: "Montenegro", code: "+382"}, {name: "Morocco", code: "+212"}, {name: "Myanmar", code: "+95"},
+                {name: "Namibia", code: "+264"}, {name: "Nepal", code: "+977"}, {name: "Netherlands", code: "+31"}, {name: "New Zealand", code: "+64"},
+                {name: "Nicaragua", code: "+505"}, {name: "Niger", code: "+227"}, {name: "Nigeria", code: "+234"}, {name: "Norway", code: "+47"},
+                {name: "Oman", code: "+968"}, {name: "Pakistan", code: "+92"}, {name: "Palau", code: "+680"}, {name: "Panama", code: "+507"},
+                {name: "Paraguay", code: "+595"}, {name: "Peru", code: "+51"}, {name: "Philippines", code: "+63"}, {name: "Poland", code: "+48"},
+                {name: "Portugal", code: "+351"}, {name: "Puerto Rico", code: "+1-787"}, {name: "Qatar", code: "+974"}, {name: "Romania", code: "+40"},
+                {name: "Russia", code: "+7"}, {name: "Rwanda", code: "+250"}, {name: "Samoa", code: "+685"}, {name: "San Marino", code: "+378"},
+                {name: "Saudi Arabia", code: "+966"}, {name: "Senegal", code: "+221"}, {name: "Serbia", code: "+381"}, {name: "Seychelles", code: "+248"},
+                {name: "Singapore", code: "+65"}, {name: "Slovakia", code: "+421"}, {name: "Slovenia", code: "+386"}, {name: "Somalia", code: "+252"},
+                {name: "South Africa", code: "+27"}, {name: "South Korea", code: "+82"}, {name: "Spain", code: "+34"}, {name: "Sri Lanka", code: "+94"},
+                {name: "Sudan", code: "+249"}, {name: "Sweden", code: "+46"}, {name: "Switzerland", code: "+41"}, {name: "Syria", code: "+963"},
+                {name: "Taiwan", code: "+886"}, {name: "Tanzania", code: "+255"}, {name: "Thailand", code: "+66"}, {name: "Togo", code: "+228"},
+                {name: "Tonga", code: "+676"}, {name: "Tunisia", code: "+216"}, {name: "Turkey", code: "+90"}, {name: "Turkmenistan", code: "+993"},
+                {name: "Tuvalu", code: "+688"}, {name: "Uganda", code: "+256"}, {name: "Ukraine", code: "+380"}, {name: "United Arab Emirates", code: "+971"},
+                {name: "United Kingdom", code: "+44"}, {name: "United States", code: "+1"}, {name: "Uruguay", code: "+598"}, {name: "Uzbekistan", code: "+998"},
+                {name: "Vanuatu", code: "+678"}, {name: "Venezuela", code: "+58"}, {name: "Vietnam", code: "+84"}, {name: "Yemen", code: "+967"},
+                {name: "Zambia", code: "+260"}, {name: "Zimbabwe", code: "+263"}
+            ];
+            const selectElement = document.getElementById('country-code');
+            countryData.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `${country.name} (${country.code})`;
+                selectElement.appendChild(option);
+            });
+            selectElement.value = "+91"; 
+
+            // --- Theme Toggle and Scroll Logic ---
+            const themeToggleButton = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            // Function to apply the theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                } else {
+                    body.classList.remove('dark-mode');
+                }
+            };
+            
+            // Check for a saved theme in localStorage
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            }
+
+            // Event listener for the theme toggle button
+            themeToggleButton.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                // Save the new theme preference to localStorage
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // --- Hide/Show Button on Scroll ---
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) { // Hides the button after scrolling 50px
+                    themeToggleButton.classList.add('hidden');
+                } else {
+                    themeToggleButton.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
