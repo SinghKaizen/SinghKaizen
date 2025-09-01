@@ -33,9 +33,13 @@
             background-color: #f5f5f5;
             color: var(--text-dark);
             overflow-x: hidden; 
-            transition: background-color 0.4s ease, color 0.4s ease; /* Added for smooth theme change */
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
         
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         /* --- Pre-loader Style --- */
         #preloader {
             position: fixed;
@@ -48,7 +52,6 @@
         #preloader img {
             width: 250px;
             animation: pulse 1.5s infinite ease-in-out;
-           /* filter: brightness(0) invert(1); /* प्रीलोडर के लोगो को सफ़ेद करता है */
         }
         @keyframes pulse {
             0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); }
@@ -70,7 +73,7 @@
         }
         .header-logo img { 
             height: 86px; 
-            /* filter: brightness(0) invert(1); /* हेडर के लोगो को सफ़ेद करता है */
+            transition: filter 0.4s ease;
         }
         
         .header-right-controls {
@@ -79,33 +82,47 @@
             gap: 15px;
         }
 
+        /* --- Theme Toggle Switch --- */
         #theme-toggle {
-            font-size: 20px;
-            background: none;
-            cursor: pointer;
-            color: var(--text-dark);
-            transition: transform 0.3s ease, opacity 0.4s ease, color 0.4s ease, border-color 0.4s ease;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
+            width: 70px;
+            height: 34px;
+            background-color: #e0e0e0;
+            border-radius: 100px;
+            padding: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
             border: 2px solid var(--text-dark);
-            padding: 8px;
             box-sizing: border-box;
         }
-        #theme-toggle:hover {
-            transform: scale(1.1);
+        #theme-toggle .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+            box-shadow: 0 0 2px rgba(0,0,0,0.4);
         }
+        #theme-toggle i {
+            font-size: 14px;
+            z-index: 1;
+        }
+        #theme-toggle .fa-sun { color: #f39c12; }
+        #theme-toggle .fa-moon { color: #4a4a4a; }
+
         #theme-toggle.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        #theme-toggle .fa-moon { display: none; }
-        #theme-toggle .fa-sun { display: block; }
-        
+
         /* --- Sidebar Navigation --- */
         .sidebar {
             height: 100%; width: 0; position: fixed;
@@ -201,7 +218,7 @@
         .hero-logo { 
             max-width: 350px; 
             margin-bottom: 50px;
-           /* filter: brightness(0) invert(1); /* हीरो सेक्शन के मुख्य लोगो को सफ़ेद करता है */
+            transition: filter 0.4s ease;
         }
         .hero-title {
             font-family: var(--font-serif); font-size: 4rem;
@@ -228,7 +245,7 @@
         .home-extra-content img {
             max-width: 400px; border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            filter: grayscale(100%); /* हीरो सेक्शन की अतिरिक्त इमेज को ब्लैक एंड व्हाइट (ग्रेस्केल) करता है */
+            filter: grayscale(100%);
         }
         .home-extra-content h2 { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 15px; }
         .home-extra-content p { line-height: 1.7; }
@@ -256,7 +273,7 @@
         .about-image-container img {
             width: 100%; border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            filter: sepia(80%); /* 'हमारे बारे में' सेक्शन की इमेज को एक पुराना, भूरा रंग (सेपिया) देता है */
+            filter: sepia(80%);
         }
         .about-text-container { flex: 1; }
         .about-intro { font-size: 1.1rem; line-height: 1.7; margin: 0; }
@@ -293,12 +310,12 @@
         .gallery-item img {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
-            transition: transform 0.4s ease, filter 0.4s ease; /* फ़िल्टर ट्रांजीशन जोड़ा गया */
-            filter: grayscale(100%) brightness(0.7); /* सर्विस गैलरी की सभी इमेज को ब्लैक एंड व्हाइट और थोड़ा गहरा दिखाता है */
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: grayscale(100%) brightness(0.7);
         }
         .gallery-item:hover img { 
             transform: scale(1.1);
-            filter: grayscale(0%) brightness(1); /* होवर करने पर इमेज को रंगीन और पूरी चमक में दिखाता है */
+            filter: grayscale(0%) brightness(1);
         }
         .gallery-caption {
             position: absolute; bottom: 0; left: 0; width: 100%;
@@ -325,7 +342,7 @@
             padding: 20px; font-size: 1.2rem; font-weight: 600;
             font-family: var(--font-sans); cursor: pointer;
             display: flex; justify-content: space-between; align-items: center;
-            color: var(--text-dark); /* Inherit color */
+            color: var(--text-dark);
             transition: color 0.4s ease;
         }
         .faq-question i { transition: transform 0.3s ease; }
@@ -342,13 +359,13 @@
         .faq-item.active .faq-answer { max-height: 200px; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* --- 6. Contact Section (UPDATED) --- */
+        /* --- 6. Contact Section (UPDATED FOR THEMES) --- */
         #contact {
-            display: none; /* Hidden by default */
-            background: radial-gradient(circle, #3a3a3a, #111111); /* Premium gradient background */
-            color: var(--text-light);
+            display: none;
+            background-color: #f0f2f5; /* Light mode background */
+            color: var(--text-dark);
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
-
         body.contact-lock-mode header,
         body.contact-lock-mode main,
         body.contact-lock-mode footer {
@@ -363,8 +380,6 @@
             padding: 20px 5%;
             box-sizing: border-box;
         }
-        
-        /* Shared styles for content inside contact lock mode */
         .contact-content-container {
             display: flex;
             flex-direction: column;
@@ -372,69 +387,67 @@
             width: 100%;
             max-width: 600px;
         }
-        
-        #contact .section-title { color: var(--text-light); margin-bottom: 20px; }
-        
-        /* Styles for the new options container */
+        #contact .section-title { color: var(--text-dark); margin-bottom: 20px; }
         #contact-options { text-align: center; width: 100%; }
         #contact-options p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
         
         .contact-choice-btn {
             display: block; width: 100%; padding: 20px; margin-bottom: 20px;
             background-color: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #aab0bb; /* Light mode border */
+            color: var(--text-dark);
             border-radius: 10px; font-size: 1.3rem; font-weight: 500; cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
             text-align: center; box-sizing: border-box;
         }
         .contact-choice-btn:hover {
-            background-color: var(--text-light);
-            color: var(--text-dark);
+            background-color: var(--text-dark);
+            color: #ffffff;
+            border-color: var(--text-dark);
             transform: translateY(-5px);
         }
         .contact-choice-btn i { margin-right: 15px; }
 
         .contact-form { width: 100%; }
-        .contact-form input, .contact-form textarea {
+        .contact-form input, .contact-form textarea, .phone-group select {
             width: 100%; padding: 15px; margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1); color: var(--text-light);
+            border-radius: 5px;
             font-family: var(--font-sans); font-size: 1rem;
-            box-sizing: border-box; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; 
+            border: 1px solid #cdd1d9; /* Light mode border */
+            background-color: #ffffff; /* Light mode background */
+            color: var(--text-dark);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease, color 0.4s ease;
         }
-        .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: #8a8a8a; }
         .contact-form input:focus, .contact-form textarea:focus, .phone-group select:focus {
-            outline: none; border-color: var(--text-light);
-            box-shadow: 0 0 10px rgba(232, 235, 237, 0.5);
+            outline: none; 
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 8px rgba(0, 119, 204, 0.2);
         }
         .phone-group { display: flex; gap: 10px; }
-        .phone-group select {
-            flex-basis: 35%; width: 100%; padding: 15px; margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1); color: var(--text-light);
-            font-family: var(--font-sans); font-size: 1rem;
-            box-sizing: border-box; transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .phone-group input { flex-basis: 65%; margin-bottom: 20px; }
+        .phone-group select { flex-basis: 35%; }
+        .phone-group input { flex-basis: 65%; }
+
         .contact-form button[type="submit"] {
             background-color: #3a3a3a; color: var(--text-light);
             border: none; padding: 15px 30px; border-radius: 5px;
             font-size: 1.1rem; font-weight: 600; cursor: pointer;
             width: 100%; transition: background-color 0.3s ease, transform 0.3s ease;
         }
-        .contact-form button[type="submit"]:hover { background-color: #ffffff; transform: translateY(-2px); }
+        .contact-form button[type="submit"]:hover { background-color: var(--accent-blue); transform: translateY(-2px); }
         
         #back-to-site-btn {
-            background: none; color: var(--text-light);
-            border: 1px solid var(--text-light);
+            background: none; 
+            color: var(--text-dark);
+            border: 1px solid var(--text-dark);
             padding: 10px 25px; border-radius: 5px;
             font-size: 1rem; font-weight: 500; cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.4s ease;
         }
-        #back-to-site-btn:hover { background-color: var(--text-light); color: var(--text-dark); }
+        #back-to-site-btn:hover { background-color: var(--text-dark); color: #ffffff; }
         #thank-you-message { display: none; text-align: center; font-size: 1.5rem; margin-top: 30px; }
         
         /* --- 7. Footer --- */
@@ -456,12 +469,13 @@
         .footer-center .footer-logo {
             height: 60px;
             margin-bottom: 20px;
-            filter: brightness(0) invert(1); /* फुटर के लोगो को सफ़ेद करता है */
+            filter: brightness(0) invert(1);
         }
         .footer-links a {
             display: block; color: #fff; text-decoration: none;
             margin-bottom: 10px; font-size: 14px; letter-spacing: 1px;
             text-transform: uppercase; transition: color 0.3s ease;
+            cursor: pointer;
         }
         .footer-links a:hover { color: #c9ff07; }
         .footer-newsletter h4 {
@@ -498,8 +512,16 @@
             color: var(--text-dark);
         }
 
+        body.dark-mode .header-logo img,
+        body.dark-mode #home .hero-logo,
+        body.dark-mode #contact .hero-logo {
+            filter: brightness(0) invert(1);
+        }
         body.dark-mode #preloader {
             background-color: #121212;
+        }
+        body.dark-mode #preloader img {
+            filter: brightness(0) invert(1);
         }
         body.dark-mode #home::before {
             background-color: #121212;
@@ -512,11 +534,13 @@
             background-color: var(--text-dark);
         }
         body.dark-mode #theme-toggle {
-            color: var(--text-dark);
+            background-color: #4d4d4d;
             border-color: var(--text-dark);
         }
-        body.dark-mode #theme-toggle .fa-moon { display: block; }
-        body.dark-mode #theme-toggle .fa-sun { display: none; }
+        body.dark-mode #theme-toggle .slider {
+            transform: translateX(32px);
+            background-color: #2c2c2c;
+        }
         body.dark-mode .home-extra-content {
             border-top-color: rgba(255,255,255,0.1);
         }
@@ -547,6 +571,52 @@
             background-color: var(--accent-blue-hover);
         }
 
+        /* Dark Mode for Contact Page */
+        body.dark-mode #contact {
+            background: radial-gradient(circle, #2c3e50, #161e27);
+            color: var(--text-dark);
+        }
+        body.dark-mode #contact .section-title {
+            color: var(--text-dark);
+        }
+        body.dark-mode .contact-choice-btn {
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        body.dark-mode .contact-choice-btn:hover {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            border-color: var(--text-dark);
+        }
+        body.dark-mode .contact-form input,
+        body.dark-mode .contact-form textarea,
+        body.dark-mode .phone-group select {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-dark);
+        }
+        body.dark-mode .contact-form input::placeholder,
+        body.dark-mode .contact-form textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        body.dark-mode .contact-form input:focus,
+        body.dark-mode .contact-form textarea:focus,
+        body.dark-mode .phone-group select:focus {
+            border-color: var(--text-dark);
+            box-shadow: 0 0 10px rgba(232, 235, 237, 0.3);
+        }
+        body.dark-mode .contact-form button[type="submit"]:hover {
+             background-color: var(--accent-blue-hover);
+        }
+        body.dark-mode #back-to-site-btn {
+            color: var(--text-dark);
+            border: 1px solid var(--text-dark);
+        }
+        body.dark-mode #back-to-site-btn:hover {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+        }
+
         /* --- 9. Responsive Design --- */
         @media (max-width: 768px) {
             header { padding: 10px 20px; }
@@ -563,6 +633,85 @@
             .footer-social-icons a { margin: 0 10px; }
             .copyright { text-align: center; }
         }
+
+        /* --- 10. Modal Styles (for Privacy/Terms) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1002;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .modal-overlay.hidden {
+            display: none;
+        }
+        .modal-overlay:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+        .modal-overlay:not(.hidden) .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .modal-close:hover {
+            transform: scale(1.2);
+        }
+        .modal-content h2 {
+            font-family: var(--font-serif);
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        .modal-content h3 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        .modal-content p {
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+        body.dark-mode .modal-content {
+            background: #2c2c2c;
+            color: var(--text-dark);
+        }
+        body.dark-mode .modal-close {
+            color: #f0f0f0;
+        }
+        body.dark-mode .modal-content h2,
+        body.dark-mode .modal-content h3,
+        body.dark-mode .modal-content p {
+            color: var(--text-dark);
+        }
+
     </style>
 </head>
 <body>
@@ -576,10 +725,11 @@
             <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo">
         </a>
         <div class="header-right-controls">
-            <button id="theme-toggle" title="Toggle dark mode">
+            <div id="theme-toggle" title="Toggle theme">
                 <i class="fas fa-sun"></i>
+                <div class="slider"></div>
                 <i class="fas fa-moon"></i>
-            </button>
+            </div>
             <button class="hamburger-menu" onclick="openNav()">
                 <span></span><span></span><span></span>
             </button>
@@ -622,18 +772,14 @@
                     <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="Singh Kaizen Team Collaboration">
                 </div>
                 <div class="about-text-container">
-                     <p class="about-intro">The future isn't something you wait for; it's something you build. At Singh Kaizen, we are the architects of that future.
-
-We were founded on a simple yet powerful belief: that ambition combined with relentless innovation can solve any challenge. Our name is our promise. 'Kaizen'—the principle of continuous improvement—is embedded in everything we do. We don't just solve problems; we push boundaries and challenge the status quo to engineer unparalleled results for our clients and partners.</p>
+                     <p class="about-intro">The future isn't something you wait for; it's something you build. At Singh Kaizen, we are the architects of that future.<br><br>We were founded on a simple yet powerful belief: that ambition combined with relentless innovation can solve any challenge. Our name is our promise. 'Kaizen'—the principle of continuous improvement—is embedded in everything we do. We don't just solve problems; we push boundaries and challenge the status quo to engineer unparalleled results for our clients and partners.</p>
                 </div>
             </div>
             <div class="commitments-grid">
                 <div class="commitment-card">
                     <div class="icon"><i class="fas fa-bullseye"></i></div>
                     <h3>Our Vision</h3>
-                    <p>To architect a future of limitless potential.
-
-Where others see complexity, we see patterns. Where they see obstacles, we see opportunities. Our vision is to pioneer the foundational solutions of tomorrow, turning complex challenges into breakthrough successes for our clients.</p>
+                    <p>To architect a future of limitless potential.<br><br>Where others see complexity, we see patterns. Where they see obstacles, we see opportunities. Our vision is to pioneer the foundational solutions of tomorrow, turning complex challenges into breakthrough successes for our clients.</p>
                 </div>
                 <div class="commitment-card highlight">
                     <div class="icon"><i class="fas fa-layer-group"></i></div>
@@ -643,8 +789,7 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
                 <div class="commitment-card">
                     <div class="icon"><i class="fas fa-shield-halved"></i></div>
                     <h3>Our Commitment</h3>
-                    <p>Your success is our legacy.Our work isn't transactional; it's transformational. Our commitment goes far beyond delivering a final product. We are dedicated to building a legacy of trust with every partner. We forge lasting relationships founded on absolute transparency, unwavering integrity, and a shared drive for mutual success. When you succeed, we succeed.
-</p>
+                    <p>Your success is our legacy.Our work isn't transactional; it's transformational. Our commitment goes far beyond delivering a final product. We are dedicated to building a legacy of trust with every partner. We forge lasting relationships founded on absolute transparency, unwavering integrity, and a shared drive for mutual success. When you succeed, we succeed.<br></p>
                 </div>
             </div>
         </section>
@@ -772,8 +917,8 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
                 <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="footer-logo">
                 <div class="footer-links">
                      <a href="javascript:void(0);" onclick="showContactLock()">CONTACT US</a>
-                     <a href="#">PRIVACY POLICY</a>
-                     <a href="#">TERMS & CONDITIONS</a>
+                     <a onclick="openModal('privacy-modal')">PRIVACY POLICY</a>
+                     <a onclick="openModal('terms-modal')">TERMS & CONDITIONS</a>
                 </div>
             </div>
 
@@ -789,6 +934,38 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
             &copy; 2025 SINGH KAIZEN. All rights reserved.
         </div>
     </footer>
+
+    <div id="privacy-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('privacy-modal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p><strong>Last Updated: 2025-09-01</strong></p>
+            <p>Welcome to SINGH KAIZEN. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website.</p>
+            <h3>1. Information We Collect</h3>
+            <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows: Identity Data, Contact Data, Technical Data, and Usage Data via forms and analytics.</p>
+            <h3>2. How We Use Your Information</h3>
+            <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data to respond to your inquiries, process your requests, and improve our website and services.</p>
+            <h3>3. Data Security</h3>
+            <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorised way, altered or disclosed.</p>
+            <p><em>Thank You</em></p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('terms-modal')">&times;</span>
+            <h2>Terms & Conditions</h2>
+            <p><strong>Last Updated: 2025-09-01</strong></p>
+            <p>Please read these terms and conditions carefully before using Our Service.</p>
+            <h3>1. Agreement to Terms</h3>
+            <p>By using this website, you agree to be bound by these Terms and Conditions. If you disagree with any part of the terms, then you may not access the service. Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.</p>
+            <h3>2. Intellectual Property</h3>
+            <p>The Service and its original content, features and functionality are and will remain the exclusive property of SINGH KAIZEN and its licensors. The Service is protected by copyright, trademark, and other laws of both the India and foreign countries.</p>
+            <h3>3. Limitation of Liability</h3>
+            <p>In no event shall SINGH KAIZEN, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+            <p><em>Thank You</em></p>
+        </div>
+    </div>
 
 
     <script>
@@ -831,24 +1008,46 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
 
         function hideContactLock() {
             document.body.classList.remove('contact-lock-mode');
-            // Reset the view to show options and hide form for next time
             setTimeout(() => {
                 contactOptions.style.display = 'block';
                 contactForm.style.display = 'none';
-            }, 300); // Small delay to prevent flash
+            }, 300);
         }
+        
+        // --- Modal Logic (for Privacy/Terms) ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.classList.add('no-scroll');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(event) {
+                if (event.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
 
         // --- Country Code and Initial Page Setup Script ---
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('back-to-site-btn').addEventListener('click', hideContactLock);
             
-            // New event listener for showing the form
             document.getElementById('show-form-btn').addEventListener('click', () => {
                 contactOptions.style.display = 'none';
                 contactForm.style.display = 'block';
             });
 
-            // --- Intersection Observer for animations on scroll ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -860,8 +1059,6 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
             observer.observe(document.querySelector('.about-image-container'));
             observer.observe(document.querySelector('.about-text-container'));
 
-
-            // --- Country Code Logic ---
             const countryData = [
                 {name: "India", code: "+91"}, {name: "Afghanistan", code: "+93"}, {name: "Albania", code: "+355"}, {name: "Algeria", code: "+213"},
                 {name: "American Samoa", code: "+1-684"}, {name: "Andorra", code: "+376"}, {name: "Angola", code: "+244"},
@@ -922,11 +1119,9 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
             });
             selectElement.value = "+91"; 
 
-            // --- Theme Toggle and Scroll Logic ---
             const themeToggleButton = document.getElementById('theme-toggle');
             const body = document.body;
 
-            // Function to apply the theme
             const applyTheme = (theme) => {
                 if (theme === 'dark') {
                     body.classList.add('dark-mode');
@@ -935,17 +1130,13 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
                 }
             };
             
-            // Check for a saved theme in localStorage
             const savedTheme = localStorage.getItem('theme');
-            
             if (savedTheme) {
                 applyTheme(savedTheme);
             }
 
-            // Event listener for the theme toggle button
             themeToggleButton.addEventListener('click', () => {
                 body.classList.toggle('dark-mode');
-                // Save the new theme preference to localStorage
                 if (body.classList.contains('dark-mode')) {
                     localStorage.setItem('theme', 'dark');
                 } else {
@@ -953,9 +1144,8 @@ Where others see complexity, we see patterns. Where they see obstacles, we see o
                 }
             });
 
-            // --- Hide/Show Button on Scroll ---
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) { // Hides the button after scrolling 50px
+                if (window.scrollY > 50) {
                     themeToggleButton.classList.add('hidden');
                 } else {
                     themeToggleButton.classList.remove('hidden');
