@@ -33,7 +33,6 @@
             background-color: #f5f5f5;
             color: var(--text-dark);
             overflow-x: hidden; 
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
         
         body.no-scroll {
@@ -60,7 +59,7 @@
 
         /* --- 2. Header --- */
         header {
-            background-color: transparent !important;
+            background-color: transparent;
             padding: 10px 5%;
             display: flex;
             justify-content: space-between;
@@ -68,59 +67,26 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: none !important;
-            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            transition: background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
         }
+
+        /* NEW: Premium header style on scroll */
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
         .header-logo img { 
             height: 86px; 
-            transition: filter 0.4s ease;
+            transition: filter 0.4s ease-in-out;
         }
         
         .header-right-controls {
             display: flex;
             align-items: center;
             gap: 15px;
-        }
-
-        /* --- Theme Toggle Switch --- */
-        #theme-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            width: 70px;
-            height: 34px;
-            background-color: #e0e0e0;
-            border-radius: 100px;
-            padding: 4px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
-            border: 2px solid var(--text-dark);
-            box-sizing: border-box;
-        }
-        #theme-toggle .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 2px;
-            left: 2px;
-            width: 26px;
-            height: 26px;
-            background-color: white;
-            border-radius: 50%;
-            transition: transform 0.4s ease;
-            box-shadow: 0 0 2px rgba(0,0,0,0.4);
-        }
-        #theme-toggle i {
-            font-size: 14px;
-            z-index: 1;
-        }
-        #theme-toggle .fa-sun { color: #f39c12; }
-        #theme-toggle .fa-moon { color: #4a4a4a; }
-
-        #theme-toggle.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
         }
 
         /* --- Sidebar Navigation --- */
@@ -138,7 +104,7 @@
             position: absolute; top: 20px; right: 25px;
             font-size: 28px; color: #f1f1f1;
             text-decoration: none; cursor: pointer;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out;
             border: 2px solid #f1f1f1;
             border-radius: 50%;
             width: 50px; height: 50px;
@@ -152,7 +118,7 @@
         .sidebar-links li { margin: 15px 0; }
         .sidebar-links a {
             text-decoration: none; font-size: 2.0rem; color: #f1f1f1;
-            display: inline-block; transition: 0.3s ease;
+            display: inline-block; transition: 0.3s ease-in-out;
             position: relative; font-family: var(--font-sans);
             font-weight: 500; text-transform: none;
             padding: 10px 25px; border-radius: 50px;
@@ -164,7 +130,7 @@
             padding: 15px 30px; border-radius: 5px;
             text-decoration: none; font-size: 1.1rem; font-weight: 800;
             margin-top: 40px; display: inline-block;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .sidebar-links .connect-btn-sidebar:hover {
             background-color: #312f34;
@@ -173,7 +139,7 @@
         }
         .hamburger-menu {
             font-size: 24px; background: none; cursor: pointer;
-            color: var(--text-dark); transition: transform 0.3s ease, color 0.4s ease, border-color 0.4s ease;
+            color: var(--text-dark); transition: transform 0.3s ease-in-out, color 0.4s ease-in-out, border-color 0.4s ease-in-out;
             border-radius: 50%; width: 45px; height: 45px;
             display: flex; align-items: center;
             flex-direction: column;
@@ -190,7 +156,7 @@
             height: 2px;
             background-color: var(--text-dark);
             border-radius: 3px;
-            transition: background-color 0.4s ease;
+            transition: background-color 0.4s ease-in-out;
         }
 
         /* --- 3. Hero Section --- */
@@ -212,13 +178,14 @@
             width: 100%; height: 100%;
             background-color:#eae9dd;
             z-index: 1;
-            transition: background-color 0.4s ease;
         }
         #home > * { position: relative; z-index: 2; }
+        
+        /* UPDATED: Hero logo size reduced */
         .hero-logo { 
-            max-width: 350px; 
-            margin-bottom: 50px;
-            transition: filter 0.4s ease;
+            max-width: 250px; 
+            margin-bottom: 40px;
+            transition: filter 0.4s ease-in-out;
         }
         .hero-title {
             font-family: var(--font-serif); font-size: 4rem;
@@ -232,7 +199,7 @@
             background-color: var(--accent-blue); color: var(--text-light);
             padding: 15px 35px; border-radius: 5px;
             text-decoration: none; font-size: 1.1rem; font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .notify-btn:hover { background-color: var(--accent-blue-hover); transform: translateY(-2px); }
         .home-extra-content {
@@ -240,7 +207,6 @@
             gap: 40px; margin-top: 100px; padding-top: 60px;
             border-top: 1px solid rgba(0,0,0,0.1);
             max-width: 1100px; text-align: left;
-            transition: border-color 0.4s ease;
         }
         .home-extra-content img {
             max-width: 400px; border-radius: 15px;
@@ -251,7 +217,7 @@
         .home-extra-content p { line-height: 1.7; }
 
         /* --- 4. About Us Section --- */
-        #about { padding: 80px 5%; background-color: var(--text-light); transition: background-color 0.4s ease; }
+        #about { padding: 80px 5%; background-color: var(--text-light); }
         .section-title {
             font-family: var(--font-serif); font-size: 3rem;
             color: var(--text-dark); margin-bottom: 50px; text-align: center;
@@ -283,7 +249,7 @@
             padding: 30px; border-radius: 15px;
             flex: 1; min-width: 280px; max-width: 350px;
             text-align: left; border: 1px solid transparent;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
         .commitment-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .commitment-card.highlight { border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(0, 119, 204, 0.3); }
@@ -292,7 +258,7 @@
         .commitment-card p { line-height: 1.6; opacity: 0.8; }
 
         /* --- 4.5 Our Services Section --- */
-        #services { padding: 80px 5%; text-align: center; background-color: var(--cream-bg); transition: background-color 0.4s ease; }
+        #services { padding: 80px 5%; text-align: center; background-color: var(--cream-bg); }
         .service-intro {
             max-width: 800px; margin: 0 auto 50px auto;
             font-size: 1.1rem; line-height: 1.7;
@@ -310,7 +276,7 @@
         .gallery-item img {
             width: 100%; height: 100%;
             object-fit: cover; display: block;
-            transition: transform 0.4s ease, filter 0.4s ease;
+            transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
             filter: grayscale(100%) brightness(0.7);
         }
         .gallery-item:hover img { 
@@ -325,7 +291,7 @@
         .gallery-caption h3 {
             margin: 0; font-family: var(--font-serif);
             font-size: 1.5rem; transform: translateY(20px); opacity: 0;
-            transition: transform 0.4s ease, opacity 0.4s ease;
+            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
         }
         .gallery-item:hover .gallery-caption h3 { transform: translateY(0); opacity: 1; }
 
@@ -335,7 +301,6 @@
             background-color: #ffffff; margin-bottom: 15px;
             border-radius: 10px; border: 1px solid #d4e0c9;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
         .faq-question {
             width: 100%; background: none; border: none; text-align: left;
@@ -343,28 +308,26 @@
             font-family: var(--font-sans); cursor: pointer;
             display: flex; justify-content: space-between; align-items: center;
             color: var(--text-dark);
-            transition: color 0.4s ease;
         }
-        .faq-question i { transition: transform 0.3s ease; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; }
+        .faq-question i { transition: transform 0.3s ease-in-out; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; }
         .faq-answer p { padding: 0 20px 20px 20px; margin: 0; line-height: 1.6; }
         .faq-button {
             display: inline-block; background-color: rgb(43, 157, 113);
             color: black; padding: 10px 25px;
             border-radius: 5px; text-decoration: none; font-weight: 500;
             margin: 10px 20px 0px 20px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .faq-button:hover { background-color: lightskyblue; transform: translateY(-2px); }
         .faq-item.active .faq-answer { max-height: 200px; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* --- 6. Contact Section (UPDATED FOR THEMES) --- */
+        /* --- 6. Contact Section --- */
         #contact {
             display: none;
-            background-color: #f0f2f5; /* Light mode background */
+            background-color: #f0f2f5; 
             color: var(--text-dark);
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
         body.contact-lock-mode header,
         body.contact-lock-mode main,
@@ -376,7 +339,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px 5%;
             box-sizing: border-box;
         }
@@ -387,6 +350,13 @@
             width: 100%;
             max-width: 600px;
         }
+        #contact .hero-logo {
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto 30px auto;
+            display: block;
+        }
+        
         #contact .section-title { color: var(--text-dark); margin-bottom: 20px; }
         #contact-options { text-align: center; width: 100%; }
         #contact-options p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
@@ -394,11 +364,11 @@
         .contact-choice-btn {
             display: block; width: 100%; padding: 20px; margin-bottom: 20px;
             background-color: transparent;
-            border: 2px solid #aab0bb; /* Light mode border */
+            border: 2px solid #aab0bb;
             color: var(--text-dark);
             border-radius: 10px; font-size: 1.3rem; font-weight: 500; cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
             text-align: center; box-sizing: border-box;
         }
         .contact-choice-btn:hover {
@@ -415,10 +385,10 @@
             border-radius: 5px;
             font-family: var(--font-sans); font-size: 1rem;
             box-sizing: border-box; 
-            border: 1px solid #cdd1d9; /* Light mode border */
-            background-color: #ffffff; /* Light mode background */
+            border: 1px solid #cdd1d9;
+            background-color: #ffffff;
             color: var(--text-dark);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease, color 0.4s ease;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
         .contact-form input::placeholder, .contact-form textarea::placeholder { color: #8a8a8a; }
         .contact-form input:focus, .contact-form textarea:focus, .phone-group select:focus {
@@ -434,7 +404,7 @@
             background-color: #3a3a3a; color: var(--text-light);
             border: none; padding: 15px 30px; border-radius: 5px;
             font-size: 1.1rem; font-weight: 600; cursor: pointer;
-            width: 100%; transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%; transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         .contact-form button[type="submit"]:hover { background-color: var(--accent-blue); transform: translateY(-2px); }
         
@@ -445,7 +415,7 @@
             padding: 10px 25px; border-radius: 5px;
             font-size: 1rem; font-weight: 500; cursor: pointer;
             margin-top: 25px;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.4s ease;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
         }
         #back-to-site-btn:hover { background-color: var(--text-dark); color: #ffffff; }
         #thank-you-message { display: none; text-align: center; font-size: 1.5rem; margin-top: 30px; }
@@ -462,7 +432,7 @@
         .footer-col { flex: 1; min-width: 250px; }
         .footer-social-icons a {
             color: #fff; font-size: 24px; margin-right: 20px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease-in-out;
         }
         .footer-social-icons a:hover { color: #f9fd09; }
         .footer-center { text-align: center; }
@@ -474,7 +444,7 @@
         .footer-links a {
             display: block; color: #fff; text-decoration: none;
             margin-bottom: 10px; font-size: 14px; letter-spacing: 1px;
-            text-transform: uppercase; transition: color 0.3s ease;
+            text-transform: uppercase; transition: color 0.3s ease-in-out;
             cursor: pointer;
         }
         .footer-links a:hover { color: #c9ff07; }
@@ -499,125 +469,7 @@
             border-top: 1px solid #fbfbfb; color: #ffffff; font-size: 14px;
         }
 
-        /* --- 8. Dark Mode Styles --- */
-        body.dark-mode {
-            --cream-bg: #1a1a1a;
-            --light-mint-bg: #1f2b38;
-            --accent-blue: #008cff;
-            --accent-blue-hover: #0077cc;
-            --text-dark: #f0f0f0;
-            --text-light: #0d1b2a;
-
-            background-color: #121212;
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .header-logo img,
-        body.dark-mode #home .hero-logo,
-        body.dark-mode #contact .hero-logo {
-            filter: brightness(0) invert(1);
-        }
-        body.dark-mode #preloader {
-            background-color: #121212;
-        }
-        body.dark-mode #preloader img {
-            filter: brightness(0) invert(1);
-        }
-        body.dark-mode #home::before {
-            background-color: #121212;
-        }
-        body.dark-mode .hamburger-menu {
-            color: var(--text-dark);
-            border-color: var(--text-dark);
-        }
-        body.dark-mode .hamburger-menu span {
-            background-color: var(--text-dark);
-        }
-        body.dark-mode #theme-toggle {
-            background-color: #4d4d4d;
-            border-color: var(--text-dark);
-        }
-        body.dark-mode #theme-toggle .slider {
-            transform: translateX(32px);
-            background-color: #2c2c2c;
-        }
-        body.dark-mode .home-extra-content {
-            border-top-color: rgba(255,255,255,0.1);
-        }
-        body.dark-mode #about {
-            background-color: #1c1c1c;
-        }
-        body.dark-mode .commitment-card {
-            background-color: #1f2b38;
-        }
-        body.dark-mode .gallery-item img {
-            filter: grayscale(100%) brightness(0.8);
-        }
-        body.dark-mode .gallery-item:hover img {
-            filter: grayscale(0%) brightness(1);
-        }
-        body.dark-mode .faq-item {
-            background-color: #2c2c2c;
-            border-color: #444;
-        }
-        body.dark-mode .faq-question {
-            color: var(--text-dark);
-        }
-        body.dark-mode .faq-button {
-            background-color: var(--accent-blue);
-            color: #ffffff;
-        }
-        body.dark-mode .faq-button:hover {
-            background-color: var(--accent-blue-hover);
-        }
-
-        /* Dark Mode for Contact Page */
-        body.dark-mode #contact {
-            background: radial-gradient(circle, #2c3e50, #161e27);
-            color: var(--text-dark);
-        }
-        body.dark-mode #contact .section-title {
-            color: var(--text-dark);
-        }
-        body.dark-mode .contact-choice-btn {
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            color: rgba(255, 255, 255, 0.8);
-        }
-        body.dark-mode .contact-choice-btn:hover {
-            background-color: var(--text-dark);
-            color: var(--text-light);
-            border-color: var(--text-dark);
-        }
-        body.dark-mode .contact-form input,
-        body.dark-mode .contact-form textarea,
-        body.dark-mode .phone-group select {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-dark);
-        }
-        body.dark-mode .contact-form input::placeholder,
-        body.dark-mode .contact-form textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        body.dark-mode .contact-form input:focus,
-        body.dark-mode .contact-form textarea:focus,
-        body.dark-mode .phone-group select:focus {
-            border-color: var(--text-dark);
-            box-shadow: 0 0 10px rgba(232, 235, 237, 0.3);
-        }
-        body.dark-mode .contact-form button[type="submit"]:hover {
-             background-color: var(--accent-blue-hover);
-        }
-        body.dark-mode #back-to-site-btn {
-            color: var(--text-dark);
-            border: 1px solid var(--text-dark);
-        }
-        body.dark-mode #back-to-site-btn:hover {
-            background-color: var(--text-dark);
-            color: var(--text-light);
-        }
-
-        /* --- 9. Responsive Design --- */
+        /* --- 8. Responsive Design --- */
         @media (max-width: 768px) {
             header { padding: 10px 20px; }
             .header-logo img { height: 70px; }
@@ -634,7 +486,7 @@
             .copyright { text-align: center; }
         }
 
-        /* --- 10. Modal Styles (for Privacy/Terms) --- */
+        /* --- 9. Modal Styles (for Privacy/Terms) --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -646,7 +498,7 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
         }
         .modal-overlay.hidden {
             display: none;
@@ -665,7 +517,7 @@
             overflow-y: auto;
             position: relative;
             transform: scale(0.9);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease-in-out;
         }
         .modal-overlay:not(.hidden) .modal-content {
             transform: scale(1);
@@ -677,7 +529,7 @@
             font-weight: bold;
             color: #333;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease-in-out;
         }
         .modal-close:hover {
             transform: scale(1.2);
@@ -699,18 +551,6 @@
             line-height: 1.7;
             color: var(--text-dark);
         }
-        body.dark-mode .modal-content {
-            background: #2c2c2c;
-            color: var(--text-dark);
-        }
-        body.dark-mode .modal-close {
-            color: #f0f0f0;
-        }
-        body.dark-mode .modal-content h2,
-        body.dark-mode .modal-content h3,
-        body.dark-mode .modal-content p {
-            color: var(--text-dark);
-        }
 
     </style>
 </head>
@@ -725,11 +565,6 @@
             <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo">
         </a>
         <div class="header-right-controls">
-            <div id="theme-toggle" title="Toggle theme">
-                <i class="fas fa-sun"></i>
-                <div class="slider"></div>
-                <i class="fas fa-moon"></i>
-            </div>
             <button class="hamburger-menu" onclick="openNav()">
                 <span></span><span></span><span></span>
             </button>
@@ -738,6 +573,7 @@
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        
         <ul class="sidebar-links">
             <li><a href="#home" onclick="closeNav()">Home</a></li>
             <li><a href="#about" onclick="closeNav()">About Us</a></li>
@@ -745,7 +581,6 @@
             <li><a href="#faq" onclick="closeNav()">FAQ</a></li>
             <li><a href="javascript:void(0);" onclick="showContactLock()">Contact</a></li>
             <li><a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="connect-btn-sidebar" onclick="closeNav()">Follow on Social Media</a></li>
-             
         </ul>
     </div>
 
@@ -757,7 +592,7 @@
             <p class="hero-subtitle">"The wait is almost over. We aren't just launching a brand; we're setting a new standard. Get ready to enter a new era of excellence with Singh Kaizen. Be the first to receive exclusive updates."</p>
             <a href="javascript:void(0);" onclick="showContactLock()" class="notify-btn">Notify Me</a>
             <div class="home-extra-content">
-                <img src="imagee/Screenshot 2025-08-28 213518.png" alt="Launch Countdown Concept">
+                <img src="imagee/Screenshot 2025-08-28 213518.png" alt="Launch Countdown Concept" loading="lazy">
                 <div>
                     <h2>The Final Countdown is ON</h2>
                     <p>We're meticulously perfecting every detail to bring you an unparalleled digital experience. Our official launch is just around the corner, promising to deliver innovation, excellence, and a fresh perspective directly to you. Get ready to witness the next chapter unfold.</p>
@@ -769,7 +604,7 @@
             <h2 class="section-title">About Us</h2>
             <div class="about-content">
                 <div class="about-image-container">
-                    <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="Singh Kaizen Team Collaboration">
+                    <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="Singh Kaizen Team Collaboration" loading="lazy">
                 </div>
                 <div class="about-text-container">
                      <p class="about-intro">The future isn't something you wait for; it's something you build. At Singh Kaizen, we are the architects of that future.<br><br>We were founded on a simple yet powerful belief: that ambition combined with relentless innovation can solve any challenge. Our name is our promise. 'Kaizen'—the principle of continuous improvement—is embedded in everything we do. We don't just solve problems; we push boundaries and challenge the status quo to engineer unparalleled results for our clients and partners.</p>
@@ -799,27 +634,27 @@
             <p class="service-intro">We don't just offer services; we craft solutions that redefine what's possible. At Singh Kaizen, we provide a meticulously curated suite of expertise designed to empower your boldest visions. From cutting-edge Strategic Consulting to the development of bespoke Technological Solutions, our approach is always deeply tailored, relentlessly data-driven, and intensely results-oriented. Discover how our unique blend of innovation and precision can propel you towards unparalleled excellence.</p>
             <div class="service-gallery">
                 <div class="gallery-item">
-                    <img src="imagee/Gemini_Generated_Image_6q89126q89126q89.png" alt="Strategic Consulting">
+                    <img src="imagee/Gemini_Generated_Image_6q89126q89126q89.png" alt="Strategic Consulting" loading="lazy">
                     <div class="gallery-caption"><h3>Innovation</h3></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="imagee/othertina.jpg" alt="Tech Solutions">
+                    <img src="imagee/othertina.jpg" alt="Tech Solutions" loading="lazy">
                     <div class="gallery-caption"><h3>Transformed</h3></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="imagee/Gemini_Generated_Image_d79m5id79m5id79m.png" alt="Data Analytics">
+                    <img src="imagee/Gemini_Generated_Image_d79m5id79m5id79m.png" alt="Data Analytics" loading="lazy">
                     <div class="gallery-caption"><h3>Clarity</h3></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="imagee/Gemini_Generated_Image_lfmaqrlfmaqrlfma.png" alt="Brand Development">
+                    <img src="imagee/Gemini_Generated_Image_lfmaqrlfmaqrlfma.png" alt="Brand Development" loading="lazy">
                     <div class="gallery-caption"><h3>Brand Development</h3></div>
                 </div>
                  <div class="gallery-item">
-                    <img src="imagee/Gemini_Generated_Image_w052ksw052ksw052.png" alt="Digital Marketing">
+                    <img src="imagee/Gemini_Generated_Image_w052ksw052ksw052.png" alt="Digital Marketing" loading="lazy">
                     <div class="gallery-caption"><h3>Insights</h3></div>
                 </div>
                  <div class="gallery-item">
-                    <img src="imagee/New-Range-Rover-Sport-SV-Edition-Two-Blue-Nebula.jpg" alt="User Experience Design">
+                    <img src="imagee/New-Range-Rover-Sport-SV-Edition-Two-Blue-Nebula.jpg" alt="User Experience Design" loading="lazy">
                     <div class="gallery-caption"><h3>Automobile</h3></div>
                 </div>
             </div>
@@ -872,7 +707,7 @@
 
     <section id="contact">
         <div class="contact-content-container">
-            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="hero-logo" style="max-width: 250px; margin: 0 auto 30px auto; display: block;">
+            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="hero-logo">
             
             <div id="contact-options">
                 <h2 class="section-title">Connect With Us</h2>
@@ -1119,36 +954,13 @@
             });
             selectElement.value = "+91"; 
 
-            const themeToggleButton = document.getElementById('theme-toggle');
-            const body = document.body;
-
-            const applyTheme = (theme) => {
-                if (theme === 'dark') {
-                    body.classList.add('dark-mode');
-                } else {
-                    body.classList.remove('dark-mode');
-                }
-            };
-            
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            }
-
-            themeToggleButton.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                if (body.classList.contains('dark-mode')) {
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-
+            // NEW: Script for premium header scroll effect
+            const header = document.querySelector('header');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
-                    themeToggleButton.classList.add('hidden');
+                    header.classList.add('scrolled');
                 } else {
-                    themeToggleButton.classList.remove('hidden');
+                    header.classList.remove('scrolled');
                 }
             });
         });
