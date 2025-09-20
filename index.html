@@ -6,7 +6,7 @@
     <title>SINGH KAIZEN</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -85,6 +85,7 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform, opacity;
         }
         .animate-on-scroll.visible {
             opacity: 1;
@@ -122,7 +123,7 @@
             gap: 15px;
         }
 
-        /* --- Sidebar Navigation (ANIMATION REVAMPED) --- */
+        /* --- Sidebar Navigation --- */
         .sidebar {
             height: 100%;
             width: 350px;
@@ -136,6 +137,7 @@
             align-items: center; justify-content: flex-start;
             transform: translateX(100%);
             transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            will-change: transform;
         }
         .sidebar.open {
             transform: translateX(0);
@@ -161,7 +163,6 @@
         }
         .sidebar-links li { margin: 15px 0; }
         
-        /* Staggered link animation */
         .sidebar.open .sidebar-links li {
             opacity: 0;
             animation: fadeInUp 0.5s ease-out forwards;
@@ -219,61 +220,55 @@
 
         /* --- 3. Hero Section --- */
         #home {
-            min-height: 80vh; padding: 40px 5%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; position: relative;
-            background-image: url('imagee/Gemini_Generated_image_iph0usiph0-Photaroom.png');
-            background-size: contain; background-position: center;
+            min-height: 80vh; 
+            padding: 40px 5%;
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            text-align: center;
+            background-color: #F3F2EE;
         }
-        #home::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color:#eae9dd;
-            z-index: 1;
-        }
-        #home > * { position: relative; z-index: 2; }
         
-        .hero-logo { 
-            max-width: 250px; 
-            margin-bottom: 40px;
-            transition: filter 0.4s ease-in-out;
-        }
         .hero-title {
-            font-family: var(--font-serif); font-size: 4rem;
-            color: var(--text-dark); line-height: 1.2; margin: 10px 0;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 4.5rem;
+            color: var(--text-dark); 
+            line-height: 1.3; 
+            margin: 10px 0;
         }
+        .hero-title .innovation {
+            font-family: 'Playfair Display', serif;
+            color: #006A4E;
+            font-style: italic;
+        }
+
         .hero-subtitle {
-            max-width: 600px; font-size: 1.1rem;
-            margin: 20px 0 30px 0; line-height: 1.6;
+            max-width: 600px; 
+            font-size: 1.1rem;
+            margin: 20px 0 30px 0; 
+            line-height: 1.6;
         }
-        .notify-btn {
-            background-color: var(--accent-blue); color: var(--text-light);
-            padding: 15px 35px; border-radius: 5px;
-            text-decoration: none; font-size: 1.1rem; font-weight: 600;
+        .hero-btn {
+            background-color: #043c2c; 
+            color: var(--text-light);
+            padding: 15px 35px; 
+            border-radius: 50px;
+            text-decoration: none; 
+            font-size: 1.1rem; 
+            font-weight: 500;
             transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
-        .notify-btn:hover { background-color: var(--accent-blue-hover); transform: translateY(-2px); }
+        .hero-btn:hover { 
+            background-color: #032d21; 
+            transform: translateY(-2px); 
+        }
         
-        /* NEW: Staggered animation for Hero elements on load */
-        #home .hero-logo.visible { transition-delay: 0.1s; }
-        #home .hero-title.visible { transition-delay: 0.3s; }
-        #home .hero-subtitle.visible { transition-delay: 0.5s; }
-        #home .notify-btn.visible { transition-delay: 0.7s; }
+        #home .hero-title.visible { transition-delay: 0.1s; }
+        #home .hero-subtitle.visible { transition-delay: 0.3s; }
+        #home .hero-btn.visible { transition-delay: 0.5s; }
 
-        .home-extra-content {
-            display: flex; align-items: center;
-            gap: 40px; margin-top: 100px; padding-top: 60px;
-            border-top: 1px solid rgba(0,0,0,0.1);
-            max-width: 1100px; text-align: left;
-        }
-        .home-extra-content img {
-            max-width: 400px; border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            filter: grayscale(100%);
-        }
-        .home-extra-content h2 { font-family: var(--font-serif); font-size: 2.5rem; margin-bottom: 15px; }
-        .home-extra-content p { line-height: 1.7; }
 
         /* --- 4. About Us Section --- */
         #about { padding: 80px 5%; background-color: var(--text-light); }
@@ -300,9 +295,8 @@
             padding: 30px; border-radius: 15px;
             flex: 1; min-width: 280px; max-width: 350px;
             text-align: left; border: 1px solid transparent;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        /* Staggered animation for commitment cards */
         .commitment-card.visible:nth-child(1) { transition-delay: 0.1s; }
         .commitment-card.visible:nth-child(2) { transition-delay: 0.2s; }
         .commitment-card.visible:nth-child(3) { transition-delay: 0.3s; }
@@ -313,49 +307,54 @@
         .commitment-card h3 { font-family: var(--font-serif); font-size: 1.8rem; margin: 0 0 15px 0; }
         .commitment-card p { line-height: 1.6; opacity: 0.8; }
 
-        /* --- 4.5 Our Services Section --- */
-        #services { padding: 80px 5%; text-align: center; background-color: var(--cream-bg); }
+        /* --- 4.5 Our Services Section (REVAMPED) --- */
+        #services { 
+            padding: 80px 5%; 
+            text-align: center; 
+            background-color: var(--cream-bg); 
+        }
         .service-intro {
-            max-width: 800px; margin: 0 auto 50px auto;
-            font-size: 1.1rem; line-height: 1.7;
+            max-width: 800px; 
+            margin: 0 auto 50px auto;
+            font-size: 1.1rem; 
+            line-height: 1.7;
         }
-        .service-gallery {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; margin-top: 40px; max-width: 1200px;
-            margin-left: auto; margin-right: auto;
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
         }
-        .gallery-item {
-            position: relative; overflow: hidden;
-            border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            cursor: pointer;
+        .service-card {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        /* Staggered animation for gallery items */
-        .gallery-item.visible { transition-property: opacity, transform; } /* Ensure only these transition on scroll */
-        .gallery-item.visible:nth-of-type(3n+1) { transition-delay: 0.1s; }
-        .gallery-item.visible:nth-of-type(3n+2) { transition-delay: 0.2s; }
-        .gallery-item.visible:nth-of-type(3n+3) { transition-delay: 0.3s; }
-        
-        .gallery-item img {
-            width: 100%; height: 100%;
-            object-fit: cover; display: block;
-            transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
-            filter: grayscale(100%) brightness(0.7);
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
         }
-        .gallery-item:hover img { 
-            transform: scale(1.1);
-            filter: grayscale(0%) brightness(1);
+        .service-icon {
+            font-size: 3rem;
+            color: #043c2c;
+            margin-bottom: 20px;
         }
-        .gallery-caption {
-            position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-            color: white; padding: 40px 20px 20px 20px; box-sizing: border-box;
+        .service-card h3 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin: 0 0 15px 0;
         }
-        .gallery-caption h3 {
-            margin: 0; font-family: var(--font-serif);
-            font-size: 1.5rem; transform: translateY(20px); opacity: 0;
-            transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+        .service-card p {
+            line-height: 1.6;
+            color: #555;
+            margin: 0;
         }
-        .gallery-item:hover .gallery-caption h3 { transform: translateY(0); opacity: 1; }
 
         /* --- 5. FAQ Section --- */
         #faq { padding: 80px 5%; max-width: 800px; margin: 0 auto; background-color: transparent; }
@@ -385,7 +384,7 @@
         .faq-item.active .faq-answer { max-height: 200px; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* --- 6. Contact Section (ANIMATION REVAMPED) --- */
+        /* --- 6. Contact Section --- */
         main, footer, header {
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
         }
@@ -449,7 +448,6 @@
             border-radius: 10px; font-size: 1.3rem; font-weight: 500; cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
-            text-align: center; box-sizing: border-box;
         }
         .contact-choice-btn:hover {
             background-color: var(--text-dark);
@@ -502,71 +500,153 @@
         
         /* --- 7. Footer --- */
         footer {
-            background-color: #181717; color: #fffefe;
-            padding: 60px 5%; border-top: 1px solid #444;
+            background-color: #fff;
+            color: #333;
+            padding: 60px 5%;
+            border-top: 1px solid #e0e0e0;
         }
         .footer-content {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            flex-wrap: wrap; gap: 40px; max-width: 1200px; margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .footer-col { flex: 1; min-width: 250px; }
-        .footer-social-icons a {
-            color: #fff; font-size: 24px; margin-right: 20px;
-            transition: color 0.3s ease-in-out, transform 0.3s ease;
+        .footer-col {
+            flex: 1;
+            min-width: 220px;
         }
-        .footer-social-icons a:hover { color: #f9fd09; transform: scale(1.1); }
-        .footer-center { text-align: center; }
-        .footer-center .footer-logo {
+        .footer-logo {
             height: 60px;
             margin-bottom: 20px;
-            filter: brightness(0) invert(1);
         }
-        .footer-links a {
-            display: block; color: #fff; text-decoration: none;
-            margin-bottom: 10px; font-size: 14px; letter-spacing: 1px;
-            text-transform: uppercase; transition: color 0.3s ease-in-out;
+        .footer-col h4 {
+            font-family: var(--font-sans);
+            font-weight: 500;
+            font-size: 1rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #000;
+            text-transform: uppercase;
+        }
+        .footer-col a {
+            display: block;
+            color: #555;
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            transition: color 0.3s ease-in-out;
             cursor: pointer;
+            text-transform: none;
         }
-        .footer-links a:hover { color: #c9ff07; }
-        .footer-newsletter h4 {
-            font-size: 16px; font-weight: 500; margin-bottom: 15px;
-            text-transform: uppercase; letter-spacing: 1px;
+        .footer-col a:hover {
+            color: #000;
         }
-        .newsletter-form { position: relative; }
+        .footer-social-icons a {
+            color: #333;
+            font-size: 20px;
+            margin-right: 15px;
+            display: inline-block;
+            transition: color 0.3s ease-in-out, transform 0.3s ease;
+        }
+        .footer-social-icons a:hover {
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+        .newsletter-form {
+            position: relative;
+        }
         .newsletter-form input {
-            width: 100%; padding: 12px 40px 12px 15px;
-            background-color: white; border: 1px solid #fff;
-            color: #000000; box-sizing: border-box;
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: #000;
+            box-sizing: border-box;
         }
-        .newsletter-form input::placeholder { color: #000000; }
+        .newsletter-form input::placeholder {
+            color: #555;
+        }
         .newsletter-form button {
-            position: absolute; right: 0; top: 0; height: 100%;
-            background: white; border: none; color: #000000;
-            padding: 0 15px; cursor: pointer; font-size: 18px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: transparent;
+            border: none;
+            color: #555;
+            padding: 0 15px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .footer-divider {
+            border: none;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 40px 0 20px 0;
         }
         .copyright {
-            text-align: center; margin-top: 50px; padding-top: 20px;
-            border-top: 1px solid #fbfbfb; color: #ffffff; font-size: 14px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
         }
 
-        /* --- 8. Responsive Design --- */
+        /* --- 8. Responsive Design (MOBILE FRIENDLY UPDATE) --- */
         @media (max-width: 768px) {
-            header { padding: 10px 20px; }
-            .header-logo img { height: 70px; }
-            .sidebar-links a { font-size: 1.8rem; }
-            .sidebar-links .connect-btn-sidebar { font-size: 1rem; padding: 12px 25px; margin-top: 30px; }
-            .hero-title { font-size: 2.8rem; }
-            .home-extra-content { flex-direction: column; text-align: center; margin-top: 60px; padding-top: 40px; }
-            .home-extra-content img { max-width: 80%; }
-            .section-title { font-size: 2.5rem; }
-            .about-content { flex-direction: column; text-align: center; }
-            .footer-content { flex-direction: column; align-items: center; text-align: center; }
-            .footer-col { min-width: 100%; margin-bottom: 30px; }
-            .footer-social-icons a { margin: 0 10px; }
-            .copyright { text-align: center; }
+            header { 
+                padding: 10px 20px; 
+            }
+            .header-logo img { 
+                height: 70px; 
+            }
+            .sidebar-links a { 
+                font-size: 1.8rem; 
+            }
+            .sidebar-links .connect-btn-sidebar { 
+                font-size: 1rem; padding: 12px 25px; margin-top: 30px; 
+            }
+            .hero-title { 
+                font-size: 2.8rem; 
+            }
+            .hero-subtitle {
+                font-size: 1rem; /* Better font size for mobile */
+            }
+            .section-title { 
+                font-size: 2.5rem; 
+            }
+            #about, #services, #faq {
+                padding-top: 60px; /* Reduced padding for mobile */
+                padding-bottom: 60px;
+            }
+            .about-content { 
+                flex-direction: column; text-align: center; 
+            }
+            
+            /* Centered and improved mobile footer */
+            .footer-content {
+                flex-direction: column;
+                align-items: center; 
+            }
+            .footer-col {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .footer-col:last-child {
+                margin-bottom: 0;
+            }
+            .footer-social-icons a {
+                margin: 0 10px; /* Spacing for centered icons */
+            }
+            .copyright { 
+                text-align: center; 
+            }
         }
 
-        /* --- 9. Modal Styles (ANIMATION REVAMPED) --- */
+        /* --- 9. Modal Styles --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -586,6 +666,7 @@
             position: relative;
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform;
         }
         .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
         
@@ -635,18 +716,9 @@
 
     <main>
         <section id="home">
-            <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Main Logo" class="hero-logo animate-on-scroll">
-            <h1 class="hero-title animate-on-scroll"> Excellence is Arriving Soon</h1>
-            
-            <p class="hero-subtitle animate-on-scroll">"The wait is almost over. We aren't just launching a brand; we're setting a new standard. Get ready to enter a new era of excellence with Singh Kaizen. Be the first to receive exclusive updates."</p>
-            <a href="javascript:void(0);" onclick="showContactLock()" class="notify-btn animate-on-scroll">Notify Me</a>
-            <div class="home-extra-content animate-on-scroll">
-                <img src="imagee/Screenshot 2025-08-28 213518.png" alt="Launch Countdown Concept" loading="lazy">
-                <div>
-                    <h2>The Final Countdown is ON</h2>
-                    <p>We're meticulously perfecting every detail to bring you an unparalleled digital experience. Our official launch is just around the corner, promising to deliver innovation, excellence, and a fresh perspective directly to you. Get ready to witness the next chapter unfold.</p>
-                </div>
-            </div>
+            <h1 class="hero-title animate-on-scroll">Crafting Legacies, One <span class="innovation">Innovation</span> at a Time.</h1>
+            <p class="hero-subtitle animate-on-scroll">At Singh Kaizen, we move beyond simple solutions. We meticulously engineer strategies for sustained growth, transforming ambitious visions into market-defining realities.</p>
+            <a href="#about" class="hero-btn animate-on-scroll">Discover Our Philosophy</a>
         </section>
 
         <section id="about">
@@ -681,30 +753,26 @@
         <section id="services">
             <h2 class="section-title animate-on-scroll">Our Services</h2>
             <p class="service-intro animate-on-scroll">We don't just offer services; we craft solutions that redefine what's possible. At Singh Kaizen, we provide a meticulously curated suite of expertise designed to empower your boldest visions. From cutting-edge Strategic Consulting to the development of bespoke Technological Solutions, our approach is always deeply tailored, relentlessly data-driven, and intensely results-oriented. Discover how our unique blend of innovation and precision can propel you towards unparalleled excellence.</p>
-            <div class="service-gallery">
-                <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/Gemini_Generated_Image_6q89126q89126q89.png" alt="Strategic Consulting" loading="lazy">
-                    <div class="gallery-caption"><h3>Innovation</h3></div>
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll" style="animation-delay: 0.1s;">
+                    <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Strategic Consulting</h3>
+                    <p>We craft bespoke strategies that anticipate market shifts and create clear pathways to sustainable growth.</p>
                 </div>
-                <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/othertina.jpg" alt="Tech Solutions" loading="lazy">
-                    <div class="gallery-caption"><h3>Transformed</h3></div>
+                <div class="service-card animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="service-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Technological Solutions</h3>
+                    <p>From custom software to scalable platforms, we engineer the technology that powers your vision.</p>
                 </div>
-                <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/Gemini_Generated_Image_d79m5id79m5id79m.png" alt="Data Analytics" loading="lazy">
-                    <div class="gallery-caption"><h3>Clarity</h3></div>
+                <div class="service-card animate-on-scroll" style="animation-delay: 0.3s;">
+                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Data Analytics & Insights</h3>
+                    <p>We transform complex data into actionable insights, providing the clarity you need to make decisive moves.</p>
                 </div>
-                <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/Gemini_Generated_Image_lfmaqrlfmaqrlfma.png" alt="Brand Development" loading="lazy">
-                    <div class="gallery-caption"><h3>Brand Development</h3></div>
-                </div>
-                 <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/Gemini_Generated_Image_w052ksw052ksw052.png" alt="Digital Marketing" loading="lazy">
-                    <div class="gallery-caption"><h3>Insights</h3></div>
-                </div>
-                 <div class="gallery-item animate-on-scroll">
-                    <img src="imagee/New-Range-Rover-Sport-SV-Edition-Two-Blue-Nebula.jpg" alt="User Experience Design" loading="lazy">
-                    <div class="gallery-caption"><h3>Automobile</h3></div>
+                <div class="service-card animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>Brand Development</h3>
+                    <p>We build compelling brand identities and narratives that resonate with your audience and define your legacy.</p>
                 </div>
             </div>
         </section>
@@ -785,7 +853,23 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-col footer-socials animate-on-scroll">
+            <div class="footer-col">
+                <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="footer-logo">
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a onclick="openModal('privacy-modal')">Privacy Policy</a>
+                <a onclick="openModal('terms-modal')">Terms & Conditions</a>
+                <a href="javascript:void(0);" onclick="showContactLock()">Contact Us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
                 <div class="footer-social-icons">
                     <a href="https://www.facebook.com/share/1TiP8cwq89/"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/singhkaizenofficial?igsh=MW5odWVuYzEyYjA3aw=="><i class="fab fa-instagram"></i></a>
@@ -794,30 +878,15 @@
                     <a href="https://www.linkedin.com/in/singh-kaizen-22557837a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
                     <a href="https://t.me/singhkaizen"><i class="fab fa-telegram"></i></a>
                     <a href="https://bsky.app/profile/singhkaizen.bsky.social"><i class="fab fa-bluesky"></i></a>
-                 </div>
-            </div>
-            
-            <div class="footer-col footer-center animate-on-scroll">
-                <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="footer-logo">
-                <div class="footer-links">
-                     <a href="javascript:void(0);" onclick="showContactLock()">CONTACT US</a>
-                     <a onclick="openModal('privacy-modal')">PRIVACY POLICY</a>
-                     <a onclick="openModal('terms-modal')">TERMS & CONDITIONS</a>
                 </div>
             </div>
-
-            <div class="footer-col footer-newsletter animate-on-scroll">
-                <h4>Sign Up For Newsletters And Latest Updates</h4>
-                <form class="newsletter-form" action="https://formspree.io/f/mwpnkrbv" method="POST">
-                    <input type="email" name="email" placeholder="EMAIL" required>
-                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
-                </form>
-            </div>
         </div>
+        <hr class="footer-divider">
         <div class="copyright">
-            &copy; 2025 SINGH KAIZEN. All rights reserved.
+            &copy; 2025 SINGH KAIZEN. All Rights Reserved.
         </div>
     </footer>
+
 
     <div id="privacy-modal" class="modal-overlay hidden">
         <div class="modal-content">
@@ -854,11 +923,16 @@
 
     <script>
         // --- Pre-loader Script ---
-        window.onload = function() {
-            document.getElementById('preloader').classList.add('fade-out');
+        function hideTheLoader() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('fade-out');
+            }
         }
+        window.addEventListener('load', hideTheLoader);
+        setTimeout(hideTheLoader, 4000); // 4-second backup timer
 
-        // --- Sidebar Navigation Script (REVAMPED) ---
+        // --- Sidebar Navigation Script ---
         function openNav() {
             document.getElementById("mySidebar").classList.add('open');
             document.body.classList.add('no-scroll');
@@ -886,19 +960,18 @@
             });
         });
 
-        // --- Contact Lock Logic (REVAMPED for new animation) ---
+        // --- Contact Lock Logic ---
         const contactOptions = document.getElementById('contact-options');
         const contactForm = document.querySelector('#contact .contact-form');
 
         function showContactLock() {
             document.body.classList.add('contact-lock-mode', 'no-scroll');
             window.scrollTo(0, 0);
-            closeNav(); // Close sidebar if it's open
+            closeNav();
         }
 
         function hideContactLock() {
             document.body.classList.remove('contact-lock-mode', 'no-scroll');
-            // Reset the form view back to the initial choice buttons for the next time it's opened.
             contactOptions.style.display = 'block';
             contactForm.style.display = 'none';
         }
@@ -927,7 +1000,7 @@
             });
         });
 
-        // --- Country Code and Initial Page Setup Script ---
+        // --- This script block runs after the main HTML is parsed ---
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('back-to-site-btn').addEventListener('click', hideContactLock);
             
@@ -936,13 +1009,13 @@
                 contactForm.style.display = 'block';
             });
 
-            // --- NEW: General Scroll Animation Observer ---
+            // --- General Scroll Animation Observer ---
             const animatedElements = document.querySelectorAll('.animate-on-scroll');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // Stop observing after it's animated once
+                        observer.unobserve(entry.target);
                     }
                 });
             }, { threshold: 0.1 });
@@ -1001,23 +1074,27 @@
                 {name: "Zambia", code: "+260"}, {name: "Zimbabwe", code: "+263"}
             ];
             const selectElement = document.getElementById('country-code');
-            countryData.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.code;
-                option.textContent = `${country.name} (${country.code})`;
-                selectElement.appendChild(option);
-            });
-            selectElement.value = "+91"; 
+            if (selectElement) {
+                countryData.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country.code;
+                    option.textContent = `${country.name} (${country.code})`;
+                    selectElement.appendChild(option);
+                });
+                selectElement.value = "+91"; 
+            }
 
             // Script for premium header scroll effect
             const header = document.querySelector('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
+            if (header) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
         });
     </script>
 
