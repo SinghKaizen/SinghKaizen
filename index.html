@@ -373,14 +373,43 @@
         .faq-question i { transition: transform 0.3s ease-in-out; }
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out; }
         .faq-answer p { padding: 0 20px 20px 20px; margin: 0; line-height: 1.6; }
-        .faq-button {
-            display: inline-block; background-color: rgb(43, 157, 113);
-            color: black; padding: 10px 25px;
-            border-radius: 5px; text-decoration: none; font-weight: 500;
-            margin: 10px 20px 0px 20px;
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        
+        .faq-answer .faq-button {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 10px 0px 0;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
         }
-        .faq-button:hover { background-color: lightskyblue; transform: translateY(-2px); }
+        .faq-answer .faq-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .faq-button-primary {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            border-color: var(--text-dark);
+        }
+        .faq-button-primary:hover {
+            background-color: #006A4E;
+            border-color: #006A4E;
+            color: var(--text-light);
+        }
+        .faq-button-secondary {
+            background-color: transparent;
+            color: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+        .faq-button-secondary:hover {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+        }
+
         .faq-item.active .faq-answer { max-height: 200px; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
@@ -624,6 +653,9 @@
             .about-content { 
                 flex-direction: column; text-align: center; 
             }
+            .modal-content {
+                width: 85%;
+            }
             
             /* Centered and improved mobile footer */
             .footer-content {
@@ -661,12 +693,13 @@
         
         .modal-content {
             background: #ffffff; padding: 30px 40px;
-            border-radius: 15px; width: 90%; max-width: 700px;
-            max-height: 80vh; overflow-y: auto;
+            border-radius: 15px; width: 90%; max-width: 550px;
+            max-height: 90vh; overflow-y: auto;
             position: relative;
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             will-change: transform;
+            text-align: center;
         }
         .modal-overlay:not(.hidden) .modal-content { transform: scale(1); }
         
@@ -678,9 +711,44 @@
         }
         .modal-close:hover { transform: scale(1.2); }
         
-        .modal-content h2 { font-family: var(--font-serif); margin-top: 0; margin-bottom: 20px; color: var(--text-dark); }
+        .modal-content h2 { font-family: var(--font-serif); margin-top: 0; margin-bottom: 15px; color: var(--text-dark); }
         .modal-content h3 { font-family: var(--font-sans); font-weight: 600; margin-top: 25px; margin-bottom: 10px; color: var(--text-dark); }
-        .modal-content p { line-height: 1.7; color: var(--text-dark); }
+        .modal-content p { line-height: 1.7; color: var(--text-dark); margin-bottom: 25px; }
+
+        /* --- NEW: Styles for Auto Popup Modal --- */
+        .popup-social-icons {
+            margin: 20px 0 30px 0;
+        }
+        .popup-social-icons a {
+            color: #333;
+            font-size: 24px;
+            margin: 0 12px;
+            display: inline-block;
+            transition: color 0.3s ease-in-out, transform 0.3s ease;
+        }
+        .popup-social-icons a:hover {
+            color: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+        .popup-cta-btn {
+            display: inline-block;
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+            border: 2px solid var(--text-dark);
+        }
+        .popup-cta-btn:hover {
+            background-color: #006A4E;
+            border-color: #006A4E;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
 
     </style>
 </head>
@@ -706,73 +774,68 @@
         
         <ul class="sidebar-links">
             <li><a href="#home" onclick="closeNav()">Home</a></li>
-            <li><a href="#about" onclick="closeNav()">About Us</a></li>
-            <li><a href="#services" onclick="closeNav()">Our Services</a></li>
+            <li><a href="#about" onclick="closeNav()">Our Ethos</a></li>
+            <li><a href="#services" onclick="closeNav()">Core Disciplines</a></li>
             <li><a href="#faq" onclick="closeNav()">FAQ</a></li>
-            <li><a href="javascript:void(0);" onclick="showContactLock()">Contact</a></li>
-            <li><a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="connect-btn-sidebar" onclick="closeNav()">Follow on Social Media</a></li>
+            <li><a href="javascript:void(0);" onclick="showContactLock()">Engage</a></li>
+            <li><a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="connect-btn-sidebar" onclick="closeNav()">Follow The Journey</a></li>
         </ul>
     </div>
 
     <main>
         <section id="home">
-            <h1 class="hero-title animate-on-scroll">Crafting Legacies, One <span class="innovation">Innovation</span> at a Time.</h1>
-            <p class="hero-subtitle animate-on-scroll">At Singh Kaizen, we move beyond simple solutions. We meticulously engineer strategies for sustained growth, transforming ambitious visions into market-defining realities.</p>
-            <a href="#about" class="hero-btn animate-on-scroll">Discover Our Philosophy</a>
+            <h1 class="hero-title animate-on-scroll">Where Vision Meets <span class="innovation">Legacy.</span></h1>
+            <p class="hero-subtitle animate-on-scroll">We are architecting a new paradigm. At the intersection of strategic foresight and relentless innovation, Singh Kaizen is building the foundational platforms for tomorrow's industries. A new era of excellence is not just coming—it is being engineered.</p>
+            <a href="javascript:void(0);" onclick="showContactLock()" class="hero-btn animate-on-scroll">Witness The Unveiling</a>
         </section>
 
         <section id="about">
-            <h2 class="section-title animate-on-scroll">About Us</h2>
+            <h2 class="section-title animate-on-scroll">The SINGH KAIZEN Ethos</h2>
             <div class="about-content">
                 <div class="about-image-container animate-on-scroll">
-                    <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="Singh Kaizen Team Collaboration" loading="lazy">
+                    <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="A compass pointing towards the future, symbolizing direction and purpose" loading="lazy">
                 </div>
                 <div class="about-text-container animate-on-scroll">
-                     <p class="about-intro">The future isn't something you wait for; it's something you build. At Singh Kaizen, we are the architects of that future.<br><br>We were founded on a simple yet powerful belief: that ambition combined with relentless innovation can solve any challenge. Our name is our promise. 'Kaizen'—the principle of continuous improvement—is embedded in everything we do. We don't just solve problems; we push boundaries and challenge the status quo to engineer unparalleled results for our clients and partners.</p>
+                     <p class="about-intro">We exist to challenge the conventional. Singh Kaizen was conceived not as a company, but as a commitment to national progress and transformative change. Our foundation is built upon the pillars of unwavering integrity and the audacious pursuit of 'what's next'. We measure our success not in profits, but in the enduring value we create for the ecosystem we serve.</p>
                 </div>
             </div>
             <div class="commitments-grid">
                 <div class="commitment-card animate-on-scroll">
                     <div class="icon"><i class="fas fa-bullseye"></i></div>
                     <h3>Our Vision</h3>
-                    <p>To architect a future of limitless potential.<br><br>Where others see complexity, we see patterns. Where they see obstacles, we see opportunities. Our vision is to pioneer the foundational solutions of tomorrow, turning complex challenges into breakthrough successes for our clients.</p>
+                    <p>To be the silent engine behind the next wave of industrial and technological advancement. We envision a future built by pioneers and leaders, and our purpose is to provide them with the foundational strength to not just succeed, but to redefine excellence itself.</p>
                 </div>
                 <div class="commitment-card highlight animate-on-scroll">
                     <div class="icon"><i class="fas fa-layer-group"></i></div>
-                    <h3>Our Methodology</h3>
-                    <p>Our approach is a deliberate synthesis of meticulous analysis and bold strategy. We deconstruct challenges to their absolute core, allowing us to engineer bespoke pathways to success. Every action is calculated, every solution is custom-built, and every outcome is designed for maximum impact.</p>
-                </div>
-                <div class="commitment-card animate-on-scroll">
-                    <div class="icon"><i class="fas fa-shield-halved"></i></div>
-                    <h3>Our Commitment</h3>
-                    <p>Your success is our legacy.Our work isn't transactional; it's transformational. Our commitment goes far beyond delivering a final product. We are dedicated to building a legacy of trust with every partner. We forge lasting relationships founded on absolute transparency, unwavering integrity, and a shared drive for mutual success. When you succeed, we succeed.<br></p>
+                    <h3>Our Approach</h3>
+                    <p>Our methodology is our distinction. We call it <strong>Strategic Architecture</strong>. It is a synthesis of deep-seated analysis and bold, creative strategy, governed by the principle of Kaizen. We don't solve problems; we build systems that make them obsolete. This is our commitment to creating enduring, unshakable value.</p>
                 </div>
             </div>
         </section>
 
         <section id="services">
-            <h2 class="section-title animate-on-scroll">Our Services</h2>
-            <p class="service-intro animate-on-scroll">We don't just offer services; we craft solutions that redefine what's possible. At Singh Kaizen, we provide a meticulously curated suite of expertise designed to empower your boldest visions. From cutting-edge Strategic Consulting to the development of bespoke Technological Solutions, our approach is always deeply tailored, relentlessly data-driven, and intensely results-oriented. Discover how our unique blend of innovation and precision can propel you towards unparalleled excellence.</p>
+            <h2 class="section-title animate-on-scroll">Our Core Disciplines</h2>
+            <p class="service-intro animate-on-scroll">We are not defined by a list of services, but by the fundamental capabilities that will power our vision. These are the core disciplines through which we will architect the future, turning ambitious ideas into tangible, market-defining realities. What we are building is foundational. It is designed to last.</p>
             <div class="services-grid">
                 <div class="service-card animate-on-scroll" style="animation-delay: 0.1s;">
                     <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3>Strategic Consulting</h3>
-                    <p>We craft bespoke strategies that anticipate market shifts and create clear pathways to sustainable growth.</p>
+                    <h3>Strategic Foresight</h3>
+                    <p>We don't just plan for the future; we design it. Our expertise lies in identifying and shaping the trends that will define tomorrow's landscape, creating unparalleled competitive advantages.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="animation-delay: 0.2s;">
                     <div class="service-icon"><i class="fas fa-cogs"></i></div>
-                    <h3>Technological Solutions</h3>
-                    <p>From custom software to scalable platforms, we engineer the technology that powers your vision.</p>
+                    <h3>Digital Architecture</h3>
+                    <p>We build more than platforms; we create ecosystems. Our technological solutions are engineered from the ground up to be robust, scalable, and secure—the very bedrock of modern enterprise.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="animation-delay: 0.3s;">
                     <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Data Analytics & Insights</h3>
-                    <p>We transform complex data into actionable insights, providing the clarity you need to make decisive moves.</p>
+                    <h3>Intelligence & Insight</h3>
+                    <p>We transform data into decisive power. By moving beyond simple analytics, we uncover the deep insights that provide absolute clarity, enabling bold and impactful decision-making.</p>
                 </div>
                 <div class="service-card animate-on-scroll" style="animation-delay: 0.4s;">
                     <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
-                    <h3>Brand Development</h3>
-                    <p>We build compelling brand identities and narratives that resonate with your audience and define your legacy.</p>
+                    <h3>Legacy Creation</h3>
+                    <p>We build brands that endure. More than an identity, we craft a narrative and a presence that commands respect, builds trust, and stands the test of time in the marketplace.</p>
                 </div>
             </div>
         </section>
@@ -782,40 +845,40 @@
             <div class="faq-container animate-on-scroll">
                 <div class="faq-item">
                     <button class="faq-question">
-                        <span>What is the mission behind SINGH KAIZEN?</span>
+                        <span>What is the ultimate mission of SINGH KAIZEN?</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Our mission is to redefine the standards of excellence in our industry. The name 'Kaizen' represents our core belief in continuous improvement. We are committed to delivering exceptional value and innovative solutions that evolve with the needs of our clients, ensuring we always stay ahead of the curve.</p>
+                        <p>Our mission is to serve as a catalyst for growth and innovation on a national scale. We are committed to building foundational platforms that empower industries and leaders to achieve unprecedented levels of excellence and create lasting value.</p>
                     </div>
                 </div>
                  <div class="faq-item">
                     <button class="faq-question">
-                        <span>What makes SINGH KAIZEN different?</span>
+                        <span>Is SINGH KAIZEN focused on a specific industry?</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>Our key differentiator is our bespoke methodology. We don't believe in one-size-fits-all solutions. We meticulously analyze each challenge and engineer unique pathways to success, ensuring that every action is deliberate, strategic, and impactful.</p>
+                        <p>Our approach is sector-agnostic. The principles of strategic foresight, robust architecture, and legacy creation are universal. We engage where we can create the most significant and enduring impact, irrespective of the industry.</p>
                     </div>
                 </div>
                  <div class="faq-item">
                     <button class="faq-question">
-                        <span>Where can I find Singh Kaizen's social media accounts?</span>
+                        <span>When will more information be available?</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>You can find us on all our social media platforms. Click the button below to follow us..</p>
-                        <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="faq-button">Find on Social Media</a>
+                        <p>We believe in deliberate action over premature announcements. To be the first to know about our upcoming initiatives, we invite you to follow our journey on our official social media channels.</p>
+                        <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" class="faq-button faq-button-secondary">Follow The Journey</a>
                     </div>
                 </div>
                  <div class="faq-item">
                     <button class="faq-question">
-                        <span>How can I contact your customer care?</span>
+                        <span>How can we explore a potential partnership?</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="faq-answer">
-                        <p>To contact our customer care, please click the 'Contact Us' button and fill in all the mandatory information</p>
-                         <a href="javascript:void(0);" onclick="showContactLock()" class="faq-button">Contact Us</a>
+                        <p>We are always open to exploring synergies with like-minded visionaries. To begin a confidential dialogue with our strategy team, please proceed to our engagement section.</p>
+                         <a href="javascript:void(0);" onclick="showContactLock()" class="faq-button faq-button-primary">Initiate a Dialogue</a>
                     </div>
                 </div>
             </div>
@@ -827,28 +890,28 @@
             <img src="imagee/resize-jagur.png" alt="SINGH KAIZEN Logo" class="hero-logo">
             
             <div id="contact-options">
-                <h2 class="section-title">Connect With Us</h2>
-                <p>How would you like to get in touch?</p>
-                <button id="show-form-btn" class="contact-choice-btn"><i class="fas fa-envelope"></i> Send a Message</button>
-                <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" target="_blank" class="contact-choice-btn"><i class="fas fa-users"></i> Follow on Social Media</a>
+                <h2 class="section-title">Engage With Us</h2>
+                <p>For strategic inquiries and partnership opportunities, please select your preferred method to connect.</p>
+                <button id="show-form-btn" class="contact-choice-btn"><i class="fas fa-envelope"></i> Submit a Formal Inquiry</button>
+                <a href="https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/" target="_blank" class="contact-choice-btn"><i class="fas fa-users"></i> Connect on Social Media</a>
             </div>
 
             <div class="contact-form" style="display: none;">
-                <h2 class="section-title">Send Us a Message</h2>
+                <h2 class="section-title">Confidential Inquiry</h2>
                 <form id="contactForm" action="https://formspree.io/f/mwpnkrbv" method="POST">
-                    <input type="email" name="email" placeholder="Email address *" required>
-                    <input type="text" name="name" placeholder="Name *" required>
+                    <input type="email" name="email" placeholder="Corporate Email Address *" required>
+                    <input type="text" name="name" placeholder="Full Name & Designation *" required>
                     <div class="phone-group">
                         <select id="country-code" name="country-code" required></select>
-                        <input type="tel" name="phone" placeholder="Phone number" required pattern="[0-9]{7,15}" title="Please enter a valid phone number (7-15 digits).">
+                        <input type="tel" name="phone" placeholder="Contact Number *" required pattern="[0-9]{7,15}" title="Please enter a valid phone number (7-15 digits).">
                     </div>
-                    <textarea name="message" rows="5" placeholder="Message *" required></textarea>
-                    <button type="submit">Send</button>
+                    <textarea name="message" rows="5" placeholder="Your Message / Inquiry *" required></textarea>
+                    <button type="submit">Submit Securely</button>
                 </form>
-                <p id="thank-you-message">Thank you for your message!</p>
+                <p id="thank-you-message">Thank you. Your inquiry has been received and will be reviewed by our strategy team.</p>
             </div>
         </div>
-        <button id="back-to-site-btn">← Back to Site</button>
+        <button id="back-to-site-btn">← Return to Main Site</button>
     </section>
 
     <footer>
@@ -859,14 +922,14 @@
             <div class="footer-col">
                 <h4>Navigate</h4>
                 <a href="#home">Home</a>
-                <a href="#services">Services</a>
+                <a href="#services">Core Disciplines</a>
                 <a href="#faq">FAQ</a>
             </div>
             <div class="footer-col">
                 <h4>Legal</h4>
                 <a onclick="openModal('privacy-modal')">Privacy Policy</a>
                 <a onclick="openModal('terms-modal')">Terms & Conditions</a>
-                <a href="javascript:void(0);" onclick="showContactLock()">Contact Us</a>
+                <a href="javascript:void(0);" onclick="showContactLock()">Engage With Us</a>
             </div>
             <div class="footer-col">
                 <h4>Connect</h4>
@@ -887,19 +950,18 @@
         </div>
     </footer>
 
-
     <div id="privacy-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('privacy-modal')">&times;</span>
             <h2>Privacy Policy</h2>
             <p><strong>Last Updated: 2025-09-01</strong></p>
-            <p>Welcome to SINGH KAIZEN. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website.</p>
-            <h3>1. Information We Collect</h3>
-            <p>We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows: Identity Data, Contact Data, Technical Data, and Usage Data via forms and analytics.</p>
-            <h3>2. How We Use Your Information</h3>
-            <p>We will only use your personal data when the law allows us to. Most commonly, we will use your personal data to respond to your inquiries, process your requests, and improve our website and services.</p>
+            <p>This Privacy Policy governs the manner in which SINGH KAIZEN collects, uses, maintains, and discloses information collected from users of this website. We are committed to safeguarding the privacy of our website visitors.</p>
+            <h3>1. Personal Identification Information</h3>
+            <p>We may collect personal identification information in a variety of ways, including, but not to, when users visit our site, fill out a form, and in connection with other activities, services, features or resources we make available.</p>
+            <h3>2. Use of Collected Information</h3>
+            <p>SINGH KAIZEN may collect and use personal information to respond to inquiries, improve our services, and send periodic communications. We do not sell, trade, or rent personal identification information to others.</p>
             <h3>3. Data Security</h3>
-            <p>We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorised way, altered or disclosed.</p>
+            <p>We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access, alteration, disclosure or destruction of your personal information.</p>
             <p><em>Thank You</em></p>
         </div>
     </div>
@@ -909,14 +971,31 @@
             <span class="modal-close" onclick="closeModal('terms-modal')">&times;</span>
             <h2>Terms & Conditions</h2>
             <p><strong>Last Updated: 2025-09-01</strong></p>
-            <p>Please read these terms and conditions carefully before using Our Service.</p>
+            <p>Please read these Terms and Conditions carefully before using the SINGH KAIZEN website.</p>
             <h3>1. Agreement to Terms</h3>
-            <p>By using this website, you agree to be bound by these Terms and Conditions. If you disagree with any part of the terms, then you may not access the service. Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms.</p>
+            <p>By accessing or using this website, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service. Your access to and use of the Service is conditioned upon your acceptance of and compliance with these Terms.</p>
             <h3>2. Intellectual Property</h3>
-            <p>The Service and its original content, features and functionality are and will remain the exclusive property of SINGH KAIZEN and its licensors. The Service is protected by copyright, trademark, and other laws of both the India and foreign countries.</p>
+            <p>The Service and its original content, features, and functionality are and will remain the exclusive property of SINGH KAIZEN and its licensors. The Service is protected by copyright, trademark, and other laws of both India and foreign countries.</p>
             <h3>3. Limitation of Liability</h3>
-            <p>In no event shall SINGH KAIZEN, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+            <p>In no event shall SINGH KAIZEN, nor its directors, employees, or partners, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses arising from your use of the website.</p>
             <p><em>Thank You</em></p>
+        </div>
+    </div>
+
+    <div id="follow-us-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('follow-us-modal')">&times;</span>
+            <h2>Join Our Journey</h2>
+            <p>Stay informed on our progress and be the first to witness what's next. Connect with us across our official channels.</p>
+            <div class="popup-social-icons">
+                <a href="https://www.facebook.com/share/1TiP8cwq89/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/singhkaizenofficial?igsh=MW5odWVuYzEyYjA3aw=="><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/SinghKaizen?t=I4wp7Jt_BJVSQ4fMkHjfDw&s=09"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.youtube.com/@SinghKaizen"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/singh-kaizen-22557837a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://t.me/singhkaizen"><i class="fab fa-telegram"></i></a>
+            </div>
+            <a href="javascript:void(0);" onclick="openContactFromPopup()" class="popup-cta-btn">Initiate a Dialogue</a>
         </div>
     </div>
 
@@ -976,7 +1055,7 @@
             contactForm.style.display = 'none';
         }
         
-        // --- Modal Logic (for Privacy/Terms) ---
+        // --- Modal Logic (for All Modals) ---
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             if (modal) {
@@ -989,7 +1068,10 @@
             const modal = document.getElementById(modalId);
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.classList.remove('no-scroll');
+                // Only remove no-scroll if no other modals are open
+                if (document.querySelectorAll('.modal-overlay:not(.hidden)').length === 0) {
+                   document.body.classList.remove('no-scroll');
+                }
             }
         }
         document.querySelectorAll('.modal-overlay').forEach(overlay => {
@@ -999,6 +1081,15 @@
                 }
             });
         });
+
+        // NEW HELPER FUNCTION for popup button
+        function openContactFromPopup() {
+            closeModal('follow-us-modal');
+            // A small delay to allow the first modal to close smoothly
+            setTimeout(() => {
+                showContactLock();
+            }, 400); 
+        }
 
         // --- This script block runs after the main HTML is parsed ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -1021,7 +1112,15 @@
             }, { threshold: 0.1 });
             animatedElements.forEach(el => observer.observe(el));
 
+            // --- NEW: Auto Trigger for Follow-Us Popup ---
+            setTimeout(() => {
+                // We check if any other modal or contact screen is already open
+                if (!document.body.classList.contains('no-scroll')) {
+                    openModal('follow-us-modal');
+                }
+            }, 6000); // 6000 milliseconds = 6 seconds
 
+            // Country code data for contact form
             const countryData = [
                 {name: "India", code: "+91"}, {name: "Afghanistan", code: "+93"}, {name: "Albania", code: "+355"}, {name: "Algeria", code: "+213"},
                 {name: "American Samoa", code: "+1-684"}, {name: "Andorra", code: "+376"}, {name: "Angola", code: "+244"},
@@ -1100,4 +1199,3 @@
 
 </body>
 </html>
-
