@@ -417,7 +417,7 @@
         }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         
-        /* --- 6. Contact Section --- */
+        /* --- 6. Contact Section (CRITICAL FIX FOR SCROLLING & BUTTON) --- */
         main, footer, header {
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
         }
@@ -439,16 +439,20 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%;
-            min-height: 100vh;
+            height: 100vh;
             background-color: #f0f2f5; 
             color: var(--text-dark);
             z-index: 2000;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* FIX: Starts from top so scrolling works */
             align-items: center;
             padding: 20px 5%;
+            padding-bottom: 100px; /* FIX: Extra space at bottom to show button */
             box-sizing: border-box;
+            overflow-y: auto; /* FIX: Force Scroll */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
         }
+        
         body.contact-lock-mode #contact {
             opacity: 1;
             transform: scale(1);
@@ -461,6 +465,8 @@
             align-items: center;
             width: 100%;
             max-width: 600px;
+            margin: 40px auto; /* Ensure centering */
+            flex-shrink: 0;
         }
         #contact .hero-logo {
             max-width: 250px;
@@ -473,14 +479,23 @@
         #contact-options { text-align: center; width: 100%; }
         #contact-options p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
         
+        /* Fixed Buttons/Links Styling */
         .contact-choice-btn {
-            display: block; width: 100%; padding: 20px; margin-bottom: 20px;
+            display: block; 
+            width: 100%; 
+            padding: 20px; 
+            margin-bottom: 20px;
             background-color: transparent;
             border: 2px solid #aab0bb;
             color: var(--text-dark);
-            border-radius: 10px; font-size: 1.3rem; font-weight: 500; cursor: pointer;
+            border-radius: 10px; 
+            font-size: 1.3rem; 
+            font-weight: 500; 
+            cursor: pointer;
             text-decoration: none;
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            box-sizing: border-box; /* IMPORTANT: Fixes border sizing issues */
+            text-align: center; 
         }
         .contact-choice-btn:hover {
             background-color: var(--text-dark);
@@ -516,6 +531,8 @@
             border: none; padding: 15px 30px; border-radius: 5px;
             font-size: 1.1rem; font-weight: 600; cursor: pointer;
             width: 100%; transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+            margin-bottom: 30px; /* Added spacing at bottom */
+            display: block;
         }
         .contact-form button[type="submit"]:hover { background-color: var(--accent-blue); transform: translateY(-2px); }
         
@@ -525,8 +542,10 @@
             border: 1px solid var(--text-dark);
             padding: 10px 25px; border-radius: 5px;
             font-size: 1rem; font-weight: 500; cursor: pointer;
-            margin-top: 25px;
+            margin-top: 10px;
+            margin-bottom: 80px; /* HUGE SPACE at bottom for mobile scroll */
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            align-self: center;
         }
         #back-to-site-btn:hover { background-color: var(--text-dark); color: #ffffff; }
         #thank-you-message { display: none; text-align: center; font-size: 1.5rem; margin-top: 30px; }
@@ -645,13 +664,13 @@
                 font-size: 2.8rem; 
             }
             .hero-subtitle {
-                font-size: 1rem; /* Better font size for mobile */
+                font-size: 1rem; 
             }
             .section-title { 
                 font-size: 2.5rem; 
             }
             #about, #services, #faq {
-                padding-top: 60px; /* Reduced padding for mobile */
+                padding-top: 60px; 
                 padding-bottom: 60px;
             }
             .about-content { 
@@ -675,10 +694,32 @@
                 margin-bottom: 0;
             }
             .footer-social-icons a {
-                margin: 0 10px; /* Spacing for centered icons */
+                margin: 0 10px;
             }
             .copyright { 
                 text-align: center; 
+            }
+
+            /* --- CONTACT PAGE MOBILE FIX --- */
+            #contact {
+                justify-content: flex-start; /* Ensure it starts from top */
+                padding-top: 80px; /* Space for header if needed */
+                padding-bottom: 120px; /* EXTRA SPACE at bottom ensures button is visible */
+            }
+            .contact-content-container {
+                margin: 0 auto;
+                width: 100%;
+            }
+            .contact-form {
+                margin-bottom: 20px;
+            }
+            .contact-form input, .contact-form textarea, .phone-group select {
+                margin-bottom: 15px; 
+                padding: 12px;
+            }
+            .contact-choice-btn {
+                font-size: 1.1rem;
+                padding: 15px;
             }
         }
 
@@ -799,7 +840,7 @@
                     <img src="imagee/Gemini_Generated_Image_8psqs68psqs68psq.png" alt="A compass pointing towards the future, symbolizing direction and purpose" loading="lazy">
                 </div>
                 <div class="about-text-container animate-on-scroll">
-                     <p class="about-intro">We exist to challenge the conventional. Singh Kaizen was conceived not as a company, but as a commitment to national progress and transformative change. Our foundation is built upon the pillars of unwavering integrity and the audacious pursuit of 'what's next'. We measure our success not in profits, but in the enduring value we create for the ecosystem we serve.</p>
+                      <p class="about-intro">We exist to challenge the conventional. Singh Kaizen was conceived not as a company, but as a commitment to national progress and transformative change. Our foundation is built upon the pillars of unwavering integrity and the audacious pursuit of 'what's next'. We measure our success not in profits, but in the enduring value we create for the ecosystem we serve.</p>
                 </div>
             </div>
             <div class="commitments-grid">
