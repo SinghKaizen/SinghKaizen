@@ -1284,7 +1284,8 @@
     /* --- 3. Launcher --- */
     .suku-launcher {
         position: fixed; bottom: 30px; right: 30px;
-        width: 70px; height: 70px; border-radius: 50%;
+        width: 60px; height: 60px;
+        border-radius: 50%;
         background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         cursor: pointer; z-index: 99999; padding: 5px; transition: transform 0.3s ease;
     }
@@ -1293,8 +1294,8 @@
 
     /* --- 4. Chat Window --- */
     .suku-window {
-        position: fixed; bottom: 110px; right: 30px;
-        width: 380px; max-width: 90vw; height: 600px; max-height: 80vh;
+        position: fixed; bottom: 100px; right: 30px;
+        width: 360px; max-width: 90vw; height: 550px; max-height: 80vh;
         background: #fff; border-radius: 20px;
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         display: flex; flex-direction: column; overflow: hidden;
@@ -1306,73 +1307,73 @@
 
     /* Header */
     .suku-header {
-        background: var(--suku-primary); padding: 15px; color: white;
+        background: var(--suku-primary); padding: 12px 15px; color: white;
         display: flex; align-items: center; justify-content: space-between;
     }
     .header-left { display: flex; align-items: center; gap: 10px; }
-    .header-orb-box { width: 40px; height: 40px; background: #000; border-radius: 50%; padding: 2px; }
-    .header-info h3 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .header-orb-box { width: 35px; height: 35px; background: #000; border-radius: 50%; padding: 2px; }
+    .header-info h3 { margin: 0; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
     .beta-tag { font-size: 0.6rem; background: var(--orb-purple); color: white; padding: 2px 6px; border-radius: 4px; letter-spacing: 1px; }
-    .header-info span { font-size: 0.75rem; opacity: 0.9; display: block; }
-    .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+    .header-info span { font-size: 0.7rem; opacity: 0.9; display: block; }
+    .close-btn { background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; }
 
     /* Body */
     .suku-body {
-        flex: 1; padding: 20px; overflow-y: auto; background: #fff;
-        display: flex; flex-direction: column; gap: 15px;
+        flex: 1; padding: 15px; overflow-y: auto; background: #fff;
+        display: flex; flex-direction: column; gap: 12px;
     }
 
     /* Messages */
-    .msg-row { display: flex; align-items: flex-end; gap: 10px; width: 100%; animation: slideUp 0.3s ease; }
+    .msg-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; animation: slideUp 0.3s ease; }
     .msg-row.user { flex-direction: row-reverse; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- UPDATED: SMALLER CHAT AVATAR --- */
+    /* --- CHAT AVATAR (Small & Sleek: 20px) --- */
     .chat-avatar {
-        width: 28px; height: 28px; /* Reduced size from 35px */
+        width: 20px; height: 20px;
         border-radius: 50%; flex-shrink: 0;
         display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
-    .chat-avatar.bot { background: #000; padding: 1px; /* Reduced padding */ box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    .chat-avatar.user { background: #eee; color: #555; font-size: 1rem; /* Reduced font size */ }
+    .chat-avatar.bot { background: #000; padding: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .chat-avatar.user { background: #eee; color: #555; font-size: 0.8rem; }
 
     .msg-bubble {
-        max-width: 75%; padding: 12px 16px; font-size: 0.92rem; line-height: 1.5;
-        border-radius: 18px; position: relative; word-wrap: break-word;
+        max-width: 78%; padding: 10px 14px; font-size: 0.9rem; line-height: 1.4;
+        border-radius: 16px; position: relative; word-wrap: break-word;
     }
     .msg-bubble.bot { background: var(--suku-bot-bg); color: #333; border-bottom-left-radius: 2px; }
     .msg-bubble.user { background: var(--suku-user-bg); color: white; border-bottom-right-radius: 2px; text-align: left; }
     
     /* Chips */
-    .chips-area { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 38px; /* Adjusted margin for smaller avatar */ }
+    .chips-area { display: flex; flex-wrap: wrap; gap: 6px; margin-left: 28px; }
     .chip {
         background: #fff; border: 1px solid var(--suku-primary); color: var(--suku-primary);
-        padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s;
+        padding: 5px 10px; border-radius: 15px; font-size: 0.75rem; cursor: pointer; transition: 0.2s;
     }
     .chip:hover { background: var(--suku-primary); color: #fff; }
 
     /* Social Buttons */
     .social-btn {
-        background: #fff; color: #333; border: 1px solid #ddd; padding: 8px 12px; 
-        border-radius: 8px; text-decoration: none; font-size: 0.85rem; display: inline-flex; 
+        background: #fff; color: #333; border: 1px solid #ddd; padding: 6px 10px; 
+        border-radius: 6px; text-decoration: none; font-size: 0.8rem; display: inline-flex; 
         align-items: center; gap: 5px; transition: 0.2s; font-weight: 600; margin-top: 5px;
     }
     .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
     /* Footer */
-    .suku-footer { padding: 15px; background: #fff; border-top: 1px solid #eee; display: flex; gap: 10px; }
-    .suku-input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; outline: none; }
-    .suku-send { width: 45px; height: 45px; background: var(--suku-primary); color: white; border-radius: 50%; border: none; cursor: pointer; display:flex; align-items:center; justify-content:center;}
+    .suku-footer { padding: 10px; background: #fff; border-top: 1px solid #eee; display: flex; gap: 8px; }
+    .suku-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 0.9rem; }
+    .suku-send { width: 40px; height: 40px; background: var(--suku-primary); color: white; border-radius: 50%; border: none; cursor: pointer; display:flex; align-items:center; justify-content:center;}
 
     /* Typing */
-    .typing { display: none; margin-left: 38px; /* Adjusted margin */ gap: 5px; margin-bottom: 10px; }
-    .dot { width: 6px; height: 6px; background: #bbb; border-radius: 50%; animation: bounce 1s infinite; }
+    .typing { display: none; margin-left: 28px; gap: 4px; margin-bottom: 10px; }
+    .dot { width: 5px; height: 5px; background: #bbb; border-radius: 50%; animation: bounce 1s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; } .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
     /* Language Grid */
-    .lang-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-    .lang-btn { padding: 15px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; cursor: pointer; text-align: left; font-weight: 600; display: flex; justify-content: space-between; }
+    .lang-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+    .lang-btn { padding: 12px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; font-weight: 600; display: flex; justify-content: space-between; font-size: 0.9rem; }
     .lang-btn:hover { background: var(--suku-primary); color: white; }
 
 </style>
@@ -1433,51 +1434,52 @@
     let currentLang = null;
     const botOrbHtml = `<div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>`;
 
-    // --- MASSIVE KNOWLEDGE BASE (REGEX) ---
+    // --- SMART KNOWLEDGE BASE (STRICT REGEX) ---
+    // Fix: Added \b boundaries to prevent partial matches (e.g., 'night' triggering 'ig')
     const kb = {
-        // --- 1. ACKNOWLEDGEMENT & SMALL TALK (The "Ok" Fix) ---
-        agreement: /^(ok|okay|okk|k|alright|done|sure|cool|theek|acha|han|hmm|yup|yes|hanji|right|correct|sahi|badhiya|nice|good)$/i,
-        greetings: /^(hi|hii|hiii|hello|helo|hey|namaste|ssup|yo|greetings|morning|evening)/i,
-        wellbeing: /(how are (u|you)|kaise (ho|hai)|kya haal|whats up|doing good|sab badhiya|all good)/i,
-        thanks: /(thank|shukriya|dhanyavad|nice|good|great job|awesome|sahi h|badhiya)/i,
-        bye: /(bye|goodbye|tata|see you|ja raha)/i,
-        insult: /(stupid|idiot|pagal|mad|useless|bakwaas|chutiya|bakar)/i,
+        // 1. Social Media (Specific) - Note the \b (word boundary) for 'ig'
+        social_insta: /\b(instagram|insta|ig)\b/i, 
+        social_fb: /\b(facebook|fb|meta)\b/i,
+        social_yt: /\b(youtube|yt|channel)\b/i,
+        social_tele: /\b(telegram|tele|tg)\b/i,
+        social_linkedin: /\b(linkedin)\b/i,
+        social_twitter: /\b(twitter|x\.com|x account)\b/i, 
+        social_all: /\b(social|links|follow|connect|profiles|id)\b/i,
 
-        // --- 2. SPECIFIC SOCIAL MEDIA ---
-        social_insta: /(instagram|insta|ig)/i,
-        social_fb: /(facebook|fb|meta)/i,
-        social_yt: /(youtube|yt|video channel)/i,
-        social_tele: /(telegram|tele|channel)/i,
-        social_linkedin: /(linkedin|professional)/i,
-        social_twitter: /(twitter|x\.com|\bx link\b|\blink of x\b|\bx account\b|\bx\b)/i, 
-        social_all: /(social media|sabhi link|all links|follow|connect|profiles)/i,
+        // 2. Greetings & Bye (High Priority)
+        bye: /\b(bye|goodbye|tata|see you|ja raha|good night|gn|gud night|shubhratri|sleep|so jao|kal milte|night)\b/i,
+        morning: /\b(good morning|gm|suprabhat|morning)\b/i,
+        afternoon: /\b(good afternoon|afternoon|noon)\b/i,
+        greetings: /\b(hi|hii|hello|helo|hey|namaste|ssup|yo|hola|pranam|radhe radhe|ram ram)\b/i,
+        wellbeing: /\b(how are you|kaise ho|kaise hai|kya haal|whats up|doing good|sab badhiya|all good|kya chal raha|sab theek)\b/i,
+        thanks: /\b(thank|shukriya|dhanyavad|nice|good|great job|awesome|sahi h|badhiya|mast)\b/i,
 
-        // --- 3. LANGUAGE ---
-        lang_switch_hi: /(hindi me bolo|speak in hindi|hindi mein baat|hindi language)/i,
-        lang_switch_en: /(english me bolo|speak in english|talk in english|english language)/i,
+        // 3. Small Talk / Personality
+        identity: /\b(who are you|tum kaun ho|naam kya hai|intro|introduce|robot|bot|insan ho|real person)\b/i,
+        love_hate: /\b(love|like you|best bot|smart|cute|hate|bura|bekar|stupid|idiot|pagal|mad)\b/i,
+        action_query: /\b(kya kar rahe|what doing|busy|free ho|kya ho raha|kya kar re)\b/i,
+        food: /\b(khana|lunch|dinner|breakfast|food|bhook|chai|coffee|piya|khaya)\b/i,
+        agreement: /\b(ok|okay|okk|k|alright|done|sure|cool|theek|acha|han|hmm|yup|yes|hanji|right|correct|sahi)\b/i,
 
-        // --- 4. BUSINESS CORE ---
-        founder: /(founder|ceo|owner|malik|boss|saurabh|kisne banaya|banaya kisne)/i,
-        fees: /(fee|charge|cost|commission|price|pay|profit share|pricing|paise|free)/i,
-        location: /(location|address|office|kahan|where|city|prayagraj|hq|place)/i,
-        contact: /(contact|call|phone|number|mobile|agent|support|care|baat karni|manager)/i,
-        hiring: /(job|hiring|vacancy|career|work|naukri|resume|cv|apply|intern)/i,
-        
-        // --- 5. INVESTMENT ---
-        invest_intent: /(where.*invest|kaha.*invest|portfolio|assets|market|stock|crypto|forex|trading|allocation)/i,
-        returns: /(return|profit|munafa|fayda|percent|cagr|roi|kitna milega|income)/i,
-        sebi: /(sebi|register|license|govt|legal|certif|approved)/i,
-        lockin: /(lock|period|withdraw|nikal|maturity|bound|bond|liquidity)/i,
-        kyc: /(kyc|doc|paper|pan|adhar|bank|id proof)/i
+        // 4. Language Switch
+        lang_switch_hi: /\b(hindi me|speak in hindi|hindi mein|hindi)\b/i,
+        lang_switch_en: /\b(english me|speak in english|talk in english|english)\b/i,
+
+        // 5. Business & Investment
+        founder: /\b(founder|ceo|owner|malik|boss|saurabh|kisne banaya|banaya kisne)\b/i,
+        fees: /\b(fee|charge|cost|commission|price|pay|profit share|pricing|paise|free|rate)\b/i,
+        location: /\b(location|address|office|kahan|where|city|prayagraj|hq|place)\b/i,
+        contact: /\b(contact|call|phone|number|mobile|agent|support|care|baat karni|manager|talk)\b/i,
+        hiring: /\b(job|hiring|vacancy|career|work|naukri|resume|cv|apply|intern)\b/i,
+        invest_intent: /\b(invest|kaha.*laga|portfolio|assets|market|stock|crypto|forex|trading|allocation|shuru|start|pais)\b/i,
+        returns: /\b(return|profit|munafa|fayda|percent|cagr|roi|kitna milega|income)\b/i
     };
 
     // --- Functions ---
-
     function openSuku() {
         el.window.classList.add('active'); el.launcher.classList.add('hide');
         if(el.body.innerHTML.trim() === "") setTimeout(showLang, 100);
     }
-
     function closeSuku() {
         el.window.classList.remove('active'); el.launcher.classList.remove('hide');
         setTimeout(() => { el.body.innerHTML = ""; el.input.value = ""; disableInput(); currentLang = null; }, 300);
@@ -1488,7 +1490,7 @@
         div.innerHTML = `
             <div class="chat-avatar bot">${botOrbHtml}</div>
             <div class="msg-bubble bot">
-                <b>Namaste! Welcome to Singh Kaizen (BETA).</b><br>I am Suku. Select language:
+                <b>Namaste! Welcome to Singh Kaizen.</b><br>I am Suku. Select language:
                 <div class="lang-grid">
                     <div class="lang-btn" onclick="setLang('english')">English <span>➔</span></div>
                     <div class="lang-btn" onclick="setLang('hindi')">Hindi (हिंदी) <span>➔</span></div>
@@ -1502,13 +1504,13 @@
         currentLang = lang; el.body.innerHTML = ""; enableInput();
         let msg = "", chips = [];
         if(lang === 'english') {
-            el.input.placeholder = "Ask anything (e.g. Fees, Twitter)...";
-            msg = "Hello! I am Suku. I can provide specific links or answer queries. How can I help?";
-            chips = ["📱 X (Twitter) Link", "💰 Where to invest?", "💸 Fees Info", "📍 Location"];
+            el.input.placeholder = "Type here (e.g. Fees, Good Night)...";
+            msg = "Hello! I am Suku. I can chat with you, provide links, or help with investments. How can I help?";
+            chips = ["📱 Social Links", "💰 Invest", "💸 Fees", "🌙 Good Night"];
         } else {
-            el.input.placeholder = "Sawal puchein (Jaise: Fees, Twitter)...";
-            msg = "नमस्ते! मैं सुकू हूँ। मैं आपको सोशल मीडिया लिंक, निवेश या कंपनी की जानकारी दे सकता हूँ।";
-            chips = ["📱 X (Twitter) लिंक", "💰 पैसा कहाँ लगता है?", "💸 फीस कितनी है?", "📍 ऑफिस"];
+            el.input.placeholder = "Yahan likhein (Jaise: Fees, Hi)...";
+            msg = "नमस्ते! मैं सुकू हूँ। आप मुझसे नॉर्मल बातें कर सकते हैं या निवेश की जानकारी ले सकते हैं। बताइए क्या मदद करूँ?";
+            chips = ["📱 सोशल लिंक", "💰 निवेश", "💸 फीस", "🌙 शुभ रात्रि"];
         }
         addBotMsg(msg, chips);
     }
@@ -1523,11 +1525,13 @@
         addUserMsg(text);
         if(!txt) el.input.value = "";
         el.typing.style.display = 'flex'; el.body.appendChild(el.typing); scrollToBottom();
+        
+        // Slightly random delay to feel human
         setTimeout(() => {
             el.typing.style.display = 'none';
             const resp = getResponse(text.toLowerCase());
             addBotMsg(resp.text, resp.chips);
-        }, 800);
+        }, 800 + Math.random() * 400); 
     }
 
     function addUserMsg(text) {
@@ -1552,72 +1556,99 @@
     }
     function scrollToBottom() { el.body.scrollTop = el.body.scrollHeight; }
 
-    // --- RESPONSE LOGIC ---
+    // --- REFINED RESPONSE LOGIC (PRIORITY BASED) ---
     function getResponse(input) {
         const l = currentLang;
         const formBtn = `<br><br><button style="background:var(--suku-primary); color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;" onclick="showContactLock(); closeSuku();">🔓 Open Inquiry Form</button>`;
 
-        // 1. LANGUAGE SWITCH
-        if(input.match(kb.lang_switch_hi)) { currentLang = 'hindi'; el.input.placeholder = "Kuch bhi puchein..."; return { text: "जी ठीक है, अब मैं हिंदी में बात करूँगा।", chips: ["💰 निवेश", "📱 सोशल मीडिया"] }; }
-        if(input.match(kb.lang_switch_en)) { currentLang = 'english'; el.input.placeholder = "Ask anything..."; return { text: "Sure, I will speak in English now.", chips: ["💰 Invest", "📱 Social Media"] }; }
-
-        // 2. AGREEMENT / OKAY
-        if(input.match(kb.agreement)) {
-            const repliesEn = ["Great! Anything else?", "Got it. How else can I help?", "Understood. Any other questions?", "Sure! Ask me about Fees or Returns."];
-            const repliesHi = ["बहुत बढ़िया! और कुछ पूछना है?", "समझ गया। और कैसे मदद करूँ?", "ठीक है। क्या आप फीस या निवेश के बारे में जानना चाहते हैं?", "जी ज़रूर। और बताइये?"];
-            const reply = l === 'hindi' ? repliesHi[Math.floor(Math.random() * repliesHi.length)] : repliesEn[Math.floor(Math.random() * repliesEn.length)];
-            return { text: reply, chips: [] };
+        // === PRIORITY 1: TIME SENSITIVE & GREETINGS (Fixes the "Good Night" bug) ===
+        // Must be checked BEFORE Social Media
+        if(input.match(kb.bye)) {
+            const nightRepliesHi = ["शुभ रात्रि! 🌙 अपना ख्याल रखें।", "गुड नाईट! सो जाइये, कल बात होगी।", "अलविदा! मीठे सपने।"];
+            const nightRepliesEn = ["Good Night! 🌙 Sleep tight.", "Sweet dreams! Talk to you tomorrow.", "Good Night! Take care."];
+            return { 
+                text: l==='hindi' ? nightRepliesHi[Math.floor(Math.random()*nightRepliesHi.length)] : nightRepliesEn[Math.floor(Math.random()*nightRepliesEn.length)], 
+                chips: [] 
+            };
+        }
+        if(input.match(kb.morning)) return { text: l==='hindi' ? "सुप्रभात! ☀️ आज का दिन शानदार हो।" : "Good Morning! ☀️ Hope you have a great day.", chips: ["📈 Market Updates"] };
+        if(input.match(kb.afternoon)) return { text: l==='hindi' ? "गुड आफ्टरनून! लंच किया आपने?" : "Good Afternoon! Have you had lunch?", chips: [] };
+        
+        if(input.match(kb.greetings)) {
+             const greetHi = ["नमस्ते! 🙏 कहिये क्या सेवा करूँ?", "हैलो! कैसे हैं आप?", "राम राम! सब ठीक?"];
+             const greetEn = ["Hello! 👋 How can I help?", "Hi there! What's on your mind?", "Greetings! How are you?"];
+             return { text: l==='hindi' ? greetHi[Math.floor(Math.random()*greetHi.length)] : greetEn[Math.floor(Math.random()*greetEn.length)], chips: [] };
         }
 
-        // 3. SPECIFIC SOCIAL MEDIA
+        // === PRIORITY 2: WELLBEING & CHIT-CHAT ===
+        if(input.match(kb.wellbeing)) {
+            return { text: l==='hindi' 
+                ? "मैं एकदम फिट हूँ (डिजिटल तरीके से)! 😄 आप सुनाइये?" 
+                : "I'm functioning at 100% capacity! 😄 How are you doing?", chips: ["👍 Good", "👎 Not Good"] };
+        }
+        if(input.match(kb.identity)) {
+             return { text: l==='hindi' 
+                ? "मैं सुकू (Suku) हूँ, Singh Kaizen का स्मार्ट AI। मैं 24/7 आपकी मदद के लिए यहाँ हूँ।" 
+                : "I am Suku, the smart AI for Singh Kaizen. I'm here 24/7 to assist you.", chips: [] };
+        }
+        if(input.match(kb.love_hate)) {
+            if(input.includes("hate") || input.includes("stupid") || input.includes("pagal") || input.includes("bura")) {
+                return { text: l==='hindi' ? "माफ़ कीजिये अगर मैंने कुछ गलत किया। 😔 मैं सीख रहा हूँ।" : "I apologize if I made a mistake. 😔 I am still learning.", chips: [] };
+            }
+            return { text: l==='hindi' ? "शुक्रिया! आप भी बहुत प्यारे हैं। ❤️" : "Thank you! You are awesome too. ❤️", chips: [] };
+        }
+        if(input.match(kb.food)) {
+             return { text: l==='hindi' ? "मैं तो बस डेटा (Data) खाता हूँ! ⚡ आपने क्या खाया?" : "I run on electricity and code! ⚡ Have you eaten yet?", chips: [] };
+        }
+        if(input.match(kb.action_query)) {
+            return { text: l==='hindi' ? "बस आपके सवालों का इंतज़ार कर रहा हूँ। आप बताईये क्या चल रहा है?" : "Just waiting to help you! What's happening on your end?", chips: [] };
+        }
+        if(input.match(kb.agreement)) {
+             return { text: l==='hindi' ? "जी बिलकुल। कुछ और पूछना है?" : "Got it. Anything else?", chips: [] };
+        }
+
+        // === PRIORITY 3: LANGUAGE SWITCH ===
+        if(input.match(kb.lang_switch_hi)) { currentLang = 'hindi'; el.input.placeholder = "Kuch bhi puchein..."; return { text: "जी ठीक है, अब हम हिंदी में बात करेंगे।", chips: ["💰 निवेश", "📱 सोशल"] }; }
+        if(input.match(kb.lang_switch_en)) { currentLang = 'english'; el.input.placeholder = "Ask anything..."; return { text: "Sure, let's switch to English.", chips: ["💰 Invest", "📱 Social"] }; }
+
+        // === PRIORITY 4: SPECIFIC REQUESTS (Social Media) ===
         if(input.match(kb.social_twitter)) {
             const link = `<br><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> Open X (Twitter)</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी X (Twitter) लिंक:" + link : "Here is our X (Twitter) link:" + link, chips: [] };
+            return { text: l==='hindi' ? "X (Twitter) पर हमसे जुड़ें:" + link : "Connect on X (Twitter):" + link, chips: [] };
         }
         if(input.match(kb.social_insta)) {
             const link = `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Open Instagram</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी इंस्टाग्राम लिंक:" + link : "Here is our Instagram link:" + link, chips: [] };
+            return { text: l==='hindi' ? "इंस्टाग्राम पर फॉलो करें:" + link : "Follow us on Instagram:" + link, chips: [] };
         }
         if(input.match(kb.social_fb)) {
             const link = `<br><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> Open Facebook</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी फेसबुक लिंक:" + link : "Here is our Facebook link:" + link, chips: [] };
+            return { text: l==='hindi' ? "फेसबुक लिंक:" + link : "Facebook Link:" + link, chips: [] };
         }
         if(input.match(kb.social_yt)) {
             const link = `<br><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> Open YouTube</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी यूट्यूब लिंक:" + link : "Here is our YouTube link:" + link, chips: [] };
-        }
-        if(input.match(kb.social_tele)) {
-            const link = `<br><a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram"></i> Open Telegram</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी टेलीग्राम लिंक:" + link : "Here is our Telegram link:" + link, chips: [] };
-        }
-        if(input.match(kb.social_linkedin)) {
-            const link = `<br><a href="${socialUrls.linkedin}" target="_blank" class="social-btn" style="color:#0077b5"><i class="fab fa-linkedin"></i> Open LinkedIn</a>`;
-            return { text: l==='hindi' ? "यह रही हमारी लिंक्डइन लिंक:" + link : "Here is our LinkedIn link:" + link, chips: [] };
+            return { text: l==='hindi' ? "यूट्यूब चैनल देखें:" + link : "Watch on YouTube:" + link, chips: [] };
         }
         if(input.match(kb.social_all)) {
-            const allLinks = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C">Insta</a><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2">FB</a><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000">X</a></div>`;
-            return { text: l==='hindi' ? "ये रहे हमारे सभी सोशल मीडिया अकाउंट्स:" + allLinks : "Here are our social media profiles:" + allLinks, chips: [] };
+            const allLinks = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C">Insta</a><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2">FB</a><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000">X</a><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000">YT</a></div>`;
+            return { text: l==='hindi' ? "हमारे सभी सोशल मीडिया लिंक:" + allLinks : "Here are all our profiles:" + allLinks, chips: [] };
         }
 
-        // 4. GREETINGS & SMALL TALK
-        if(input.match(kb.greetings)) return { text: l==='hindi' ? "नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?" : "Hello! How can I assist you today?", chips: ["💰 Invest", "📱 Social"] };
-        if(input.match(kb.wellbeing)) return { text: l==='hindi' ? "मैं एक AI हूँ, और पूरी तरह ठीक हूँ! आप कैसे हैं?" : "I am functioning perfectly! How are you doing?", chips: [] };
-        if(input.match(kb.thanks)) return { text: l==='hindi' ? "आपका स्वागत है! 🙏" : "You're welcome! 🙏", chips: [] };
-        if(input.match(kb.insult)) return { text: l==='hindi' ? "माफ़ कीजिये, मैं अभी सीख रहा हूँ।" : "I apologize. I am still learning.", chips: [] };
+        // === PRIORITY 5: BUSINESS INFO ===
+        if(input.match(kb.founder)) return { text: l==='hindi' ? "Founder: <b>Mr. Saurabh Singh</b>." : "Founder: <b>Mr. Saurabh Singh</b>.", chips: [] };
+        if(input.match(kb.fees)) return { text: l==='hindi' ? "1 महीना फ्री, उसके बाद 5% प्रॉफिट शेयर।" : "1st Month Free, then 5% Profit Share.", chips: ["💰 Invest Now"] };
+        if(input.match(kb.contact)) return { text: l==='hindi' ? "हमसे संपर्क करने के लिए यह फॉर्म भरें:" + formBtn : "To contact us, please fill this form:" + formBtn, chips: [] };
+        if(input.match(kb.location)) return { text: l==='hindi' ? "हमारा ऑफिस <b>प्रयागराज (Prayagraj)</b> में है।" : "Our office is located in <b>Prayagraj</b>.", chips: [] };
+        if(input.match(kb.invest_intent)) return { text: l==='hindi' ? "निवेश शुरू करने के लिए यह फॉर्म भरें:" + formBtn : "To start investing, fill this form:" + formBtn, chips: [] };
 
-        // 5. BUSINESS
-        if(input.match(kb.founder)) return { text: l==='hindi' ? "संस्थापक और सीईओ: <b>Mr. Saurabh Singh</b>." : "Founder & CEO: <b>Mr. Saurabh Singh</b>.", chips: ["💰 Start Invest"] };
-        if(input.match(kb.fees)) return { text: l==='hindi' ? "1st महीना फ्री, फिर 5% प्रॉफिट शेयर।" : "1st Month Free, then 5% Profit Share.", chips: [] };
-        if(input.match(kb.contact)) return { text: l==='hindi' ? "अधिकारी से बात करने के लिए फॉर्म भरें:" + formBtn : "To speak with an agent, fill this form:" + formBtn, chips: [] };
 
-        // 6. FALLBACK (Polite)
-        const fallbacksEn = ["I apologize, I don't have that specific info right now.", "That's a great question! It's outside my current training.", "I'm still learning. Please use the contact form."];
-        const fallbacksHi = ["क्षमा करें, मुझे अभी इसकी जानकारी नहीं है।", "यह अच्छा सवाल है! लेकिन यह मेरी जानकारी से बाहर है।", "मैं अभी सीख रहा हूँ। विस्तृत उत्तर के लिए फॉर्म भरें।"];
+        // === FALLBACK (If nothing matches) ===
+        const fallbacksEn = ["I didn't quite catch that, but I can help with Fees, Social Links or Investing.", "I am still learning human conversation. Try asking about 'Fees' or 'Founder'.", "Could you rephrase that?"];
+        const fallbacksHi = ["मुझे ठीक से समझ नहीं आया, लेकिन आप फीस या ऑफिस के बारे में पूछ सकते हैं।", "मैं अभी सीख रहा हूँ। 'Fees' या 'Social' लिखकर देखें।", "माफ़ कीजिये, क्या आप दोबारा पूछ सकते हैं?"];
         const randomFallback = l === 'hindi' ? fallbacksHi[Math.floor(Math.random() * fallbacksHi.length)] : fallbacksEn[Math.floor(Math.random() * fallbacksEn.length)];
 
         return {
             text: randomFallback + formBtn,
-            chips: ["📞 Request Call"]
+            chips: ["📞 Contact Support"]
         };
     }
 </script>
