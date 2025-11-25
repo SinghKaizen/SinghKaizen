@@ -1244,143 +1244,219 @@
             }
         });
     </script>
+
 <style>
-    /* --- 1. Variables --- */
+    /* --- 1. Variables & Premium Colors --- */
     :root {
         --suku-primary: #043c2c;
-        --suku-bot-bg: #f0f2f5;
+        --suku-accent: #055e44;
+        --suku-bot-bg: #f4f6f9;
         --suku-user-bg: #043c2c;
-        --orb-blue: #2E3192;
-        --orb-cyan: #00FFFF;
-        --orb-purple: #D4145A;
+        --orb-blue: #0066ff;
+        --orb-cyan: #00ffff;
+        --orb-purple: #ff00ff;
+        --font-main: 'Poppins', sans-serif;
+        --gold: #FFD700;
+        --status-online: #00e676; 
+        --status-away: #ffb74d;   
     }
 
-    /* --- 2. ORB ANIMATION --- */
+    /* --- 2. 3D ORB ANIMATION --- */
     .sci-fi-orb {
         position: relative; width: 100%; height: 100%;
         transform-style: preserve-3d;
         display: flex; align-items: center; justify-content: center;
+        animation: orbitSpin 5s linear infinite;
     }
-    .sf-ring { position: absolute; border-radius: 50%; border: 2px solid transparent; }
+    .sf-ring {
+        position: absolute; width: 140%; height: 40%; 
+        border-radius: 50%; filter: blur(3px); opacity: 0.7; background: transparent;
+    }
     .sf-ring:nth-child(1) {
-        width: 100%; height: 100%;
-        border-top: 2px solid var(--orb-cyan); border-bottom: 2px solid var(--orb-blue);
-        animation: spin3D 3s linear infinite;
+        background: linear-gradient(90deg, transparent, var(--orb-cyan), var(--orb-blue), transparent);
+        box-shadow: 0 0 25px var(--orb-cyan);
+        transform: rotateZ(45deg) rotateX(70deg);
     }
     .sf-ring:nth-child(2) {
-        width: 70%; height: 70%;
-        border-left: 2px solid var(--orb-purple); border-right: 2px solid #fff;
-        animation: spin3D 4s linear infinite reverse;
+        background: linear-gradient(90deg, transparent, var(--orb-purple), transparent);
+        box-shadow: 0 0 25px var(--orb-purple);
+        transform: rotateZ(-45deg) rotateX(70deg);
     }
     .sf-core {
-        width: 30%; height: 30%;
-        background: radial-gradient(circle, #fff, var(--orb-blue));
-        border-radius: 50%; box-shadow: 0 0 15px var(--orb-cyan);
-        animation: pulseCore 1.5s infinite alternate;
+        position: absolute; width: 25%; height: 25%;
+        background: white; border-radius: 50%; 
+        box-shadow: 0 0 20px var(--orb-cyan), 0 0 40px var(--orb-blue), 0 0 60px var(--orb-purple);
+        filter: blur(2px); animation: pulseCore 2s ease-in-out infinite alternate;
     }
-    @keyframes spin3D { 0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); } 100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg); } }
-    @keyframes pulseCore { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.2); opacity: 1; } }
+    @keyframes orbitSpin {
+        0% { transform: rotateY(0deg) rotateX(15deg) scale(0.8); }
+        50% { transform: rotateY(180deg) rotateX(15deg) scale(1); }
+        100% { transform: rotateY(360deg) rotateX(15deg) scale(0.8); }
+    }
+    @keyframes pulseCore { 0% { opacity: 0.8; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.2); } }
 
-    /* --- 3. Launcher --- */
+    /* --- 3. LAUNCHER --- */
+    .launcher-container {
+        position: fixed; bottom: 30px; right: 30px; z-index: 999999;
+        display: flex; flex-direction: column; align-items: center; 
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .launcher-label {
+        position: absolute; bottom: 65px;
+        background: linear-gradient(135deg, #fff, #f0f0f0); color: var(--suku-primary);
+        padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1); white-space: nowrap; pointer-events: none;
+        animation: floatLabel 3s ease-in-out infinite;
+    }
+    .launcher-label::after {
+        content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+        border-width: 6px 6px 0; border-style: solid; border-color: #fff transparent transparent transparent;
+    }
+    @keyframes floatLabel { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
     .suku-launcher {
-        position: fixed; bottom: 30px; right: 30px;
-        width: 60px; height: 60px;
-        border-radius: 50%;
-        background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        cursor: pointer; z-index: 99999; padding: 5px; transition: transform 0.3s ease;
+        width: 55px; height: 55px; border-radius: 50%; background: #000; 
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5); cursor: pointer; padding: 2px; 
+        transition: transform 0.3s; overflow: hidden;
     }
-    .suku-launcher:hover { transform: scale(1.1); }
-    .suku-launcher.hide { transform: scale(0); opacity: 0; pointer-events: none; }
+    .suku-launcher:hover { transform: scale(1.15); box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
+    
+    .launcher-container.hide { transform: scale(0) rotate(180deg); opacity: 0; pointer-events: none; }
 
-    /* --- 4. Chat Window --- */
+    /* --- 4. CHAT WINDOW --- */
     .suku-window {
         position: fixed; bottom: 100px; right: 30px;
-        width: 360px; max-width: 90vw; height: 550px; max-height: 80vh;
-        background: #fff; border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        width: 380px; max-width: 90vw; height: 550px; max-height: 80vh;
+        background: #fff; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         display: flex; flex-direction: column; overflow: hidden;
-        z-index: 99999; opacity: 0; transform: translateY(20px) scale(0.95);
-        pointer-events: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        font-family: 'Poppins', sans-serif;
+        z-index: 999999; font-family: var(--font-main);
+        
+        transform-origin: bottom right; 
+        transform: scale(0) translateY(50px); 
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        pointer-events: none;
     }
-    .suku-window.active { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+    .suku-window.active { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
 
     /* Header */
     .suku-header {
-        background: var(--suku-primary); padding: 12px 15px; color: white;
-        display: flex; align-items: center; justify-content: space-between;
+        background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent));
+        padding: 16px; color: white; display: flex; align-items: center; justify-content: space-between;
     }
-    .header-left { display: flex; align-items: center; gap: 10px; }
-    .header-orb-box { width: 35px; height: 35px; background: #000; border-radius: 50%; padding: 2px; }
-    .header-info h3 { margin: 0; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-    .beta-tag { font-size: 0.6rem; background: var(--orb-purple); color: white; padding: 2px 6px; border-radius: 4px; letter-spacing: 1px; }
-    .header-info span { font-size: 0.7rem; opacity: 0.9; display: block; }
-    .close-btn { background: none; border: none; color: white; font-size: 1.4rem; cursor: pointer; }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-orb-box { width: 38px; height: 38px; background: #000; border-radius: 50%; padding: 2px; overflow: hidden; }
+    
+    .header-info h3 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .beta-tag { font-size: 0.6rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 2px 6px; border-radius: 6px; }
+    
+    .status-line { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; margin-top: 2px; opacity: 0.9; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; transition: 0.3s; }
+    .status-dot.online { background: var(--status-online); box-shadow: 0 0 8px var(--status-online); }
+    .status-dot.away { background: var(--status-away); }
+    .status-dot.typing { background: var(--status-online); animation: pulseDot 1s infinite; }
+    @keyframes pulseDot { 0% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.5; transform: scale(0.9); } }
+
+    .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.8; transition: 0.2s; }
+    .close-btn:hover { opacity: 1; transform: rotate(90deg); color: #ff6b6b; }
 
     /* Body */
     .suku-body {
-        flex: 1; padding: 15px; overflow-y: auto; background: #fff;
-        display: flex; flex-direction: column; gap: 12px;
+        flex: 1; padding: 20px; overflow-y: auto; background: var(--suku-bot-bg);
+        display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth;
     }
 
     /* Messages */
-    .msg-row { display: flex; align-items: flex-end; gap: 8px; width: 100%; animation: slideUp 0.3s ease; }
+    .msg-row { display: flex; align-items: flex-end; gap: 10px; width: 100%; animation: slideUp 0.4s ease; }
     .msg-row.user { flex-direction: row-reverse; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- CHAT AVATAR (Small & Sleek: 20px) --- */
     .chat-avatar {
-        width: 20px; height: 20px;
-        border-radius: 50%; flex-shrink: 0;
-        display: flex; align-items: center; justify-content: center; overflow: hidden;
+        width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff;
     }
-    .chat-avatar.bot { background: #000; padding: 1px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .chat-avatar.user { background: #eee; color: #555; font-size: 0.8rem; }
+    .chat-avatar.bot { background: #000; padding: 1px; }
+    .chat-avatar.user { background: #e0e0e0; color: #555; font-size: 0.9rem; }
 
     .msg-bubble {
-        max-width: 78%; padding: 10px 14px; font-size: 0.9rem; line-height: 1.4;
-        border-radius: 16px; position: relative; word-wrap: break-word;
+        max-width: 80%; padding: 12px 16px; font-size: 0.92rem; line-height: 1.5;
+        border-radius: 18px; position: relative; word-wrap: break-word;
     }
-    .msg-bubble.bot { background: var(--suku-bot-bg); color: #333; border-bottom-left-radius: 2px; }
-    .msg-bubble.user { background: var(--suku-user-bg); color: white; border-bottom-right-radius: 2px; text-align: left; }
-    
-    /* Chips */
-    .chips-area { display: flex; flex-wrap: wrap; gap: 6px; margin-left: 28px; }
-    .chip {
-        background: #fff; border: 1px solid var(--suku-primary); color: var(--suku-primary);
-        padding: 5px 10px; border-radius: 15px; font-size: 0.75rem; cursor: pointer; transition: 0.2s;
-    }
-    .chip:hover { background: var(--suku-primary); color: #fff; }
+    .msg-bubble.bot { background: #fff; color: #333; border-bottom-left-radius: 4px; }
+    .msg-bubble.user { background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent)); color: white; border-bottom-right-radius: 4px; text-align: left; }
 
-    /* Social Buttons */
-    .social-btn {
-        background: #fff; color: #333; border: 1px solid #ddd; padding: 6px 10px; 
-        border-radius: 6px; text-decoration: none; font-size: 0.8rem; display: inline-flex; 
-        align-items: center; gap: 5px; transition: 0.2s; font-weight: 600; margin-top: 5px;
+    /* Chips */
+    .chips-area { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 38px; }
+    .chip {
+        background: #fff; border: 1px solid #e0e0e0; color: var(--suku-primary);
+        padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; font-weight: 500;
     }
-    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .chip:hover { background: var(--suku-primary); color: #fff; transform: translateY(-2px); }
+    
+    .social-btn {
+        background: #fff; color: #333; border: 1px solid #ddd; padding: 8px 12px; 
+        border-radius: 10px; text-decoration: none; font-size: 0.85rem; display: inline-flex; 
+        align-items: center; gap: 6px; transition: 0.2s; font-weight: 600; margin-top: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .social-btn:hover { background: #f0f0f0; transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
 
     /* Footer */
-    .suku-footer { padding: 10px; background: #fff; border-top: 1px solid #eee; display: flex; gap: 8px; }
-    .suku-input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 0.9rem; }
-    .suku-send { width: 40px; height: 40px; background: var(--suku-primary); color: white; border-radius: 50%; border: none; cursor: pointer; display:flex; align-items:center; justify-content:center;}
-
-    /* Typing */
-    .typing { display: none; margin-left: 28px; gap: 4px; margin-bottom: 10px; }
-    .dot { width: 5px; height: 5px; background: #bbb; border-radius: 50%; animation: bounce 1s infinite; }
+    .suku-footer { padding: 15px; background: #fff; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; }
+    .suku-input { flex: 1; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 25px; outline: none; background: #f9f9f9; }
+    .suku-send { width: 45px; height: 45px; background: var(--suku-primary); color: white; border-radius: 50%; border: none; cursor: pointer; display:flex; align-items:center; justify-content:center; }
+    
+    .typing { display: none; margin-left: 38px; gap: 5px; margin-bottom: 10px; }
+    .dot { width: 6px; height: 6px; background: #bbb; border-radius: 50%; animation: bounce 1s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; } .dot:nth-child(3) { animation-delay: 0.4s; }
     @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-    /* Language Grid */
-    .lang-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
-    .lang-btn { padding: 12px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; text-align: left; font-weight: 600; display: flex; justify-content: space-between; font-size: 0.9rem; }
-    .lang-btn:hover { background: var(--suku-primary); color: white; }
+    .lang-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+    .lang-btn { padding: 14px; background: #fff; border: 1px solid #eee; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; transition: 0.2s; }
+    .lang-btn:hover { border-color: var(--suku-primary); color: var(--suku-primary); transform: translateX(5px); }
 
+    /* --- 5. RATING OVERLAY --- */
+    .rating-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+        z-index: 100; display: none; align-items: center; justify-content: center;
+        flex-direction: column; text-align: center; animation: fadeIn 0.3s ease;
+        border-radius: 24px;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .rating-content {
+        background: white; padding: 30px; border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 85%; border: 1px solid #eee;
+    }
+    .rating-emoji { font-size: 3.5rem; margin-bottom: 10px; display: block; animation: popEmoji 0.4s; }
+    @keyframes popEmoji { 0% { transform: scale(0.5); } 100% { transform: scale(1); } }
+    
+    .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+    .star { font-size: 2rem; color: #ddd; cursor: pointer; transition: 0.2s; }
+    .star.filled { color: var(--gold); transform: scale(1.1); }
+    .star:hover { transform: scale(1.2); }
+    
+    .rate-submit-btn {
+        background: var(--suku-primary); color: white; border: none;
+        padding: 12px 25px; border-radius: 25px; font-weight: 600; cursor: pointer;
+        width: 100%; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .rate-submit-btn:hover { background: var(--suku-accent); transform: translateY(-2px); }
+    .skip-btn { display: block; margin-top: 15px; font-size: 0.85rem; color: #888; cursor: pointer; text-decoration: underline; }
+
+    @media (max-width: 480px) {
+        .launcher-container { bottom: 20px; right: 20px; }
+        .suku-launcher { width: 50px; height: 50px; }
+        .launcher-label { bottom: 60px; font-size: 0.7rem; }
+        .suku-window { bottom: 85px; right: 15px; width: calc(100vw - 30px); height: 65vh; border-radius: 20px; }
+    }
 </style>
 
-<div class="suku-launcher" id="sukuLauncher" onclick="openSuku()">
-    <div class="sci-fi-orb">
-        <div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div>
+<div class="launcher-container" id="sukuLauncherContainer">
+    <div class="launcher-label">Need Help?</div>
+    <div class="suku-launcher" onclick="openSuku()">
+        <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
     </div>
 </div>
 
@@ -1388,27 +1464,34 @@
     <div class="suku-header">
         <div class="header-left">
             <div class="header-orb-box">
-                <div class="sci-fi-orb">
-                    <div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div>
-                </div>
+                <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
             </div>
             <div class="header-info">
                 <h3>SUKU AI <span class="beta-tag">BETA</span></h3>
-                <span>Singh Kaizen Support</span>
+                <div class="status-line"><span class="status-dot online" id="sukuStatusDot"></span><span id="sukuStatusText">Online</span></div>
             </div>
         </div>
-        <button class="close-btn" onclick="closeSuku()">&times;</button>
+        <button class="close-btn" onclick="triggerRating()">&times;</button>
     </div>
-
+    
     <div class="suku-body" id="sukuBody"></div>
-
-    <div class="typing" id="sukuTyping">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    
+    <div class="rating-overlay" id="sukuRatingOverlay">
+        <div class="rating-content" id="ratingContentBox">
+            <div class="rating-emoji" id="ratingEmoji">🤔</div>
+            <h3 id="ratingTitle" style="margin:10px 0 20px; color:#333;">How was your experience?</h3>
+            <div class="stars">
+                <span class="star" onclick="rate(1)">★</span><span class="star" onclick="rate(2)">★</span><span class="star" onclick="rate(3)">★</span><span class="star" onclick="rate(4)">★</span><span class="star" onclick="rate(5)">★</span>
+            </div>
+            <button class="rate-submit-btn" onclick="submitRating()">Submit Review</button>
+            <span class="skip-btn" onclick="forceClose()">Skip & Close</span>
+        </div>
     </div>
-
+    
+    <div class="typing" id="sukuTyping"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     <div class="suku-footer">
-        <input type="text" class="suku-input" id="sukuInput" placeholder="Select language first..." disabled onkeypress="handleEnter(event)">
-        <button class="suku-send" id="sukuSendBtn" onclick="sendMessage()" disabled><i class="fas fa-paper-plane"></i></button>
+        <input type="text" class="suku-input" id="sukuInput" placeholder="Type here..." onkeypress="handleEnter(event)" oninput="userIsTyping()">
+        <button class="suku-send" id="sukuSendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
@@ -1416,10 +1499,15 @@
     const el = {
         body: document.getElementById('sukuBody'),
         window: document.getElementById('sukuWindow'),
-        launcher: document.getElementById('sukuLauncher'),
+        launcherContainer: document.getElementById('sukuLauncherContainer'),
         input: document.getElementById('sukuInput'),
         btn: document.getElementById('sukuSendBtn'),
-        typing: document.getElementById('sukuTyping')
+        typing: document.getElementById('sukuTyping'),
+        ratingOverlay: document.getElementById('sukuRatingOverlay'),
+        ratingEmoji: document.getElementById('ratingEmoji'),
+        ratingContent: document.getElementById('ratingContentBox'),
+        statusText: document.getElementById('sukuStatusText'),
+        statusDot: document.getElementById('sukuStatusDot')
     };
 
     const socialUrls = {
@@ -1431,227 +1519,208 @@
         twitter: "https://x.com/SinghKaizen"
     };
 
-    let currentLang = null;
+    let currentLang = 'english';
+    let currentRating = 0;
+    let idleTimer = null;
     const botOrbHtml = `<div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>`;
+    const emojis = ['😠', '😞', '😐', '🙂', '🤩'];
 
-    // --- SMART KNOWLEDGE BASE (STRICT REGEX) ---
-    // Fix: Added \b boundaries to prevent partial matches (e.g., 'night' triggering 'ig')
-    const kb = {
-        // 1. Social Media (Specific) - Note the \b (word boundary) for 'ig'
-        social_insta: /\b(instagram|insta|ig)\b/i, 
-        social_fb: /\b(facebook|fb|meta)\b/i,
-        social_yt: /\b(youtube|yt|channel)\b/i,
-        social_tele: /\b(telegram|tele|tg)\b/i,
-        social_linkedin: /\b(linkedin)\b/i,
-        social_twitter: /\b(twitter|x\.com|x account)\b/i, 
-        social_all: /\b(social|links|follow|connect|profiles|id)\b/i,
+    // --- STATUS LOGIC ---
+    function setStatus(status) {
+        clearTimeout(idleTimer);
+        if (status === 'Online') {
+            el.statusText.innerText = 'Online'; el.statusDot.className = 'status-dot online';
+            idleTimer = setTimeout(() => { setStatus('Away'); }, 7000); 
+        } else if (status === 'Typing') {
+            el.statusText.innerText = 'Typing...'; el.statusDot.className = 'status-dot typing';
+        } else if (status === 'Away') {
+            el.statusText.innerText = 'Away'; el.statusDot.className = 'status-dot away';
+        }
+    }
+    function userIsTyping() { setStatus('Online'); }
 
-        // 2. Greetings & Bye (High Priority)
-        bye: /\b(bye|goodbye|tata|see you|ja raha|good night|gn|gud night|shubhratri|sleep|so jao|kal milte|night)\b/i,
-        morning: /\b(good morning|gm|suprabhat|morning)\b/i,
-        afternoon: /\b(good afternoon|afternoon|noon)\b/i,
-        greetings: /\b(hi|hii|hello|helo|hey|namaste|ssup|yo|hola|pranam|radhe radhe|ram ram)\b/i,
-        wellbeing: /\b(how are you|kaise ho|kaise hai|kya haal|whats up|doing good|sab badhiya|all good|kya chal raha|sab theek)\b/i,
-        thanks: /\b(thank|shukriya|dhanyavad|nice|good|great job|awesome|sahi h|badhiya|mast)\b/i,
-
-        // 3. Small Talk / Personality
-        identity: /\b(who are you|tum kaun ho|naam kya hai|intro|introduce|robot|bot|insan ho|real person)\b/i,
-        love_hate: /\b(love|like you|best bot|smart|cute|hate|bura|bekar|stupid|idiot|pagal|mad)\b/i,
-        action_query: /\b(kya kar rahe|what doing|busy|free ho|kya ho raha|kya kar re)\b/i,
-        food: /\b(khana|lunch|dinner|breakfast|food|bhook|chai|coffee|piya|khaya)\b/i,
-        agreement: /\b(ok|okay|okk|k|alright|done|sure|cool|theek|acha|han|hmm|yup|yes|hanji|right|correct|sahi)\b/i,
-
-        // 4. Language Switch
-        lang_switch_hi: /\b(hindi me|speak in hindi|hindi mein|hindi)\b/i,
-        lang_switch_en: /\b(english me|speak in english|talk in english|english)\b/i,
-
-        // 5. Business & Investment
-        founder: /\b(founder|ceo|owner|malik|boss|saurabh|kisne banaya|banaya kisne)\b/i,
-        fees: /\b(fee|charge|cost|commission|price|pay|profit share|pricing|paise|free|rate)\b/i,
-        location: /\b(location|address|office|kahan|where|city|prayagraj|hq|place)\b/i,
-        contact: /\b(contact|call|phone|number|mobile|agent|support|care|baat karni|manager|talk)\b/i,
-        hiring: /\b(job|hiring|vacancy|career|work|naukri|resume|cv|apply|intern)\b/i,
-        invest_intent: /\b(invest|kaha.*laga|portfolio|assets|market|stock|crypto|forex|trading|allocation|shuru|start|pais)\b/i,
-        returns: /\b(return|profit|munafa|fayda|percent|cagr|roi|kitna milega|income)\b/i
-    };
-
-    // --- Functions ---
+    // --- CHAT LOGIC ---
     function openSuku() {
-        el.window.classList.add('active'); el.launcher.classList.add('hide');
-        if(el.body.innerHTML.trim() === "") setTimeout(showLang, 100);
+        el.window.classList.add('active'); el.launcherContainer.classList.add('hide');
+        setStatus('Online');
+        if(el.body.innerHTML.trim() === "") setTimeout(showWelcome, 300);
     }
-    function closeSuku() {
-        el.window.classList.remove('active'); el.launcher.classList.remove('hide');
-        setTimeout(() => { el.body.innerHTML = ""; el.input.value = ""; disableInput(); currentLang = null; }, 300);
+    function triggerRating() {
+        if(el.body.innerHTML.trim() === "") { forceClose(); return; }
+        el.ratingOverlay.style.display = 'flex'; resetRatingUI();
+    }
+    function forceClose() {
+        el.window.classList.remove('active'); el.launcherContainer.classList.remove('hide');
+        setTimeout(() => { el.body.innerHTML = ""; el.input.value = ""; el.ratingOverlay.style.display = 'none'; resetRatingUI(); }, 500); 
+    }
+    function rate(n) {
+        currentRating = n;
+        document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('filled', i < n));
+        el.ratingEmoji.innerText = emojis[n-1];
+        el.ratingEmoji.style.animation = 'none'; el.ratingEmoji.offsetHeight; el.ratingEmoji.style.animation = 'popEmoji 0.4s';
+    }
+    function submitRating() {
+        if(currentRating === 0) rate(5);
+        el.ratingContent.innerHTML = `<div style="font-size:4rem; animation:popEmoji 0.5s;">${emojis[currentRating-1]}</div><h2 style="color:var(--suku-primary); margin:10px 0;">Thank You!</h2>`;
+        setTimeout(forceClose, 1500);
+    }
+    function resetRatingUI() {
+        el.ratingContent.innerHTML = `<div class="rating-emoji" id="ratingEmoji">🤔</div><h3 id="ratingTitle" style="margin:10px 0 20px; color:#333;">How was your experience?</h3><div class="stars"><span class="star" onclick="rate(1)">★</span><span class="star" onclick="rate(2)">★</span><span class="star" onclick="rate(3)">★</span><span class="star" onclick="rate(4)">★</span><span class="star" onclick="rate(5)">★</span></div><button class="rate-submit-btn" onclick="submitRating()">Submit Review</button><span class="skip-btn" onclick="forceClose()">Skip & Close</span>`;
+        el.ratingEmoji = document.getElementById('ratingEmoji'); currentRating = 0;
     }
 
-    function showLang() {
+    function showWelcome() {
         const div = document.createElement('div'); div.className = 'msg-row bot';
-        div.innerHTML = `
-            <div class="chat-avatar bot">${botOrbHtml}</div>
-            <div class="msg-bubble bot">
-                <b>Namaste! Welcome to Singh Kaizen.</b><br>I am Suku. Select language:
-                <div class="lang-grid">
-                    <div class="lang-btn" onclick="setLang('english')">English <span>➔</span></div>
-                    <div class="lang-btn" onclick="setLang('hindi')">Hindi (हिंदी) <span>➔</span></div>
-                </div>
-            </div>
-        `;
+        div.innerHTML = `<div class="chat-avatar bot">${botOrbHtml}</div><div class="msg-bubble bot"><b>Namaste! Welcome to Singh Kaizen.</b><br>I am Suku. Start typing or select language:<div class="lang-grid"><div class="lang-btn" onclick="setLang('english')">English <span>➔</span></div><div class="lang-btn" onclick="setLang('hindi')">Hindi (हिंदी) <span>➔</span></div></div></div>`;
         el.body.appendChild(div);
     }
-
     function setLang(lang) {
-        currentLang = lang; el.body.innerHTML = ""; enableInput();
+        currentLang = lang; el.body.innerHTML = ""; setStatus('Online');
         let msg = "", chips = [];
         if(lang === 'english') {
-            el.input.placeholder = "Type here (e.g. Fees, Good Night)...";
-            msg = "Hello! I am Suku. I can chat with you, provide links, or help with investments. How can I help?";
-            chips = ["📱 Social Links", "💰 Invest", "💸 Fees", "🌙 Good Night"];
+            el.input.placeholder = "Ask about Fees, Market, Links...";
+            msg = "Hello! I am Suku, your Finance Expert at Singh Kaizen. Ask me about our Services, Fees, or Markets.";
+            chips = ["📈 What do you do?", "💸 Fees", "📱 Social Links"];
         } else {
-            el.input.placeholder = "Yahan likhein (Jaise: Fees, Hi)...";
-            msg = "नमस्ते! मैं सुकू हूँ। आप मुझसे नॉर्मल बातें कर सकते हैं या निवेश की जानकारी ले सकते हैं। बताइए क्या मदद करूँ?";
-            chips = ["📱 सोशल लिंक", "💰 निवेश", "💸 फीस", "🌙 शुभ रात्रि"];
+            el.input.placeholder = "Yahan likhein (Fees, Market)...";
+            msg = "नमस्ते! मैं सुकू हूँ। मैं Singh Kaizen में आपका फाइनेंस एक्सपर्ट हूँ। निवेश या कंपनी के बारे में कुछ भी पूछें।";
+            chips = ["📈 कंपनी क्या करती है?", "💸 फीस", "📱 सोशल लिंक"];
         }
         addBotMsg(msg, chips);
     }
-
-    function disableInput() { el.input.disabled = true; el.btn.disabled = true; el.input.placeholder = "Select Language First..."; }
-    function enableInput() { el.input.disabled = false; el.btn.disabled = false; el.input.focus(); }
     function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
-
     function sendMessage(txt = null) {
         const text = txt || el.input.value.trim();
         if(!text) return;
-        addUserMsg(text);
-        if(!txt) el.input.value = "";
-        el.typing.style.display = 'flex'; el.body.appendChild(el.typing); scrollToBottom();
-        
-        // Slightly random delay to feel human
-        setTimeout(() => {
-            el.typing.style.display = 'none';
-            const resp = getResponse(text.toLowerCase());
-            addBotMsg(resp.text, resp.chips);
-        }, 800 + Math.random() * 400); 
+        setStatus('Online'); addUserMsg(text); if(!txt) el.input.value = "";
+        el.typing.style.display = 'flex'; el.body.appendChild(el.typing); scrollToBottom(); setStatus('Typing');
+        setTimeout(() => { el.typing.style.display = 'none'; const resp = getResponse(text.toLowerCase()); addBotMsg(resp.text, resp.chips); setStatus('Online'); }, 800 + Math.random() * 600); 
     }
-
     function addUserMsg(text) {
         const div = document.createElement('div'); div.className = 'msg-row user';
         div.innerHTML = `<div class="msg-bubble user">${text}</div><div class="chat-avatar user"><i class="fas fa-user"></i></div>`;
         el.body.appendChild(div); scrollToBottom();
     }
-
     function addBotMsg(html, chips = []) {
         const div = document.createElement('div'); div.className = 'msg-row bot';
         div.innerHTML = `<div class="chat-avatar bot">${botOrbHtml}</div><div class="msg-bubble bot">${html}</div>`;
         el.body.insertBefore(div, el.typing);
         if(chips && chips.length > 0) {
             const cDiv = document.createElement('div'); cDiv.className = 'chips-area';
-            chips.forEach(c => {
-                const b = document.createElement('div'); b.className = 'chip'; b.innerText = c;
-                b.onclick = () => sendMessage(c); cDiv.appendChild(b);
-            });
+            chips.forEach(c => { const b = document.createElement('div'); b.className = 'chip'; b.innerText = c; b.onclick = () => sendMessage(c); cDiv.appendChild(b); });
             el.body.insertBefore(cDiv, el.typing);
         }
         scrollToBottom();
     }
     function scrollToBottom() { el.body.scrollTop = el.body.scrollHeight; }
 
-    // --- REFINED RESPONSE LOGIC (PRIORITY BASED) ---
+    // --- FINANCE EXPERT KNOWLEDGE BASE ---
+    const kb = {
+        // FINANCE & COMPANY (High Priority)
+        about_company: /\b(what do you do|kya karte ho|kya karti hai|company profile|business|work|service)\b/i,
+        invest_where: /\b(kaha.*invest|where.*invest|market|stock|crypto|forex|paise kaha lagate ho)\b/i,
+        invest_amount: /\b(kitna|how much|minimum|maximum|limit|invest karna hai|start invest)\b/i,
+        fees: /\b(fee|cost|price|charge|money|pay|commission|profit share)\b/i,
+        email: /\b(email|mail|gmail|id|address)\b/i,
+        
+        // GENERAL COMPANY INFO
+        founder: /\b(founder|ceo|owner|boss|saurabh|malik|head)\b/i,
+        location: /\b(location|address|office|kahan|where|city|prayagraj)\b/i,
+        contact: /\b(contact|call|phone|mobile|support|help|number|talk)\b/i,
+        
+        // SOCIAL
+        social_tele: /\b(telegram|tele|tg|channel)\b/i,
+        social_linkedin: /\b(linkedin|linkdin|linked)\b/i,
+        social_fb: /\b(facebook|fb|meta)\b/i,
+        social_twitter: /\b(twitter|x\.com|tweet)\b/i,
+        social_insta: /\b(insta|instagram|ig)\b/i,
+        social_yt: /\b(youtube|yt|channel)\b/i,
+        social_all: /\b(social|media|links|profiles|connect|sabhi)\b/i,
+
+        // COMMON
+        greetings: /\b(hi+|hello+|hey+|helo+|namaste|ram ram)\b/i,
+        bye: /\b(bye|goodbye|night|gn)\b/i,
+        time: /\b(time|date|samay|clock)\b/i,
+        wellbeing: /\b(how are you|kaise ho)\b/i
+    };
+
     function getResponse(input) {
         const l = currentLang;
-        const formBtn = `<br><br><button style="background:var(--suku-primary); color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;" onclick="showContactLock(); closeSuku();">🔓 Open Inquiry Form</button>`;
+        const formBtn = `<br><br><button style="background:var(--suku-primary); color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;" onclick="showContactLock(); closeSuku();">🔓 Open Form</button>`;
+        const now = new Date();
+        const dateTime = now.toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'medium' });
 
-        // === PRIORITY 1: TIME SENSITIVE & GREETINGS (Fixes the "Good Night" bug) ===
-        // Must be checked BEFORE Social Media
-        if(input.match(kb.bye)) {
-            const nightRepliesHi = ["शुभ रात्रि! 🌙 अपना ख्याल रखें।", "गुड नाईट! सो जाइये, कल बात होगी।", "अलविदा! मीठे सपने।"];
-            const nightRepliesEn = ["Good Night! 🌙 Sleep tight.", "Sweet dreams! Talk to you tomorrow.", "Good Night! Take care."];
+        // --- FINANCE & COMPANY LOGIC (Expert Level) ---
+        
+        if(input.match(kb.about_company)) {
             return { 
-                text: l==='hindi' ? nightRepliesHi[Math.floor(Math.random()*nightRepliesHi.length)] : nightRepliesEn[Math.floor(Math.random()*nightRepliesEn.length)], 
+                text: l==='hindi' ? "Singh Kaizen एक प्रमुख **निवेश प्रबंधन (Investment Management)** फर्म है। हम वैश्विक बाजारों और डेटा-संचालित रणनीतियों का उपयोग करके आपकी संपत्ति बढ़ाते हैं।" 
+                                  : "Singh Kaizen is a premier **Investment Management** firm. We deploy sophisticated quantitative strategies to preserve wealth and engineer compounding growth.", 
+                chips: ["📈 Kaha Invest?", "💸 Fees"] 
+            };
+        }
+
+        if(input.match(kb.invest_where)) {
+            return { 
+                text: l==='hindi' ? "हम मुख्य रूप से **Forex (विदेशी मुद्रा)**, **Crypto (क्रिप्टो)**, और **Indian Stock Market (NSE/BSE)** में रणनीतिक निवेश करते हैं।" 
+                                  : "We strategically invest in high-potential markets including **Forex**, **Crypto**, and the **Indian Stock Market (NSE/BSE)**.", 
+                chips: ["💰 Start Invest"] 
+            };
+        }
+
+        if(input.match(kb.invest_amount)) {
+            return { 
+                text: l==='hindi' ? "निवेश सीमा और योजना जानने के लिए कृपया हमारे **Customer Care** अधिकारी से बात करें:" + formBtn 
+                                  : "For investment limits and plans, please speak to our **Customer Care** agent:" + formBtn, 
+                chips: ["📞 Contact"] 
+            };
+        }
+
+        if(input.match(kb.email)) {
+            return { 
+                text: l==='hindi' ? "आप हमें ईमेल कर सकते हैं: <b>singhkaizen@gmail.com</b> या फॉर्म भरें:" + formBtn 
+                                  : "You can email us at: <b>singhkaizen@gmail.com</b> or fill this form:" + formBtn, 
                 chips: [] 
             };
         }
-        if(input.match(kb.morning)) return { text: l==='hindi' ? "सुप्रभात! ☀️ आज का दिन शानदार हो।" : "Good Morning! ☀️ Hope you have a great day.", chips: ["📈 Market Updates"] };
-        if(input.match(kb.afternoon)) return { text: l==='hindi' ? "गुड आफ्टरनून! लंच किया आपने?" : "Good Afternoon! Have you had lunch?", chips: [] };
-        
-        if(input.match(kb.greetings)) {
-             const greetHi = ["नमस्ते! 🙏 कहिये क्या सेवा करूँ?", "हैलो! कैसे हैं आप?", "राम राम! सब ठीक?"];
-             const greetEn = ["Hello! 👋 How can I help?", "Hi there! What's on your mind?", "Greetings! How are you?"];
-             return { text: l==='hindi' ? greetHi[Math.floor(Math.random()*greetHi.length)] : greetEn[Math.floor(Math.random()*greetEn.length)], chips: [] };
+
+        if(input.match(kb.fees)) {
+            return { text: l==='hindi' ? "हमारा मॉडल: **1st महीना फ्री**, उसके बाद **5% प्रॉफिट शेयर** (No Profit = No Fee)।" : "Our Model: **1st Month Free**, then **5% Profit Share** (No Profit = No Fee).", chips: ["💰 Invest"] };
         }
 
-        // === PRIORITY 2: WELLBEING & CHIT-CHAT ===
-        if(input.match(kb.wellbeing)) {
-            return { text: l==='hindi' 
-                ? "मैं एकदम फिट हूँ (डिजिटल तरीके से)! 😄 आप सुनाइये?" 
-                : "I'm functioning at 100% capacity! 😄 How are you doing?", chips: ["👍 Good", "👎 Not Good"] };
-        }
-        if(input.match(kb.identity)) {
-             return { text: l==='hindi' 
-                ? "मैं सुकू (Suku) हूँ, Singh Kaizen का स्मार्ट AI। मैं 24/7 आपकी मदद के लिए यहाँ हूँ।" 
-                : "I am Suku, the smart AI for Singh Kaizen. I'm here 24/7 to assist you.", chips: [] };
-        }
-        if(input.match(kb.love_hate)) {
-            if(input.includes("hate") || input.includes("stupid") || input.includes("pagal") || input.includes("bura")) {
-                return { text: l==='hindi' ? "माफ़ कीजिये अगर मैंने कुछ गलत किया। 😔 मैं सीख रहा हूँ।" : "I apologize if I made a mistake. 😔 I am still learning.", chips: [] };
-            }
-            return { text: l==='hindi' ? "शुक्रिया! आप भी बहुत प्यारे हैं। ❤️" : "Thank you! You are awesome too. ❤️", chips: [] };
-        }
-        if(input.match(kb.food)) {
-             return { text: l==='hindi' ? "मैं तो बस डेटा (Data) खाता हूँ! ⚡ आपने क्या खाया?" : "I run on electricity and code! ⚡ Have you eaten yet?", chips: [] };
-        }
-        if(input.match(kb.action_query)) {
-            return { text: l==='hindi' ? "बस आपके सवालों का इंतज़ार कर रहा हूँ। आप बताईये क्या चल रहा है?" : "Just waiting to help you! What's happening on your end?", chips: [] };
-        }
-        if(input.match(kb.agreement)) {
-             return { text: l==='hindi' ? "जी बिलकुल। कुछ और पूछना है?" : "Got it. Anything else?", chips: [] };
-        }
-
-        // === PRIORITY 3: LANGUAGE SWITCH ===
-        if(input.match(kb.lang_switch_hi)) { currentLang = 'hindi'; el.input.placeholder = "Kuch bhi puchein..."; return { text: "जी ठीक है, अब हम हिंदी में बात करेंगे।", chips: ["💰 निवेश", "📱 सोशल"] }; }
-        if(input.match(kb.lang_switch_en)) { currentLang = 'english'; el.input.placeholder = "Ask anything..."; return { text: "Sure, let's switch to English.", chips: ["💰 Invest", "📱 Social"] }; }
-
-        // === PRIORITY 4: SPECIFIC REQUESTS (Social Media) ===
-        if(input.match(kb.social_twitter)) {
-            const link = `<br><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> Open X (Twitter)</a>`;
-            return { text: l==='hindi' ? "X (Twitter) पर हमसे जुड़ें:" + link : "Connect on X (Twitter):" + link, chips: [] };
-        }
-        if(input.match(kb.social_insta)) {
-            const link = `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Open Instagram</a>`;
-            return { text: l==='hindi' ? "इंस्टाग्राम पर फॉलो करें:" + link : "Follow us on Instagram:" + link, chips: [] };
-        }
-        if(input.match(kb.social_fb)) {
-            const link = `<br><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> Open Facebook</a>`;
-            return { text: l==='hindi' ? "फेसबुक लिंक:" + link : "Facebook Link:" + link, chips: [] };
-        }
-        if(input.match(kb.social_yt)) {
-            const link = `<br><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> Open YouTube</a>`;
-            return { text: l==='hindi' ? "यूट्यूब चैनल देखें:" + link : "Watch on YouTube:" + link, chips: [] };
-        }
+        // --- SOCIAL LINKS (Guaranteed) ---
+        if(input.match(kb.social_tele)) return { text: "Telegram: " + `<br><a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> Telegram</a>`, chips: [] };
         if(input.match(kb.social_all)) {
-            const allLinks = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C">Insta</a><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2">FB</a><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000">X</a><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000">YT</a></div>`;
-            return { text: l==='hindi' ? "हमारे सभी सोशल मीडिया लिंक:" + allLinks : "Here are all our profiles:" + allLinks, chips: [] };
+            const allLinksHTML = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:5px;">
+                <a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> TG</a>
+                <a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Insta</a>
+                <a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> FB</a>
+                <a href="${socialUrls.linkedin}" target="_blank" class="social-btn" style="color:#0077b5"><i class="fab fa-linkedin-in"></i> In</a>
+                <a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> X</a>
+                <a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> YT</a>
+            </div>`;
+            return { text: l==='hindi' ? "हमारे सभी सोशल लिंक्स:" + allLinksHTML : "All our social links:" + allLinksHTML, chips: [] };
         }
+        if(input.match(kb.social_insta)) return { text: "Instagram: " + `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Instagram</a>`, chips: [] };
+        if(input.match(kb.social_fb)) return { text: "Facebook: " + `<br><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> Facebook</a>`, chips: [] };
+        if(input.match(kb.social_twitter)) return { text: "Twitter: " + `<br><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> Twitter</a>`, chips: [] };
+        if(input.match(kb.social_linkedin)) return { text: "LinkedIn: " + `<br><a href="${socialUrls.linkedin}" target="_blank" class="social-btn" style="color:#0077b5"><i class="fab fa-linkedin-in"></i> LinkedIn</a>`, chips: [] };
+        if(input.match(kb.social_yt)) return { text: "YouTube: " + `<br><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> YouTube</a>`, chips: [] };
 
-        // === PRIORITY 5: BUSINESS INFO ===
-        if(input.match(kb.founder)) return { text: l==='hindi' ? "Founder: <b>Mr. Saurabh Singh</b>." : "Founder: <b>Mr. Saurabh Singh</b>.", chips: [] };
-        if(input.match(kb.fees)) return { text: l==='hindi' ? "1 महीना फ्री, उसके बाद 5% प्रॉफिट शेयर।" : "1st Month Free, then 5% Profit Share.", chips: ["💰 Invest Now"] };
-        if(input.match(kb.contact)) return { text: l==='hindi' ? "हमसे संपर्क करने के लिए यह फॉर्म भरें:" + formBtn : "To contact us, please fill this form:" + formBtn, chips: [] };
-        if(input.match(kb.location)) return { text: l==='hindi' ? "हमारा ऑफिस <b>प्रयागराज (Prayagraj)</b> में है।" : "Our office is located in <b>Prayagraj</b>.", chips: [] };
-        if(input.match(kb.invest_intent)) return { text: l==='hindi' ? "निवेश शुरू करने के लिए यह फॉर्म भरें:" + formBtn : "To start investing, fill this form:" + formBtn, chips: [] };
+        // --- GENERAL ---
+        if(input.match(kb.time)) return { text: `Current Date & Time:<br><b>${dateTime}</b>`, chips: [] };
+        if(input.match(kb.founder)) return { text: l==='hindi' ? "मालिक: <b>Mr. Saurabh Singh</b>." : "Founder: <b>Mr. Saurabh Singh</b>.", chips: [] };
+        if(input.match(kb.location)) return { text: l==='hindi' ? "ऑफिस: <b>प्रयागराज</b>." : "Office: <b>Prayagraj</b>.", chips: [] };
+        if(input.match(kb.contact)) return { text: l==='hindi' ? "संपर्क करें:" + formBtn : "Contact us:" + formBtn, chips: [] };
+        if(input.match(kb.greetings)) return { text: l==='hindi' ? "नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?" : "Hello! How can I assist you today?", chips: ["📈 What we do", "💸 Fees"] };
+        if(input.match(kb.wellbeing)) return { text: "I am fantastic! 🤖 How are you?", chips: [] };
+        if(input.match(kb.bye)) return { text: "Goodbye! 👋", chips: [] };
 
-
-        // === FALLBACK (If nothing matches) ===
-        const fallbacksEn = ["I didn't quite catch that, but I can help with Fees, Social Links or Investing.", "I am still learning human conversation. Try asking about 'Fees' or 'Founder'.", "Could you rephrase that?"];
-        const fallbacksHi = ["मुझे ठीक से समझ नहीं आया, लेकिन आप फीस या ऑफिस के बारे में पूछ सकते हैं।", "मैं अभी सीख रहा हूँ। 'Fees' या 'Social' लिखकर देखें।", "माफ़ कीजिये, क्या आप दोबारा पूछ सकते हैं?"];
-        const randomFallback = l === 'hindi' ? fallbacksHi[Math.floor(Math.random() * fallbacksHi.length)] : fallbacksEn[Math.floor(Math.random() * fallbacksEn.length)];
-
-        return {
-            text: randomFallback + formBtn,
-            chips: ["📞 Contact Support"]
-        };
+        // Fallback
+        const fallbacksEn = ["I specialize in Singh Kaizen Finance. Ask about 'Fees', 'Markets' or 'Investments'.", "I can provide Social Links or Company Info."];
+        const fallbacksHi = ["मैं फाइनेंस एक्सपर्ट हूँ। 'फीस' या 'बाजार' के बारे में पूछें।", "मैं आपको सोशल लिंक या निवेश की जानकारी दे सकता हूँ।"];
+        return { text: l==='hindi' ? fallbacksHi[Math.floor(Math.random()*2)] : fallbacksEn[Math.floor(Math.random()*2)], chips: ["📈 What we do", "💰 Invest"] };
     }
 </script>
-
 </body>
 </html>
