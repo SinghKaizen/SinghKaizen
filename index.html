@@ -1525,7 +1525,7 @@
     const botOrbHtml = `<div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>`;
     const emojis = ['😠', '😞', '😐', '🙂', '🤩'];
 
-    // --- STATUS LOGIC ---
+    // --- STATUS & ANIMATION ---
     function setStatus(status) {
         clearTimeout(idleTimer);
         if (status === 'Online') {
@@ -1539,7 +1539,6 @@
     }
     function userIsTyping() { setStatus('Online'); }
 
-    // --- CHAT LOGIC ---
     function openSuku() {
         el.window.classList.add('active'); el.launcherContainer.classList.add('hide');
         setStatus('Online');
@@ -1578,13 +1577,13 @@
         currentLang = lang; el.body.innerHTML = ""; setStatus('Online');
         let msg = "", chips = [];
         if(lang === 'english') {
-            el.input.placeholder = "Ask about Fees, Market, Links...";
-            msg = "Hello! I am Suku, your Finance Expert at Singh Kaizen. Ask me about our Services, Fees, or Markets.";
-            chips = ["📈 What do you do?", "💸 Fees", "📱 Social Links"];
+            el.input.placeholder = "Ask about Market, Fees, Links...";
+            msg = "Hello! I am Suku, your Finance Expert at Singh Kaizen. I can answer questions about the company, provide social links, or chat like a friend. How can I help?";
+            chips = ["📈 What is Singh Kaizen?", "💸 Fees", "👋 Hi"];
         } else {
-            el.input.placeholder = "Yahan likhein (Fees, Market)...";
-            msg = "नमस्ते! मैं सुकू हूँ। मैं Singh Kaizen में आपका फाइनेंस एक्सपर्ट हूँ। निवेश या कंपनी के बारे में कुछ भी पूछें।";
-            chips = ["📈 कंपनी क्या करती है?", "💸 फीस", "📱 सोशल लिंक"];
+            el.input.placeholder = "Yahan likhein...";
+            msg = "नमस्ते! मैं सुकू हूँ। मैं सिंह काइज़ेन का AI हूँ। मुझसे कंपनी, निवेश या आम बोलचाल (Hi, Hello) में कुछ भी पूछें।";
+            chips = ["📈 कंपनी क्या है?", "💸 फीस", "👋 नमस्ते"];
         }
         addBotMsg(msg, chips);
     }
@@ -1614,34 +1613,56 @@
     }
     function scrollToBottom() { el.body.scrollTop = el.body.scrollHeight; }
 
-    // --- FINANCE EXPERT KNOWLEDGE BASE ---
+    // --- THE "SUPER BRAIN" (Combined Logic) ---
     const kb = {
-        // FINANCE & COMPANY (High Priority)
-        about_company: /\b(what do you do|kya karte ho|kya karti hai|company profile|business|work|service)\b/i,
-        invest_where: /\b(kaha.*invest|where.*invest|market|stock|crypto|forex|paise kaha lagate ho)\b/i,
-        invest_amount: /\b(kitna|how much|minimum|maximum|limit|invest karna hai|start invest)\b/i,
-        fees: /\b(fee|cost|price|charge|money|pay|commission|profit share)\b/i,
+        // 1. IDENTITY & WELLBEING (Small Talk - High Priority)
+        // Covers: Who are you, Tum kaun ho, Intro, Name
+        identity: /\b(who.*are.*you|tum.*kaun.*ho|tera.*naam|your.*name|intro|robot|bot|parichay|identity|suku)\b/i,
+        
+        // Covers: How are you, Kaise ho, Kya haal, Whats up
+        wellbeing_ask: /\b(how.*are.*you|kaise.*ho|kya.*haal|whats.*up|doing.*good|haal.*chaal|sab.*badhiya)\b/i,
+        
+        // Covers: Good Morning/Night/Afternoon
+        morning: /\b(good.*morning|gm|suprabhat|morning)\b/i,
+        afternoon: /\b(good.*afternoon|afternoon)\b/i,
+        bye: /\b(bye|goodbye|night|gn|tata|see.*you|so.*jao)\b/i,
+        
+        // Covers: Hi, Hello, Hey, Namaste (Broad Match)
+        greetings: /\b(hi+|hello+|hey+|helo+|hlo+|namaste|ram.*ram|hola|ssup|yo|pranam|shuru)\b/i,
+
+        // 2. COMPANY & FINANCE (Specifics)
+        // Covers: What does company do, Company profile, Kya karti hai
+        about_company: /\b(what.*company|kya.*karti.*hai|company.*profile|business|work|service|singh.*kaizen|about.*company|kaise.*company)\b/i,
+        
+        // Covers: Investment questions
+        invest_where: /\b(kaha.*invest|where.*invest|market|stock|crypto|forex|paise.*kaha|assets|portfolio|fund)\b/i,
+        invest_process: /\b(start.*invest|kaise.*invest|invest.*karna|join|shuru|process|how.*to)\b/i,
+        
+        // Covers: Fees, Charges
+        fees: /\b(fee|cost|price|charge|money|pay|commission|profit.*share|pricing|paise|rate)\b/i,
+        
+        // Covers: Founder/Owner
+        founder: /\b(founder|ceo|owner|boss|saurabh|malik|head|banaya|kaun.*hai.*malik)\b/i,
+        
+        // Covers: Contact/Email
         email: /\b(email|mail|gmail|id|address)\b/i,
+        contact: /\b(contact|call|phone|mobile|support|help|number|talk|baat)\b/i,
         
-        // GENERAL COMPANY INFO
-        founder: /\b(founder|ceo|owner|boss|saurabh|malik|head)\b/i,
-        location: /\b(location|address|office|kahan|where|city|prayagraj)\b/i,
-        contact: /\b(contact|call|phone|mobile|support|help|number|talk)\b/i,
-        
-        // SOCIAL
+        // Covers: Location
+        location: /\b(location|address|office|kahan|where|city|prayagraj|hq|jagah)\b/i,
+
+        // 3. SOCIAL LINKS (Very Specific)
         social_tele: /\b(telegram|tele|tg|channel)\b/i,
         social_linkedin: /\b(linkedin|linkdin|linked)\b/i,
         social_fb: /\b(facebook|fb|meta)\b/i,
         social_twitter: /\b(twitter|x\.com|tweet)\b/i,
         social_insta: /\b(insta|instagram|ig)\b/i,
         social_yt: /\b(youtube|yt|channel)\b/i,
-        social_all: /\b(social|media|links|profiles|connect|sabhi)\b/i,
+        social_all: /\b(social|media|links|connect|sabhi|saare)\b/i,
 
-        // COMMON
-        greetings: /\b(hi+|hello+|hey+|helo+|namaste|ram ram)\b/i,
-        bye: /\b(bye|goodbye|night|gn)\b/i,
-        time: /\b(time|date|samay|clock)\b/i,
-        wellbeing: /\b(how are you|kaise ho)\b/i
+        // 4. GENERAL KNOWLEDGE
+        time: /\b(time|date|samay|clock|aaj)\b/i,
+        thank: /\b(thank|shukriya|dhanyavad|nice|good)\b/i
     };
 
     function getResponse(input) {
@@ -1650,46 +1671,41 @@
         const now = new Date();
         const dateTime = now.toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'medium' });
 
-        // --- FINANCE & COMPANY LOGIC (Expert Level) ---
+        // --- 1. SMALL TALK & GREETINGS (Checking First for Natural Feel) ---
+        if(input.match(kb.identity)) {
+            return { text: l==='hindi' ? "मैं सुकू (Suku) हूँ, Singh Kaizen का AI असिस्टेंट। मैं आपके फाइनेंस और कंपनी से जुड़े सवालों का जवाब दे सकता हूँ। आप मुझसे 'Hello' भी कह सकते हैं!" : "I am Suku AI, your virtual assistant at Singh Kaizen. I can help with company info, finance queries, or just have a friendly chat!", chips: ["📈 About Company", "👋 Hello"] };
+        }
+        if(input.match(kb.wellbeing_ask)) {
+            return { text: l==='hindi' ? "मैं एकदम बढ़िया हूँ! 🤖 आप कैसे हैं?" : "I am fantastic, running on 100% efficiency! 🤖 How are you doing?", chips: ["😊 Good", "📉 Market News"] };
+        }
+        if(input.match(kb.morning)) return { text: "Good Morning! ☀️ Have a profitable day ahead.", chips: [] };
+        if(input.match(kb.bye)) return { text: "Goodbye! 👋 Take care.", chips: [] };
+        if(input.match(kb.thank)) return { text: "You're welcome! 🙏", chips: [] };
         
+        // --- 2. COMPANY & FINANCE (Expert Answers) ---
         if(input.match(kb.about_company)) {
             return { 
-                text: l==='hindi' ? "Singh Kaizen एक प्रमुख **निवेश प्रबंधन (Investment Management)** फर्म है। हम वैश्विक बाजारों और डेटा-संचालित रणनीतियों का उपयोग करके आपकी संपत्ति बढ़ाते हैं।" 
-                                  : "Singh Kaizen is a premier **Investment Management** firm. We deploy sophisticated quantitative strategies to preserve wealth and engineer compounding growth.", 
+                text: l==='hindi' ? "Singh Kaizen एक **प्रीमियर निवेश प्रबंधन (Investment Management)** फर्म है। हम एडवांस स्ट्रैटेजीज का उपयोग करके ग्लोबल मार्केट्स में वेल्थ मैनेज करते हैं।" 
+                                  : "Singh Kaizen is a premier **Investment Management Firm**. We specialize in growing wealth through sophisticated strategies in Global Markets.",
                 chips: ["📈 Kaha Invest?", "💸 Fees"] 
             };
         }
-
         if(input.match(kb.invest_where)) {
-            return { 
-                text: l==='hindi' ? "हम मुख्य रूप से **Forex (विदेशी मुद्रा)**, **Crypto (क्रिप्टो)**, और **Indian Stock Market (NSE/BSE)** में रणनीतिक निवेश करते हैं।" 
-                                  : "We strategically invest in high-potential markets including **Forex**, **Crypto**, and the **Indian Stock Market (NSE/BSE)**.", 
-                chips: ["💰 Start Invest"] 
-            };
+            return { text: l==='hindi' ? "हम **Diversified Portfolio** (Forex, Crypto, Indian Stock Market) में निवेश करते हैं।" : "We invest strategically in **Forex**, **Crypto**, and **Indian Markets**.", chips: ["💰 Start Invest"] };
         }
-
-        if(input.match(kb.invest_amount)) {
-            return { 
-                text: l==='hindi' ? "निवेश सीमा और योजना जानने के लिए कृपया हमारे **Customer Care** अधिकारी से बात करें:" + formBtn 
-                                  : "For investment limits and plans, please speak to our **Customer Care** agent:" + formBtn, 
-                chips: ["📞 Contact"] 
-            };
+        if(input.match(kb.invest_process)) {
+            return { text: l==='hindi' ? "निवेश शुरू करने के लिए फॉर्म भरें:" + formBtn : "To start investing, please fill this form:" + formBtn, chips: [] };
         }
-
-        if(input.match(kb.email)) {
-            return { 
-                text: l==='hindi' ? "आप हमें ईमेल कर सकते हैं: <b>singhkaizen@gmail.com</b> या फॉर्म भरें:" + formBtn 
-                                  : "You can email us at: <b>singhkaizen@gmail.com</b> or fill this form:" + formBtn, 
-                chips: [] 
-            };
-        }
-
         if(input.match(kb.fees)) {
-            return { text: l==='hindi' ? "हमारा मॉडल: **1st महीना फ्री**, उसके बाद **5% प्रॉफिट शेयर** (No Profit = No Fee)।" : "Our Model: **1st Month Free**, then **5% Profit Share** (No Profit = No Fee).", chips: ["💰 Invest"] };
+            return { text: l==='hindi' ? "हमारा मॉडल: **1st महीना फ्री**, फिर **5% प्रॉफिट शेयर**।" : "Our Fees: **1st Month Free**, then **5% Profit Share**.", chips: ["💰 Invest"] };
         }
+        if(input.match(kb.founder)) return { text: "Founder & Owner: <b>Mr. Saurabh Singh</b>.", chips: [] };
+        if(input.match(kb.contact)) return { text: "Contact us here:" + formBtn, chips: [] };
+        if(input.match(kb.email)) return { text: "Email: <b>singhkaizen@gmail.com</b>", chips: [] };
 
-        // --- SOCIAL LINKS (Guaranteed) ---
+        // --- 3. SOCIAL MEDIA ---
         if(input.match(kb.social_tele)) return { text: "Telegram: " + `<br><a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> Telegram</a>`, chips: [] };
+        if(input.match(kb.social_insta)) return { text: "Instagram: " + `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Instagram</a>`, chips: [] };
         if(input.match(kb.social_all)) {
             const allLinksHTML = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:5px;">
                 <a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> TG</a>
@@ -1699,27 +1715,19 @@
                 <a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> X</a>
                 <a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> YT</a>
             </div>`;
-            return { text: l==='hindi' ? "हमारे सभी सोशल लिंक्स:" + allLinksHTML : "All our social links:" + allLinksHTML, chips: [] };
+            return { text: "All Social Links:" + allLinksHTML, chips: [] };
         }
-        if(input.match(kb.social_insta)) return { text: "Instagram: " + `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Instagram</a>`, chips: [] };
-        if(input.match(kb.social_fb)) return { text: "Facebook: " + `<br><a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> Facebook</a>`, chips: [] };
-        if(input.match(kb.social_twitter)) return { text: "Twitter: " + `<br><a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> Twitter</a>`, chips: [] };
-        if(input.match(kb.social_linkedin)) return { text: "LinkedIn: " + `<br><a href="${socialUrls.linkedin}" target="_blank" class="social-btn" style="color:#0077b5"><i class="fab fa-linkedin-in"></i> LinkedIn</a>`, chips: [] };
-        if(input.match(kb.social_yt)) return { text: "YouTube: " + `<br><a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> YouTube</a>`, chips: [] };
 
-        // --- GENERAL ---
+        // --- 4. GENERIC GREETINGS (Placed lower so specific intents match first) ---
+        if(input.match(kb.greetings)) {
+            return { text: l==='hindi' ? "नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?" : "Hello! How can I assist you today?", chips: ["📈 Company Info", "💸 Fees"] };
+        }
         if(input.match(kb.time)) return { text: `Current Date & Time:<br><b>${dateTime}</b>`, chips: [] };
-        if(input.match(kb.founder)) return { text: l==='hindi' ? "मालिक: <b>Mr. Saurabh Singh</b>." : "Founder: <b>Mr. Saurabh Singh</b>.", chips: [] };
-        if(input.match(kb.location)) return { text: l==='hindi' ? "ऑफिस: <b>प्रयागराज</b>." : "Office: <b>Prayagraj</b>.", chips: [] };
-        if(input.match(kb.contact)) return { text: l==='hindi' ? "संपर्क करें:" + formBtn : "Contact us:" + formBtn, chips: [] };
-        if(input.match(kb.greetings)) return { text: l==='hindi' ? "नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?" : "Hello! How can I assist you today?", chips: ["📈 What we do", "💸 Fees"] };
-        if(input.match(kb.wellbeing)) return { text: "I am fantastic! 🤖 How are you?", chips: [] };
-        if(input.match(kb.bye)) return { text: "Goodbye! 👋", chips: [] };
 
-        // Fallback
-        const fallbacksEn = ["I specialize in Singh Kaizen Finance. Ask about 'Fees', 'Markets' or 'Investments'.", "I can provide Social Links or Company Info."];
-        const fallbacksHi = ["मैं फाइनेंस एक्सपर्ट हूँ। 'फीस' या 'बाजार' के बारे में पूछें।", "मैं आपको सोशल लिंक या निवेश की जानकारी दे सकता हूँ।"];
-        return { text: l==='hindi' ? fallbacksHi[Math.floor(Math.random()*2)] : fallbacksEn[Math.floor(Math.random()*2)], chips: ["📈 What we do", "💰 Invest"] };
+        // --- FALLBACK ---
+        const fallbacksEn = ["I specialize in Singh Kaizen. Ask about 'Company', 'Fees' or 'Social Links'.", "I can help you with Investment details."];
+        const fallbacksHi = ["मैं कंपनी और निवेश के बारे में बता सकता हूँ।", "'फीस' या 'सोशल लिंक' के बारे में पूछें।"];
+        return { text: l==='hindi' ? fallbacksHi[Math.floor(Math.random()*2)] : fallbacksEn[Math.floor(Math.random()*2)], chips: ["📈 Company Profile", "👋 Hello"] };
     }
 </script>
 </body>
