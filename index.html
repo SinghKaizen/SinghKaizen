@@ -1245,490 +1245,428 @@
         });
     </script>
 
-<style>
-    /* --- 1. Variables & Premium Colors --- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SINGH KAIZEN • SUKU AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
     :root {
-        --suku-primary: #043c2c;
-        --suku-accent: #055e44;
-        --suku-bot-bg: #f4f6f9;
-        --suku-user-bg: #043c2c;
-        --orb-blue: #0066ff;
-        --orb-cyan: #00ffff;
-        --orb-purple: #ff00ff;
-        --font-main: 'Poppins', sans-serif;
-        --gold: #FFD700;
-        --status-online: #00e676; 
-        --status-away: #ffb74d;   
+      --suku-primary: #043c2c;
+      --suku-accent: #0b7a5a;
+      --suku-bg: #ffffff;
+      --suku-light-gray: #f2f4f8;
+      --font-main: 'Poppins', sans-serif;
     }
 
-    /* --- 2. 3D ORB ANIMATION --- */
+    * { box-sizing: border-box; }
+
+    /* --- 3D ORB --- */
     .sci-fi-orb {
-        position: relative; width: 100%; height: 100%;
-        transform-style: preserve-3d;
-        display: flex; align-items: center; justify-content: center;
-        animation: orbitSpin 5s linear infinite;
+      position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+      display: flex; align-items: center; justify-content: center; animation: orbitSpin 5s linear infinite;
     }
     .sf-ring {
-        position: absolute; width: 140%; height: 40%; 
-        border-radius: 50%; filter: blur(3px); opacity: 0.7; background: transparent;
+      position: absolute; width: 140%; height: 40%; border-radius: 50%; filter: blur(3px); opacity: 0.85;
     }
-    .sf-ring:nth-child(1) {
-        background: linear-gradient(90deg, transparent, var(--orb-cyan), var(--orb-blue), transparent);
-        box-shadow: 0 0 25px var(--orb-cyan);
-        transform: rotateZ(45deg) rotateX(70deg);
-    }
-    .sf-ring:nth-child(2) {
-        background: linear-gradient(90deg, transparent, var(--orb-purple), transparent);
-        box-shadow: 0 0 25px var(--orb-purple);
-        transform: rotateZ(-45deg) rotateX(70deg);
-    }
+    .sf-ring:nth-child(1) { background: linear-gradient(90deg, transparent, #00ffff, #0066ff, transparent); transform: rotateZ(45deg) rotateX(70deg); }
+    .sf-ring:nth-child(2) { background: linear-gradient(90deg, transparent, #ff00ff, transparent); transform: rotateZ(-45deg) rotateX(70deg); }
     .sf-core {
-        position: absolute; width: 25%; height: 25%;
-        background: white; border-radius: 50%; 
-        box-shadow: 0 0 20px var(--orb-cyan), 0 0 40px var(--orb-blue), 0 0 60px var(--orb-purple);
-        filter: blur(2px); animation: pulseCore 2s ease-in-out infinite alternate;
+      position: absolute; width: 25%; height: 25%; background: white; border-radius: 50%; filter: blur(2px);
+      animation: pulseCore 2s ease-in-out infinite alternate;
     }
     @keyframes orbitSpin {
-        0% { transform: rotateY(0deg) rotateX(15deg) scale(0.8); }
-        50% { transform: rotateY(180deg) rotateX(15deg) scale(1); }
-        100% { transform: rotateY(360deg) rotateX(15deg) scale(0.8); }
+      0% { transform: rotateY(0deg) rotateX(15deg) scale(0.8); }
+      50% { transform: rotateY(180deg) rotateX(15deg) scale(1); }
+      100% { transform: rotateY(360deg) rotateX(15deg) scale(0.8); }
     }
     @keyframes pulseCore { 0% { opacity: 0.8; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.2); } }
 
-    /* --- 3. LAUNCHER --- */
+    /* --- LAUNCHER --- */
     .launcher-container {
-        position: fixed; bottom: 30px; right: 30px; z-index: 999999;
-        display: flex; flex-direction: column; align-items: center; 
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: fixed; bottom: 30px; right: 30px; z-index: 999999;
+      display: flex; flex-direction: column; align-items: center; transition: all 0.4s ease;
     }
-    .launcher-label {
-        position: absolute; bottom: 65px;
-        background: linear-gradient(135deg, #fff, #f0f0f0); color: var(--suku-primary);
-        padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1); white-space: nowrap; pointer-events: none;
-        animation: floatLabel 3s ease-in-out infinite;
+    .suku-label {
+      background: rgba(255, 255, 255, 0.95); color: var(--suku-primary); padding: 8px 16px; border-radius: 12px;
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-family: var(--font-main); animation: floatLabel 3s ease-in-out infinite; position: relative;
+      border: 1px solid rgba(255,255,255,0.5);
     }
-    .launcher-label::after {
-        content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-        border-width: 6px 6px 0; border-style: solid; border-color: #fff transparent transparent transparent;
+    .suku-label::after {
+      content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+      border-width: 6px 6px 0; border-style: solid; border-color: rgba(255,255,255,0.95) transparent transparent transparent;
     }
     @keyframes floatLabel { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
     .suku-launcher {
-        width: 55px; height: 55px; border-radius: 50%; background: #000; 
-        box-shadow: 0 8px 30px rgba(0,0,0,0.5); cursor: pointer; padding: 2px; 
-        transition: transform 0.3s; overflow: hidden;
+      width: 64px; height: 64px; border-radius: 50%; background: #000; padding: 4px; cursor: pointer;
+      overflow: hidden; transition: all 0.3s; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
     }
-    .suku-launcher:hover { transform: scale(1.15); box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
-    
-    .launcher-container.hide { transform: scale(0) rotate(180deg); opacity: 0; pointer-events: none; }
+    .suku-launcher:hover { transform: scale(1.1); }
+    .launcher-container.hide { transform: scale(0) translateY(50px); pointer-events: none; opacity: 0; }
 
-    /* --- 4. CHAT WINDOW --- */
+    /* --- CHAT WINDOW --- */
     .suku-window {
-        position: fixed; bottom: 100px; right: 30px;
-        width: 380px; max-width: 90vw; height: 550px; max-height: 80vh;
-        background: #fff; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        display: flex; flex-direction: column; overflow: hidden;
-        z-index: 999999; font-family: var(--font-main);
-        
-        transform-origin: bottom right; 
-        transform: scale(0) translateY(50px); 
-        opacity: 0;
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        pointer-events: none;
+      position: fixed; bottom: 100px; right: 30px; width: 400px; height: 600px; max-height: 80vh;
+      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column;
+      font-family: var(--font-main); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000000; border: 1px solid rgba(255,255,255,0.5); overflow: hidden;
     }
-    .suku-window.active { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+    .suku-window.active { transform: scale(1) translateY(0px); opacity: 1; pointer-events: all; }
 
-    /* Header */
     .suku-header {
-        background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent));
-        padding: 16px; color: white; display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent)); padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between; color: #fff;
     }
-    .header-left { display: flex; align-items: center; gap: 12px; }
-    .header-orb-box { width: 38px; height: 38px; background: #000; border-radius: 50%; padding: 2px; overflow: hidden; }
-    
-    .header-info h3 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-    .beta-tag { font-size: 0.6rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 2px 6px; border-radius: 6px; }
-    
-    .status-line { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; margin-top: 2px; opacity: 0.9; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; transition: 0.3s; }
-    .status-dot.online { background: var(--status-online); box-shadow: 0 0 8px var(--status-online); }
-    .status-dot.away { background: var(--status-away); }
-    .status-dot.typing { background: var(--status-online); animation: pulseDot 1s infinite; }
-    @keyframes pulseDot { 0% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0.5; transform: scale(0.9); } }
+    .header-info h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+    .header-info span { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.5px; }
+    .close-btn { background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display:flex; align-items:center; justify-content:center; }
 
-    .close-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; opacity: 0.8; transition: 0.2s; }
-    .close-btn:hover { opacity: 1; transform: rotate(90deg); color: #ff6b6b; }
-
-    /* Body */
     .suku-body {
-        flex: 1; padding: 20px; overflow-y: auto; background: var(--suku-bot-bg);
-        display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth;
+      flex: 1; padding: 20px; overflow-y: auto; background: var(--suku-light-gray);
+      display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth;
     }
-
-    /* Messages */
-    .msg-row { display: flex; align-items: flex-end; gap: 10px; width: 100%; animation: slideUp 0.4s ease; }
+    .msg-row { display: flex; align-items: flex-end; gap: 12px; animation: slideIn 0.3s both; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .msg-row.user { flex-direction: row-reverse; }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-    .chat-avatar {
-        width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-        display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff;
-    }
-    .chat-avatar.bot { background: #000; padding: 1px; }
-    .chat-avatar.user { background: #e0e0e0; color: #555; font-size: 0.9rem; }
-
     .msg-bubble {
-        max-width: 80%; padding: 12px 16px; font-size: 0.92rem; line-height: 1.5;
-        border-radius: 18px; position: relative; word-wrap: break-word;
+      max-width: 80%; padding: 14px 18px; border-radius: 18px; font-size: 0.92rem; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.03);
     }
-    .msg-bubble.bot { background: #fff; color: #333; border-bottom-left-radius: 4px; }
-    .msg-bubble.user { background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent)); color: white; border-bottom-right-radius: 4px; text-align: left; }
-
-    /* Chips */
-    .chips-area { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 38px; }
-    .chip {
-        background: #fff; border: 1px solid #e0e0e0; color: var(--suku-primary);
-        padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; font-weight: 500;
+    .msg-bubble.bot { background: #fff; color: #1e1e2f; border-bottom-left-radius: 4px; }
+    .msg-bubble.user { background: var(--suku-primary); color: #fff; border-bottom-right-radius: 4px; }
+    .bot-avatar {
+      width: 32px; height: 32px; border-radius: 50%; background: #000; overflow: hidden; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .chip:hover { background: var(--suku-primary); color: #fff; transform: translateY(-2px); }
-    
-    .social-btn {
-        background: #fff; color: #333; border: 1px solid #ddd; padding: 8px 12px; 
-        border-radius: 10px; text-decoration: none; font-size: 0.85rem; display: inline-flex; 
-        align-items: center; gap: 6px; transition: 0.2s; font-weight: 600; margin-top: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+    .typing { display: none; padding: 0 0 10px 44px; gap: 4px; }
+    .dot { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+    .dot:nth-child(1) { animation-delay: -0.32s; } .dot:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+    .suku-footer { padding: 16px; background: #fff; display: flex; gap: 12px; border-top: 1px solid #eee; }
+    .suku-input {
+      flex: 1; padding: 14px 18px; border-radius: 30px; border: 1px solid #e0e0e0; outline: none; background: #f8f9fa; font-size: 0.95rem;
     }
-    .social-btn:hover { background: #f0f0f0; transform: translateY(-2px); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
+    .suku-send {
+      width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--suku-primary); color: #fff; cursor: pointer; font-size: 1.2rem; display:flex;align-items:center;justify-content:center;
+    }
 
-    /* Footer */
-    .suku-footer { padding: 15px; background: #fff; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; }
-    .suku-input { flex: 1; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 25px; outline: none; background: #f9f9f9; }
-    .suku-send { width: 45px; height: 45px; background: var(--suku-primary); color: white; border-radius: 50%; border: none; cursor: pointer; display:flex; align-items:center; justify-content:center; }
-    
-    .typing { display: none; margin-left: 38px; gap: 5px; margin-bottom: 10px; }
-    .dot { width: 6px; height: 6px; background: #bbb; border-radius: 50%; animation: bounce 1s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; } .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+    /* --- CARDS & BUTTONS --- */
+    .action-card { margin-top: 10px; background: #f0f7f5; border: 1px solid #d1e7e0; border-radius: 12px; padding: 16px; text-align: center; }
+    .action-title { font-weight: 600; color: var(--suku-primary); margin-bottom: 8px; display:block; font-size: 0.95rem; }
+    .btn-main {
+      background: var(--suku-primary); color: white; text-decoration: none; padding: 10px 24px; border-radius: 50px;
+      font-weight: 500; font-size: 0.9rem; display: inline-block; box-shadow: 0 4px 15px rgba(4,60,44,0.3); transition: 0.3s;
+    }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(4,60,44,0.4); }
+    .email-box { margin-top: 12px; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px; }
+    .email-link { color: var(--suku-primary); font-weight: 700; text-decoration: none; font-size: 0.95rem; display: block; word-break: break-all; }
 
-    .lang-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-    .lang-btn { padding: 14px; background: #fff; border: 1px solid #eee; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; transition: 0.2s; }
-    .lang-btn:hover { border-color: var(--suku-primary); color: var(--suku-primary); transform: translateX(5px); }
-
-    /* --- 5. RATING OVERLAY --- */
+    /* --- RATING OVERLAY --- */
     .rating-overlay {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
-        z-index: 100; display: none; align-items: center; justify-content: center;
-        flex-direction: column; text-align: center; animation: fadeIn 0.3s ease;
-        border-radius: 24px;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px);
+      z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px; text-align: center;
     }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .rating-content {
-        background: white; padding: 30px; border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 85%; border: 1px solid #eee;
-    }
-    .rating-emoji { font-size: 3.5rem; margin-bottom: 10px; display: block; animation: popEmoji 0.4s; }
-    @keyframes popEmoji { 0% { transform: scale(0.5); } 100% { transform: scale(1); } }
+    .rating-overlay.show { opacity: 1; pointer-events: all; }
     
-    .stars { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+    .rating-emoji { font-size: 3.5rem; margin-bottom: 15px; animation: bounce 1s infinite; }
+    .rating-title { font-size: 1.2rem; font-weight: 600; color: var(--suku-primary); margin-bottom: 20px; }
+    .stars { display: flex; gap: 8px; margin-bottom: 30px; }
     .star { font-size: 2rem; color: #ddd; cursor: pointer; transition: 0.2s; }
-    .star.filled { color: var(--gold); transform: scale(1.1); }
-    .star:hover { transform: scale(1.2); }
+    .star.hover, .star.active { color: #FFD700; transform: scale(1.2); }
     
-    .rate-submit-btn {
-        background: var(--suku-primary); color: white; border: none;
-        padding: 12px 25px; border-radius: 25px; font-weight: 600; cursor: pointer;
-        width: 100%; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    .skip-btn {
+      margin-top: 20px; background: none; border: none; color: #999; font-size: 0.85rem;
+      cursor: pointer; text-decoration: underline; padding: 10px;
     }
-    .rate-submit-btn:hover { background: var(--suku-accent); transform: translateY(-2px); }
-    .skip-btn { display: block; margin-top: 15px; font-size: 0.85rem; color: #888; cursor: pointer; text-decoration: underline; }
+    .rating-success { display: none; flex-direction: column; align-items: center; }
+    .rating-success h3 { color: var(--suku-primary); margin-bottom: 5px; }
 
     @media (max-width: 480px) {
-        .launcher-container { bottom: 20px; right: 20px; }
-        .suku-launcher { width: 50px; height: 50px; }
-        .launcher-label { bottom: 60px; font-size: 0.7rem; }
-        .suku-window { bottom: 85px; right: 15px; width: calc(100vw - 30px); height: 65vh; border-radius: 20px; }
+      .suku-window { bottom: 0; right: 0; width: 100%; height: 100%; max-height: 100%; border-radius: 0; }
+      .suku-header { padding-top: max(18px, env(safe-area-inset-top)); }
+      .launcher-container { bottom: 20px; right: 20px; }
+      .suku-label { display: none; }
     }
-</style>
+  </style>
+</head>
+<body>
 
-<div class="launcher-container" id="sukuLauncherContainer">
-    <div class="launcher-label">Need Help?</div>
+  <div class="launcher-container" id="sukuLauncherContainer">
+    <div class="suku-label">Talk to SUKU AI</div>
     <div class="suku-launcher" onclick="openSuku()">
-        <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
+      <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
     </div>
-</div>
+  </div>
 
-<div class="suku-window" id="sukuWindow">
+  <div class="suku-window" id="sukuWindow">
+    
+    <div class="rating-overlay" id="ratingOverlay">
+      <div id="ratingContent">
+        <div class="rating-emoji" id="ratingEmoji">🤔</div>
+        <div class="rating-title">How was your experience?</div>
+        <div class="stars" id="starContainer">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+        <button class="skip-btn" onclick="closeFinal()">Skip for now</button>
+      </div>
+      <div class="rating-success" id="ratingSuccess">
+        <div class="rating-emoji">🙏</div>
+        <h3>Thank You!</h3>
+        <p style="font-size:0.9rem; color:#666;">We value your feedback.</p>
+      </div>
+    </div>
+
     <div class="suku-header">
-        <div class="header-left">
-            <div class="header-orb-box">
-                <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
-            </div>
-            <div class="header-info">
-                <h3>SUKU AI <span class="beta-tag">BETA</span></h3>
-                <div class="status-line"><span class="status-dot online" id="sukuStatusDot"></span><span id="sukuStatusText">Online</span></div>
-            </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="bot-avatar" style="border: 2px solid rgba(255,255,255,0.2);">
+          <div class="sci-fi-orb" style="width:24px;height:24px;"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
         </div>
-        <button class="close-btn" onclick="triggerRating()">&times;</button>
+        <div class="header-info"><h3>Singh Kaizen • SUKU AI</h3><span>Premium Support Partner</span></div>
+      </div>
+      <button class="close-btn" onclick="attemptClose()">&times;</button>
     </div>
-    
+
     <div class="suku-body" id="sukuBody"></div>
-    
-    <div class="rating-overlay" id="sukuRatingOverlay">
-        <div class="rating-content" id="ratingContentBox">
-            <div class="rating-emoji" id="ratingEmoji">🤔</div>
-            <h3 id="ratingTitle" style="margin:10px 0 20px; color:#333;">How was your experience?</h3>
-            <div class="stars">
-                <span class="star" onclick="rate(1)">★</span><span class="star" onclick="rate(2)">★</span><span class="star" onclick="rate(3)">★</span><span class="star" onclick="rate(4)">★</span><span class="star" onclick="rate(5)">★</span>
-            </div>
-            <button class="rate-submit-btn" onclick="submitRating()">Submit Review</button>
-            <span class="skip-btn" onclick="forceClose()">Skip & Close</span>
-        </div>
-    </div>
-    
     <div class="typing" id="sukuTyping"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+
     <div class="suku-footer">
-        <input type="text" class="suku-input" id="sukuInput" placeholder="Type here..." onkeypress="handleEnter(event)" oninput="userIsTyping()">
-        <button class="suku-send" id="sukuSendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+      <input type="text" id="sukuInput" class="suku-input" placeholder="Ask about Singh Kaizen..." onkeypress="handleEnter(event)">
+      <button class="suku-send" onclick="sendMessage()">➤</button>
     </div>
-</div>
+  </div>
 
 <script>
-    const el = {
-        body: document.getElementById('sukuBody'),
-        window: document.getElementById('sukuWindow'),
-        launcherContainer: document.getElementById('sukuLauncherContainer'),
-        input: document.getElementById('sukuInput'),
-        btn: document.getElementById('sukuSendBtn'),
-        typing: document.getElementById('sukuTyping'),
-        ratingOverlay: document.getElementById('sukuRatingOverlay'),
-        ratingEmoji: document.getElementById('ratingEmoji'),
-        ratingContent: document.getElementById('ratingContentBox'),
-        statusText: document.getElementById('sukuStatusText'),
-        statusDot: document.getElementById('sukuStatusDot')
-    };
+const API_KEY = "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";
+const MODEL_NAME = "x-ai/grok-4.1-fast";
 
-    const socialUrls = {
-        insta: "https://www.instagram.com/singhkaizenofficial",
-        youtube: "https://www.youtube.com/@SinghKaizen",
-        facebook: "https://www.facebook.com/share/1TiP8cwq89/",
-        linkedin: "https://www.linkedin.com/in/singh-kaizen-22557837a",
-        telegram: "https://t.me/singhkaizen",
-        twitter: "https://x.com/SinghKaizen"
-    };
+const SOCIAL_LINKS = {
+  telegram: "https://t.me/SinghKaizen",
+  instagram: "https://www.instagram.com/singhkaizenofficial/",
+  facebook: "https://www.facebook.com/people/Singh-Kaizen/",
+  linkedin: "https://www.linkedin.com/in/singh-kaizen-22557837a",
+  youtube: "https://www.youtube.com/@SinghKaizenyoutube",
+  x: "https://x.com/SinghKaizen",
+  reddit: "https://www.reddit.com/user/singhkaizen"
+};
 
-    let currentLang = 'english';
-    let currentRating = 0;
-    let idleTimer = null;
-    const botOrbHtml = `<div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>`;
-    const emojis = ['😠', '😞', '😐', '🙂', '🤩'];
+const LINKS = {
+  all_social: "https://singhkaizen.github.io/SinghKaizenSocialMediaAccount/",
+  website: "https://singhkaizen.github.io/SinghKaizen/",
+  email: "singhkaizenhelp@gmail.com"
+};
 
-    // --- STATUS & ANIMATION ---
-    function setStatus(status) {
-        clearTimeout(idleTimer);
-        if (status === 'Online') {
-            el.statusText.innerText = 'Online'; el.statusDot.className = 'status-dot online';
-            idleTimer = setTimeout(() => { setStatus('Away'); }, 7000); 
-        } else if (status === 'Typing') {
-            el.statusText.innerText = 'Typing...'; el.statusDot.className = 'status-dot typing';
-        } else if (status === 'Away') {
-            el.statusText.innerText = 'Away'; el.statusDot.className = 'status-dot away';
-        }
-    }
-    function userIsTyping() { setStatus('Online'); }
+const el = {
+  window: document.getElementById("sukuWindow"),
+  launcher: document.getElementById("sukuLauncherContainer"),
+  body: document.getElementById("sukuBody"),
+  input: document.getElementById("sukuInput"),
+  typing: document.getElementById("sukuTyping"),
+  overlay: document.getElementById("ratingOverlay"),
+  emoji: document.getElementById("ratingEmoji")
+};
 
-    function openSuku() {
-        el.window.classList.add('active'); el.launcherContainer.classList.add('hide');
-        setStatus('Online');
-        if(el.body.innerHTML.trim() === "") setTimeout(showWelcome, 300);
-    }
-    function triggerRating() {
-        if(el.body.innerHTML.trim() === "") { forceClose(); return; }
-        el.ratingOverlay.style.display = 'flex'; resetRatingUI();
-    }
-    function forceClose() {
-        el.window.classList.remove('active'); el.launcherContainer.classList.remove('hide');
-        setTimeout(() => { el.body.innerHTML = ""; el.input.value = ""; el.ratingOverlay.style.display = 'none'; resetRatingUI(); }, 500); 
-    }
-    function rate(n) {
-        currentRating = n;
-        document.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('filled', i < n));
-        el.ratingEmoji.innerText = emojis[n-1];
-        el.ratingEmoji.style.animation = 'none'; el.ratingEmoji.offsetHeight; el.ratingEmoji.style.animation = 'popEmoji 0.4s';
-    }
-    function submitRating() {
-        if(currentRating === 0) rate(5);
-        el.ratingContent.innerHTML = `<div style="font-size:4rem; animation:popEmoji 0.5s;">${emojis[currentRating-1]}</div><h2 style="color:var(--suku-primary); margin:10px 0;">Thank You!</h2>`;
-        setTimeout(forceClose, 1500);
-    }
-    function resetRatingUI() {
-        el.ratingContent.innerHTML = `<div class="rating-emoji" id="ratingEmoji">🤔</div><h3 id="ratingTitle" style="margin:10px 0 20px; color:#333;">How was your experience?</h3><div class="stars"><span class="star" onclick="rate(1)">★</span><span class="star" onclick="rate(2)">★</span><span class="star" onclick="rate(3)">★</span><span class="star" onclick="rate(4)">★</span><span class="star" onclick="rate(5)">★</span></div><button class="rate-submit-btn" onclick="submitRating()">Submit Review</button><span class="skip-btn" onclick="forceClose()">Skip & Close</span>`;
-        el.ratingEmoji = document.getElementById('ratingEmoji'); currentRating = 0;
-    }
+let hasRated = false;
 
-    function showWelcome() {
-        const div = document.createElement('div'); div.className = 'msg-row bot';
-        div.innerHTML = `<div class="chat-avatar bot">${botOrbHtml}</div><div class="msg-bubble bot"><b>Namaste! Welcome to Singh Kaizen.</b><br>I am Suku. Start typing or select language:<div class="lang-grid"><div class="lang-btn" onclick="setLang('english')">English <span>➔</span></div><div class="lang-btn" onclick="setLang('hindi')">Hindi (हिंदी) <span>➔</span></div></div></div>`;
-        el.body.appendChild(div);
-    }
-    function setLang(lang) {
-        currentLang = lang; el.body.innerHTML = ""; setStatus('Online');
-        let msg = "", chips = [];
-        if(lang === 'english') {
-            el.input.placeholder = "Ask about Market, Fees, Links...";
-            msg = "Hello! I am Suku, your Finance Expert at Singh Kaizen. I can answer questions about the company, provide social links, or chat like a friend. How can I help?";
-            chips = ["📈 What is Singh Kaizen?", "💸 Fees", "👋 Hi"];
-        } else {
-            el.input.placeholder = "Yahan likhein...";
-            msg = "नमस्ते! मैं सुकू हूँ। मैं सिंह काइज़ेन का AI हूँ। मुझसे कंपनी, निवेश या आम बोलचाल (Hi, Hello) में कुछ भी पूछें।";
-            chips = ["📈 कंपनी क्या है?", "💸 फीस", "👋 नमस्ते"];
-        }
-        addBotMsg(msg, chips);
-    }
-    function handleEnter(e) { if(e.key === 'Enter') sendMessage(); }
-    function sendMessage(txt = null) {
-        const text = txt || el.input.value.trim();
-        if(!text) return;
-        setStatus('Online'); addUserMsg(text); if(!txt) el.input.value = "";
-        el.typing.style.display = 'flex'; el.body.appendChild(el.typing); scrollToBottom(); setStatus('Typing');
-        setTimeout(() => { el.typing.style.display = 'none'; const resp = getResponse(text.toLowerCase()); addBotMsg(resp.text, resp.chips); setStatus('Online'); }, 800 + Math.random() * 600); 
-    }
-    function addUserMsg(text) {
-        const div = document.createElement('div'); div.className = 'msg-row user';
-        div.innerHTML = `<div class="msg-bubble user">${text}</div><div class="chat-avatar user"><i class="fas fa-user"></i></div>`;
-        el.body.appendChild(div); scrollToBottom();
-    }
-    function addBotMsg(html, chips = []) {
-        const div = document.createElement('div'); div.className = 'msg-row bot';
-        div.innerHTML = `<div class="chat-avatar bot">${botOrbHtml}</div><div class="msg-bubble bot">${html}</div>`;
-        el.body.insertBefore(div, el.typing);
-        if(chips && chips.length > 0) {
-            const cDiv = document.createElement('div'); cDiv.className = 'chips-area';
-            chips.forEach(c => { const b = document.createElement('div'); b.className = 'chip'; b.innerText = c; b.onclick = () => sendMessage(c); cDiv.appendChild(b); });
-            el.body.insertBefore(cDiv, el.typing);
-        }
-        scrollToBottom();
-    }
-    function scrollToBottom() { el.body.scrollTop = el.body.scrollHeight; }
+function openSuku() {
+  el.window.classList.add("active");
+  el.launcher.classList.add("hide");
+  if (el.body.innerHTML.trim() === "") setTimeout(showWelcome, 300);
+}
 
-    // --- THE "SUPER BRAIN" (Combined Logic) ---
-    const kb = {
-        // 1. IDENTITY & WELLBEING (Small Talk - High Priority)
-        // Covers: Who are you, Tum kaun ho, Intro, Name
-        identity: /\b(who.*are.*you|tum.*kaun.*ho|tera.*naam|your.*name|intro|robot|bot|parichay|identity|suku)\b/i,
+// Logic to check rating before closing
+function attemptClose() {
+  if (!hasRated && el.body.innerHTML.trim() !== "") {
+    el.overlay.classList.add("show"); // Show Rating Screen
+  } else {
+    closeFinal(); // Just Close
+  }
+}
+
+function closeFinal() {
+  el.overlay.classList.remove("show");
+  el.window.classList.remove("active");
+  el.launcher.classList.remove("hide");
+}
+
+function showWelcome() {
+  addBotMsg("Namaste! I am SUKU AI, your gateway to <b>Singh Kaizen</b>.<br><br>I can provide insights on our investment strategies, founder details, or assist with support. How may I serve you?");
+}
+function handleEnter(e){ if(e.key === "Enter") sendMessage(); }
+
+function addUserMsg(text){
+  const d = document.createElement("div"); d.className = "msg-row user";
+  d.innerHTML = `<div class='msg-bubble user'>${text}</div>`;
+  el.body.appendChild(d); scrollToBottom();
+}
+function addBotMsg(htmlContent){
+  const d = document.createElement("div"); d.className = "msg-row bot";
+  const orb = `<div class='bot-avatar'><div class='sci-fi-orb' style='width:20px;height:20px;'><div class='sf-ring'></div><div class='sf-ring'></div><div class='sf-core'></div></div></div>`;
+  d.innerHTML = `${orb}<div class='msg-bubble bot'>${htmlContent}</div>`;
+  el.body.appendChild(d); scrollToBottom();
+}
+function scrollToBottom(){ el.body.scrollTop = el.body.scrollHeight; }
+
+/* RATING LOGIC */
+const stars = document.querySelectorAll('.star');
+const emojis = ["😢", "😟", "😐", "🙂", "🤩"];
+
+stars.forEach((star, index) => {
+  star.addEventListener('click', () => {
+    // Fill stars
+    stars.forEach((s, i) => {
+      if(i <= index) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+    // Change Emoji
+    el.emoji.innerText = emojis[index];
+    
+    // Submit Effect
+    setTimeout(() => {
+        document.getElementById("ratingContent").style.display = 'none';
+        document.getElementById("ratingSuccess").style.display = 'flex';
+        hasRated = true;
         
-        // Covers: How are you, Kaise ho, Kya haal, Whats up
-        wellbeing_ask: /\b(how.*are.*you|kaise.*ho|kya.*haal|whats.*up|doing.*good|haal.*chaal|sab.*badhiya)\b/i,
-        
-        // Covers: Good Morning/Night/Afternoon
-        morning: /\b(good.*morning|gm|suprabhat|morning)\b/i,
-        afternoon: /\b(good.*afternoon|afternoon)\b/i,
-        bye: /\b(bye|goodbye|night|gn|tata|see.*you|so.*jao)\b/i,
-        
-        // Covers: Hi, Hello, Hey, Namaste (Broad Match)
-        greetings: /\b(hi+|hello+|hey+|helo+|hlo+|namaste|ram.*ram|hola|ssup|yo|pranam|shuru)\b/i,
+        // Auto close after 1.5s
+        setTimeout(closeFinal, 1500);
+    }, 400);
+  });
+});
 
-        // 2. COMPANY & FINANCE (Specifics)
-        // Covers: What does company do, Company profile, Kya karti hai
-        about_company: /\b(what.*company|kya.*karti.*hai|company.*profile|business|work|service|singh.*kaizen|about.*company|kaise.*company)\b/i,
-        
-        // Covers: Investment questions
-        invest_where: /\b(kaha.*invest|where.*invest|market|stock|crypto|forex|paise.*kaha|assets|portfolio|fund)\b/i,
-        invest_process: /\b(start.*invest|kaise.*invest|invest.*karna|join|shuru|process|how.*to)\b/i,
-        
-        // Covers: Fees, Charges
-        fees: /\b(fee|cost|price|charge|money|pay|commission|profit.*share|pricing|paise|rate)\b/i,
-        
-        // Covers: Founder/Owner
-        founder: /\b(founder|ceo|owner|boss|saurabh|malik|head|banaya|kaun.*hai.*malik)\b/i,
-        
-        // Covers: Contact/Email
-        email: /\b(email|mail|gmail|id|address)\b/i,
-        contact: /\b(contact|call|phone|mobile|support|help|number|talk|baat)\b/i,
-        
-        // Covers: Location
-        location: /\b(location|address|office|kahan|where|city|prayagraj|hq|jagah)\b/i,
 
-        // 3. SOCIAL LINKS (Very Specific)
-        social_tele: /\b(telegram|tele|tg|channel)\b/i,
-        social_linkedin: /\b(linkedin|linkdin|linked)\b/i,
-        social_fb: /\b(facebook|fb|meta)\b/i,
-        social_twitter: /\b(twitter|x\.com|tweet)\b/i,
-        social_insta: /\b(insta|instagram|ig)\b/i,
-        social_yt: /\b(youtube|yt|channel)\b/i,
-        social_all: /\b(social|media|links|connect|sabhi|saare)\b/i,
+async function sendMessage(){
+  const text = el.input.value.trim();
+  if(!text) return;
+  
+  addUserMsg(text);
+  el.input.value = "";
+  el.typing.style.display = "flex";
+  scrollToBottom();
 
-        // 4. GENERAL KNOWLEDGE
-        time: /\b(time|date|samay|clock|aaj)\b/i,
-        thank: /\b(thank|shukriya|dhanyavad|nice|good)\b/i
-    };
+  const localResponse = checkLocal(text.toLowerCase());
+  
+  if(localResponse){ 
+    setTimeout(() => {
+      el.typing.style.display = "none"; 
+      addBotMsg(localResponse); 
+    }, 500);
+    return; 
+  }
 
-    function getResponse(input) {
-        const l = currentLang;
-        const formBtn = `<br><br><button style="background:var(--suku-primary); color:white; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; width:100%;" onclick="showContactLock(); closeSuku();">🔓 Open Form</button>`;
-        const now = new Date();
-        const dateTime = now.toLocaleString('en-IN', { dateStyle: 'full', timeStyle: 'medium' });
+  const reply = await callAI(text);
+  el.typing.style.display = "none";
+  addBotMsg(reply);
+}
 
-        // --- 1. SMALL TALK & GREETINGS (Checking First for Natural Feel) ---
-        if(input.match(kb.identity)) {
-            return { text: l==='hindi' ? "मैं सुकू (Suku) हूँ, Singh Kaizen का AI असिस्टेंट। मैं आपके फाइनेंस और कंपनी से जुड़े सवालों का जवाब दे सकता हूँ। आप मुझसे 'Hello' भी कह सकते हैं!" : "I am Suku AI, your virtual assistant at Singh Kaizen. I can help with company info, finance queries, or just have a friendly chat!", chips: ["📈 About Company", "👋 Hello"] };
-        }
-        if(input.match(kb.wellbeing_ask)) {
-            return { text: l==='hindi' ? "मैं एकदम बढ़िया हूँ! 🤖 आप कैसे हैं?" : "I am fantastic, running on 100% efficiency! 🤖 How are you doing?", chips: ["😊 Good", "📉 Market News"] };
-        }
-        if(input.match(kb.morning)) return { text: "Good Morning! ☀️ Have a profitable day ahead.", chips: [] };
-        if(input.match(kb.bye)) return { text: "Goodbye! 👋 Take care.", chips: [] };
-        if(input.match(kb.thank)) return { text: "You're welcome! 🙏", chips: [] };
-        
-        // --- 2. COMPANY & FINANCE (Expert Answers) ---
-        if(input.match(kb.about_company)) {
-            return { 
-                text: l==='hindi' ? "Singh Kaizen एक **प्रीमियर निवेश प्रबंधन (Investment Management)** फर्म है। हम एडवांस स्ट्रैटेजीज का उपयोग करके ग्लोबल मार्केट्स में वेल्थ मैनेज करते हैं।" 
-                                  : "Singh Kaizen is a premier **Investment Management Firm**. We specialize in growing wealth through sophisticated strategies in Global Markets.",
-                chips: ["📈 Kaha Invest?", "💸 Fees"] 
-            };
-        }
-        if(input.match(kb.invest_where)) {
-            return { text: l==='hindi' ? "हम **Diversified Portfolio** (Forex, Crypto, Indian Stock Market) में निवेश करते हैं।" : "We invest strategically in **Forex**, **Crypto**, and **Indian Markets**.", chips: ["💰 Start Invest"] };
-        }
-        if(input.match(kb.invest_process)) {
-            return { text: l==='hindi' ? "निवेश शुरू करने के लिए फॉर्म भरें:" + formBtn : "To start investing, please fill this form:" + formBtn, chips: [] };
-        }
-        if(input.match(kb.fees)) {
-            return { text: l==='hindi' ? "हमारा मॉडल: **1st महीना फ्री**, फिर **5% प्रॉफिट शेयर**।" : "Our Fees: **1st Month Free**, then **5% Profit Share**.", chips: ["💰 Invest"] };
-        }
-        if(input.match(kb.founder)) return { text: "Founder & Owner: <b>Mr. Saurabh Singh</b>.", chips: [] };
-        if(input.match(kb.contact)) return { text: "Contact us here:" + formBtn, chips: [] };
-        if(input.match(kb.email)) return { text: "Email: <b>singhkaizen@gmail.com</b>", chips: [] };
-
-        // --- 3. SOCIAL MEDIA ---
-        if(input.match(kb.social_tele)) return { text: "Telegram: " + `<br><a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> Telegram</a>`, chips: [] };
-        if(input.match(kb.social_insta)) return { text: "Instagram: " + `<br><a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Instagram</a>`, chips: [] };
-        if(input.match(kb.social_all)) {
-            const allLinksHTML = `<div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:5px;">
-                <a href="${socialUrls.telegram}" target="_blank" class="social-btn" style="color:#0088cc"><i class="fab fa-telegram-plane"></i> TG</a>
-                <a href="${socialUrls.insta}" target="_blank" class="social-btn" style="color:#E1306C"><i class="fab fa-instagram"></i> Insta</a>
-                <a href="${socialUrls.facebook}" target="_blank" class="social-btn" style="color:#1877F2"><i class="fab fa-facebook-f"></i> FB</a>
-                <a href="${socialUrls.linkedin}" target="_blank" class="social-btn" style="color:#0077b5"><i class="fab fa-linkedin-in"></i> In</a>
-                <a href="${socialUrls.twitter}" target="_blank" class="social-btn" style="color:#000"><i class="fab fa-twitter"></i> X</a>
-                <a href="${socialUrls.youtube}" target="_blank" class="social-btn" style="color:#FF0000"><i class="fab fa-youtube"></i> YT</a>
-            </div>`;
-            return { text: "All Social Links:" + allLinksHTML, chips: [] };
-        }
-
-        // --- 4. GENERIC GREETINGS (Placed lower so specific intents match first) ---
-        if(input.match(kb.greetings)) {
-            return { text: l==='hindi' ? "नमस्ते! मैं आपकी क्या मदद कर सकता हूँ?" : "Hello! How can I assist you today?", chips: ["📈 Company Info", "💸 Fees"] };
-        }
-        if(input.match(kb.time)) return { text: `Current Date & Time:<br><b>${dateTime}</b>`, chips: [] };
-
-        // --- FALLBACK ---
-        const fallbacksEn = ["I specialize in Singh Kaizen. Ask about 'Company', 'Fees' or 'Social Links'.", "I can help you with Investment details."];
-        const fallbacksHi = ["मैं कंपनी और निवेश के बारे में बता सकता हूँ।", "'फीस' या 'सोशल लिंक' के बारे में पूछें।"];
-        return { text: l==='hindi' ? fallbacksHi[Math.floor(Math.random()*2)] : fallbacksEn[Math.floor(Math.random()*2)], chips: ["📈 Company Profile", "👋 Hello"] };
+function checkLocal(t){
+  
+  // Specific Socials
+  for(const k in SOCIAL_LINKS){
+    if(t.includes(k)){
+      return `Here is the official <b>${k.toUpperCase()}</b> link:<br>
+      <div style="margin-top:8px;">
+        <a href='${SOCIAL_LINKS[k]}' target='_blank' class='btn-main' style='font-size:0.85rem;'>Open ${k.charAt(0).toUpperCase() + k.slice(1)}</a>
+      </div>`;
     }
+  }
+
+  // All Socials
+  if(t.includes("social") || t.includes("link") || t.includes("media") || t.includes("follow")){
+    return `
+      <b>Singh Kaizen Digital World</b><br>
+      Stay connected with us across all platforms.<br>
+      <div class="action-card">
+        <span class="action-title">All Social Media</span>
+        <a href="${LINKS.all_social}" target="_blank" class="btn-main" style="background:#000;">View All Links</a>
+      </div>`;
+  }
+
+  // Contact / Support
+  if(t.includes("contact") || t.includes("support") || t.includes("help") || t.includes("care") || t.includes("mail") || t.includes("join") || t.includes("form") || t.includes("apply")){
+    return `
+      <b>Customer Care & Support</b><br>
+      To contact us or fill the application form, please follow these steps:<br>
+      
+      <div class="action-card">
+        <span class="action-title" style="text-align:left; font-size:0.85rem;">
+          1. Click <b>"Open Website"</b> below.<br>
+          2. Tap the <b>Menu ( ☰ )</b> button.<br>
+          3. Select <b>"Contact Us"</b>.
+        </span>
+        <br>
+        <a href="${LINKS.website}" target="_blank" class="btn-main">Open Website</a>
+        
+        <div class="email-box">
+           <small style="color:#666;">Or email us directly:</small>
+           <a href="mailto:${LINKS.email}" class="email-link">${LINKS.email}</a>
+        </div>
+      </div>
+    `;
+  }
+
+  // Website
+  if(t.includes("website") || t.includes("site")){
+    return `<b>Official Website</b><br>Transparency is our priority. Visit our site for details.<br><br><a href='${LINKS.website}' target='_blank' class='btn-main'>Visit Website</a>`;
+  }
+
+  return null;
+}
+
+async function callAI(userPrompt){
+  const body = {
+    model: MODEL_NAME,
+    messages: [
+      {
+        role: "system",
+        content: `You are SUKU AI, the premium virtual representative for **Singh Kaizen**.
+
+        **CORE IDENTITY:**
+        - **Singh Kaizen is:** A premier Global Asset Management & Investment Firm (acting like a Hedge Fund).
+        - **Founder/Owner:** Mr. **Saurabh Singh**.
+        - **Tone:** Professional, Institutional, Sophisticated, High-Trust (Think Wall Street / Private Banking).
+        - **Style:** Use financial terminology (e.g., "Algorithmic Trading", "Risk Management", "Capital Preservation", "Segregated Accounts").
+
+        **KEY FACTS:**
+        - **Strategy:** We use advanced algo-trading on Forex, Crypto, and Stocks.
+        - **Returns:** We target consistent 5%-10% monthly growth.
+        - **Safety:** Funds are NEVER held by us. They remain in the Client's personal account (Non-Custodial).
+        - **Operations:** Withdrawal & Support available Mon-Fri.
+
+        **BEHAVIOR RULES:**
+        1. If asked **"Who is the owner?"** -> Answer: "The visionary founder and owner of Singh Kaizen is Mr. Saurabh Singh."
+        2. If asked **"What is Singh Kaizen?"** -> Answer: "Singh Kaizen is a global investment management firm specializing in algorithmic trading strategies to generate consistent alpha for our clients."
+        3. If asked for Contact/Socials -> Say "I have provided the relevant options below." (Buttons will appear).
+        4. Be concise but sound expensive/premium.`
+      },
+      { role:"user", content:userPrompt }
+    ]
+  };
+
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions",{
+      method:"POST",
+      headers:{ "Authorization":`Bearer ${API_KEY}`, "Content-Type":"application/json" },
+      body:JSON.stringify(body)
+    });
+    const data = await res.json();
+    return data?.choices?.[0]?.message?.content || "Reconnecting to secure server...";
+  } catch (err) {
+    return "Network handshake failed. Please check internet.";
+  }
+}
 </script>
+</body>
+</html>
 </body>
 </html>
