@@ -1258,7 +1258,7 @@
             }
         });
     </script>
- <style>
+<style>
     /* --- VARIABLES --- */
     :root {
       --suku-primary: #043c2c;
@@ -1270,92 +1270,142 @@
 
     /* --- 3D ORB ANIMATION --- */
     .sci-fi-orb { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; display: flex; align-items: center; justify-content: center; animation: orbitSpin 5s linear infinite; }
-    .sf-ring { position: absolute; width: 140%; height: 40%; border-radius: 50%; filter: blur(3px); opacity: 0.85; }
+    .sf-ring { position: absolute; width: 140%; height: 40%; border-radius: 50%; filter: blur(2px); opacity: 0.85; }
     .sf-ring:nth-child(1) { background: linear-gradient(90deg, transparent, #00ffff, #0066ff, transparent); transform: rotateZ(45deg) rotateX(70deg); }
     .sf-ring:nth-child(2) { background: linear-gradient(90deg, transparent, #ff00ff, transparent); transform: rotateZ(-45deg) rotateX(70deg); }
     .sf-core { position: absolute; width: 25%; height: 25%; background: white; border-radius: 50%; filter: blur(2px); animation: pulseCore 2s ease-in-out infinite alternate; }
     @keyframes orbitSpin { 0% { transform: rotateY(0deg) rotateX(15deg) scale(0.8); } 50% { transform: rotateY(180deg) rotateX(15deg) scale(1); } 100% { transform: rotateY(360deg) rotateX(15deg) scale(0.8); } }
     @keyframes pulseCore { 0% { opacity: 0.8; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.2); } }
 
-    /* --- LAUNCHER --- */
-    .launcher-container { position: fixed; bottom: 30px; right: 30px; z-index: 999999; display: flex; flex-direction: column; align-items: center; transition: all 0.4s ease; }
-    .suku-label { background: rgba(255, 255, 255, 0.95); color: var(--suku-primary); padding: 8px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); font-family: var(--font-main); animation: floatLabel 3s ease-in-out infinite; position: relative; border: 1px solid rgba(0,0,0,0.1); }
-    .suku-label::after { content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); border-width: 6px 6px 0; border-style: solid; border-color: rgba(255,255,255,0.95) transparent transparent transparent; }
-    @keyframes floatLabel { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .suku-launcher { width: 64px; height: 64px; border-radius: 50%; background: #000; padding: 4px; cursor: pointer; overflow: hidden; transition: all 0.3s; box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
-    .suku-launcher:hover { transform: scale(1.1); }
-    .launcher-container.hide { transform: scale(0) translateY(50px); pointer-events: none; opacity: 0; }
+    /* --- LAUNCHER (ICON) --- */
+    .launcher-container { position: fixed; bottom: 25px; right: 25px; z-index: 999999; display: flex; flex-direction: column; align-items: center; transition: all 0.4s ease; cursor: pointer; }
+    
+    .suku-label { 
+        background: rgba(4, 60, 44, 0.9); color: #fff; padding: 5px 12px; border-radius: 20px; 
+        font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+        font-family: var(--font-main); animation: floatLabel 3s ease-in-out infinite; white-space: nowrap; pointer-events: none;
+    }
+    .suku-label::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); border-width: 4px 4px 0; border-style: solid; border-color: rgba(4, 60, 44, 0.9) transparent transparent transparent; }
+    @keyframes floatLabel { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    
+    .suku-launcher { 
+        width: 55px; height: 55px; border-radius: 50%; background: #000; padding: 8px; 
+        overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 5px 20px rgba(0,0,0,0.3); 
+        display: flex; align-items: center; justify-content: center;
+    }
+    .suku-launcher:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+    .launcher-container.hide { transform: scale(0); pointer-events: none; opacity: 0; }
 
-    /* --- WINDOW --- */
-    .suku-window { position: fixed; bottom: 100px; right: 30px; width: 380px; height: 600px; max-height: 80vh; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); display: flex; flex-direction: column; font-family: var(--font-main); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000000; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; }
+    /* --- CHAT WINDOW --- */
+    .suku-window { position: fixed; bottom: 90px; right: 25px; width: 360px; height: 550px; max-height: 80vh; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); display: flex; flex-direction: column; font-family: var(--font-main); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000000; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; }
     .suku-window.active { transform: scale(1) translateY(0px); opacity: 1; pointer-events: all; }
 
-    /* --- HEADER (With Minimize & Close) --- */
-    .suku-header { background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent)); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; color: #fff; }
+    /* HEADER */
+    .suku-header { background: linear-gradient(135deg, var(--suku-primary), var(--suku-accent)); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; color: #fff; }
     .header-left { display: flex; align-items: center; gap: 10px; }
-    .header-info h3 { margin: 0; font-size: 1rem; font-weight: 600; font-family: sans-serif; }
-    .header-info span { font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.5px; font-family: sans-serif; }
+    .header-info h3 { margin: 0; font-size: 0.95rem; font-weight: 600; font-family: sans-serif; }
+    .header-info span { font-size: 0.7rem; opacity: 0.85; letter-spacing: 0.5px; font-family: sans-serif; }
     .header-controls { display: flex; gap: 8px; }
-    .ctrl-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display:flex; align-items:center; justify-content:center; transition: 0.2s; }
+    .ctrl-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 28px; height: 28px; border-radius: 50%; font-size: 1rem; cursor: pointer; display:flex; align-items:center; justify-content:center; transition: 0.2s; }
     .ctrl-btn:hover { background: rgba(255,255,255,0.3); }
 
-    /* --- BODY --- */
-    .suku-body { flex: 1; padding: 20px; overflow-y: auto; background: var(--suku-light-gray); display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth; }
-    .msg-row { display: flex; align-items: flex-end; gap: 12px; animation: slideIn 0.3s both; }
+    /* BODY */
+    .suku-body { flex: 1; padding: 15px; overflow-y: auto; background: var(--suku-light-gray); display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+    .msg-row { display: flex; align-items: flex-end; gap: 8px; animation: slideIn 0.3s both; }
     @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .msg-row.user { flex-direction: row-reverse; }
-    .msg-bubble { max-width: 80%; padding: 12px 16px; border-radius: 18px; font-size: 0.9rem; line-height: 1.5; box-shadow: 0 2px 5px rgba(0,0,0,0.03); word-wrap: break-word; font-family: sans-serif; }
+    .msg-bubble { max-width: 80%; padding: 10px 14px; border-radius: 16px; font-size: 0.88rem; line-height: 1.4; box-shadow: 0 1px 3px rgba(0,0,0,0.05); word-wrap: break-word; font-family: sans-serif; }
     .msg-bubble.bot { background: #fff; color: #1e1e2f; border-bottom-left-radius: 4px; }
     .msg-bubble.user { background: var(--suku-primary); color: #fff; border-bottom-right-radius: 4px; }
-    .bot-avatar { width: 32px; height: 32px; border-radius: 50%; background: #000; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .bot-avatar { width: 28px; height: 28px; border-radius: 50%; background: #000; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-    /* --- FOOTER --- */
-    .suku-footer { padding: 16px; background: #fff; display: flex; gap: 12px; border-top: 1px solid #eee; }
-    .suku-input { flex: 1; padding: 12px 18px; border-radius: 30px; border: 1px solid #e0e0e0; outline: none; background: #f8f9fa; font-size: 0.95rem; font-family: sans-serif; }
-    .suku-send { width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--suku-primary); color: #fff; cursor: pointer; font-size: 1.2rem; display:flex;align-items:center;justify-content:center; }
+    /* FOOTER */
+    .suku-footer { padding: 12px; background: #fff; display: flex; gap: 10px; border-top: 1px solid #eee; }
+    .suku-input { flex: 1; padding: 10px 15px; border-radius: 30px; border: 1px solid #e0e0e0; outline: none; background: #f8f9fa; font-size: 0.9rem; font-family: sans-serif; }
+    .suku-send { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--suku-primary); color: #fff; cursor: pointer; font-size: 1rem; display:flex;align-items:center;justify-content:center; }
 
-    /* --- CARDS & BUTTONS --- */
-    .action-card { margin-top: 10px; background: #f0f7f5; border: 1px solid #d1e7e0; border-radius: 12px; padding: 16px; text-align: center; }
-    .action-title { font-weight: 600; color: var(--suku-primary); margin-bottom: 8px; display:block; font-size: 0.9rem; }
-    .btn-main { background: var(--suku-primary); color: white; text-decoration: none; padding: 8px 20px; border-radius: 50px; font-weight: 500; font-size: 0.85rem; display: inline-block; box-shadow: 0 4px 15px rgba(4,60,44,0.3); transition: 0.3s; margin-top: 5px; }
-    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(4,60,44,0.4); }
-    .email-box { margin-top: 12px; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px; }
-    .email-link { color: var(--suku-primary); font-weight: 700; text-decoration: none; font-size: 0.9rem; display: block; word-break: break-all; }
+    /* ACTION CARDS */
+    .action-card { margin-top: 5px; background: #f0f7f5; border: 1px solid #d1e7e0; border-radius: 10px; padding: 12px; text-align: center; }
+    .action-title { font-weight: 600; color: var(--suku-primary); margin-bottom: 5px; display:block; font-size: 0.85rem; }
+    .btn-main { background: var(--suku-primary); color: white; text-decoration: none; padding: 6px 16px; border-radius: 50px; font-weight: 500; font-size: 0.8rem; display: inline-block; box-shadow: 0 2px 10px rgba(4,60,44,0.2); transition: 0.3s; margin-top: 5px; }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(4,60,44,0.3); }
+    .email-box { margin-top: 10px; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px; }
+    .email-link { color: var(--suku-primary); font-weight: 700; text-decoration: none; font-size: 0.85rem; display: block; word-break: break-all; }
 
-    /* --- TYPING DOTS --- */
-    .typing { display: none; padding: 0 0 10px 44px; gap: 4px; }
-    .dot { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+    /* TYPING */
+    .typing { display: none; padding: 0 0 10px 40px; gap: 4px; }
+    .dot { width: 6px; height: 6px; background: #bbb; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
     .dot:nth-child(1) { animation-delay: -0.32s; } .dot:nth-child(2) { animation-delay: -0.16s; }
     @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
-    /* --- REVIEW OVERLAY (PROFESSIONAL) --- */
-    .rating-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(8px); z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; padding: 30px; text-align: center; }
+    /* --- FIXED PROFESSIONAL REVIEW PAGE --- */
+    .rating-overlay { 
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+        background: rgba(255, 255, 255, 0.98); 
+        backdrop-filter: blur(10px); 
+        z-index: 200; 
+        display: flex; /* Centering Magic */
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        opacity: 0; pointer-events: none; transition: 0.3s; 
+    }
     .rating-overlay.show { opacity: 1; pointer-events: all; }
+
+    /* The "Card" inside the overlay */
+    #ratingContent {
+        width: 85%;
+        background: #fff;
+        padding: 25px 20px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1); /* Soft shadow */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+    }
+
+    .rating-emoji { font-size: 3rem; margin-bottom: 10px; }
+    .rating-title { font-size: 1rem; font-weight: 600; color: var(--suku-primary); margin-bottom: 20px; font-family: sans-serif; }
     
-    .rating-emoji { font-size: 3rem; margin-bottom: 10px; } /* NO ANIMATION */
-    .rating-title { font-size: 1.1rem; font-weight: 600; color: var(--suku-primary); margin-bottom: 20px; font-family: sans-serif; }
-    
-    .stars { display: flex; gap: 10px; margin-bottom: 20px; }
-    .star { font-size: 2.2rem; color: #ddd; cursor: pointer; transition: 0.2s; }
+    .stars { display: flex; gap: 8px; margin-bottom: 20px; }
+    .star { font-size: 2.2rem; color: #e0e0e0; cursor: pointer; transition: 0.2s; }
     .star.hover, .star.active { color: #FFD700; transform: scale(1.1); }
     
-    .feedback-input { width: 100%; max-width: 300px; height: 80px; border: 1px solid #ccc; border-radius: 10px; padding: 12px; font-family: sans-serif; font-size: 0.9rem; outline: none; margin-bottom: 15px; resize: none; background: #f9f9f9; }
+    .feedback-input { 
+        width: 100%; height: 80px; 
+        border: 1px solid #ddd; border-radius: 12px; 
+        padding: 12px; 
+        font-family: sans-serif; font-size: 0.85rem; 
+        outline: none; margin-bottom: 15px; 
+        resize: none; background: #fafafa; 
+        color: #333;
+    }
     .feedback-input:focus { border-color: var(--suku-primary); background: #fff; }
 
-    .submit-btn { background: var(--suku-primary); color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s; }
+    .submit-btn { 
+        background: var(--suku-primary); color: white; border: none; 
+        padding: 12px 0; width: 100%; border-radius: 50px; 
+        font-weight: 600; cursor: pointer; font-size: 0.9rem; 
+        box-shadow: 0 4px 15px rgba(4,60,44,0.2); transition: 0.3s; 
+    }
     .submit-btn:hover { background: #0b7a5a; transform: translateY(-2px); }
 
-    .skip-btn { margin-top: 15px; background: none; border: none; color: #999; font-size: 0.8rem; cursor: pointer; text-decoration: underline; }
+    .skip-btn { margin-top: 15px; background: none; border: none; color: #999; font-size: 0.75rem; cursor: pointer; text-decoration: underline; }
     
-    .rating-success { display: none; flex-direction: column; align-items: center; }
+    .rating-success { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
     .rating-success h3 { color: var(--suku-primary); margin-bottom: 5px; font-family: sans-serif; margin-top: 10px; }
 
-    @media (max-width: 480px) { .suku-window { bottom: 0; right: 0; width: 100%; height: 100%; max-height: 100%; border-radius: 0; } .launcher-container { bottom: 20px; right: 20px; } .suku-label { display: none; } }
+    @media (max-width: 480px) { 
+        .suku-window { bottom: 0; right: 0; width: 100%; height: 100%; max-height: 100%; border-radius: 0; } 
+        .launcher-container { bottom: 20px; right: 20px; } 
+    }
 </style>
 
-<div class="launcher-container" id="sukuLauncherContainer">
-    <div class="suku-label">Talk to SUKU AI</div>
-    <div class="suku-launcher" onclick="openSuku()">
+<div class="launcher-container" id="sukuLauncherContainer" onclick="openSuku()">
+    <div class="suku-label">Talk to SUKU</div>
+    <div class="suku-launcher">
       <div class="sci-fi-orb"><div class="sf-ring"></div><div class="sf-ring"></div><div class="sf-core"></div></div>
     </div>
 </div>
@@ -1363,9 +1413,10 @@
 <div class="suku-window" id="sukuWindow">
     
     <div class="rating-overlay" id="ratingOverlay">
+      
       <div id="ratingContent">
         <div class="rating-emoji" id="ratingEmoji">🤔</div>
-        <div class="rating-title">Rate your support experience</div>
+        <div class="rating-title">How was your support experience?</div>
         
         <div class="stars" id="starContainer">
           <span class="star" onclick="setRating(1)">★</span>
@@ -1375,7 +1426,7 @@
           <span class="star" onclick="setRating(5)">★</span>
         </div>
 
-        <textarea class="feedback-input" id="feedbackInput" placeholder="Any feedback for us? (Optional)"></textarea>
+        <textarea class="feedback-input" id="feedbackInput" placeholder="Write your feedback here... (Optional)"></textarea>
         
         <button class="submit-btn" onclick="submitRating()">Submit Feedback</button>
         <button class="skip-btn" onclick="forceClose()">Skip for now</button>
@@ -1384,7 +1435,7 @@
       <div class="rating-success" id="ratingSuccess">
         <div class="rating-emoji">🙏</div>
         <h3>Thank You!</h3>
-        <p style="font-size:0.9rem; color:#666; font-family:sans-serif;">We value your feedback.</p>
+        <p style="font-size:0.9rem; color:#666; font-family:sans-serif;">We appreciate your feedback.</p>
       </div>
     </div>
 
@@ -1415,7 +1466,6 @@
   //  SUKU AI INTELLIGENCE (POLLINATIONS)
   // ==========================================
 
-  // SOCIAL MEDIA DATABASE
   const SOCIAL_LINKS = {
     instagram: "https://www.instagram.com/singhkaizenofficial/",
     facebook: "https://www.facebook.com/share/1TiP8cwq89/",
@@ -1431,7 +1481,6 @@
   const WEBSITE_LINK = "https://singhkaizen.github.io/SinghKaizen/";
   const CONTACT_EMAIL = "singhkaizenhelp@gmail.com";
 
-  // DOM ELEMENTS
   const el = {
     window: document.getElementById("sukuWindow"),
     launcher: document.getElementById("sukuLauncherContainer"),
@@ -1452,44 +1501,27 @@
   function openSuku() {
     el.window.classList.add("active");
     el.launcher.classList.add("hide");
-    // Only welcome if chat is empty
     if (el.body.innerHTML.trim() === "") setTimeout(showWelcome, 300);
   }
 
-  // MINIMIZE: Hides window, Keeps History
   function minimizeBot() {
     el.window.classList.remove("active");
     el.launcher.classList.remove("hide");
   }
 
-  // CLOSE: Shows Rating -> Then Deletes History
   function endChatSession() {
-    if (el.body.innerHTML.trim() === "") { 
-        forceClose(); // If empty, just close
-        return; 
-    }
-    // Show rating if not rated
-    if (!hasRated) {
-      el.overlay.classList.add("show");
-    } else {
-      forceClose();
-    }
+    if (el.body.innerHTML.trim() === "") { forceClose(); return; }
+    if (!hasRated) { el.overlay.classList.add("show"); } else { forceClose(); }
   }
 
-  // FORCE CLOSE: Resets everything
   function forceClose() {
     el.overlay.classList.remove("show");
     el.window.classList.remove("active");
     el.launcher.classList.remove("hide");
-    
-    // DELAY CLEARING TO ALLOW ANIMATION
     setTimeout(() => {
-        el.body.innerHTML = ''; // DELETE CHAT HISTORY
-        hasRated = false; // RESET RATING
-        currentRating = 0;
-        el.feedbackInput.value = "";
-        el.ratingContent.style.display = 'flex';
-        el.ratingSuccess.style.display = 'none';
+        el.body.innerHTML = ''; 
+        hasRated = false; currentRating = 0; el.feedbackInput.value = "";
+        el.ratingContent.style.display = 'flex'; el.ratingSuccess.style.display = 'none';
         resetStars();
     }, 400);
   }
@@ -1513,16 +1545,10 @@
   }
 
   function submitRating() {
-    if(currentRating === 0) {
-        alert("Please select a star rating first.");
-        return;
-    }
-    // Simulate submission
+    if(currentRating === 0) { alert("Please select a star rating first."); return; }
     el.ratingContent.style.display = 'none';
     el.ratingSuccess.style.display = 'flex';
     hasRated = true;
-    
-    // Auto Close after 1.5s
     setTimeout(forceClose, 1500);
   }
 
@@ -1548,27 +1574,17 @@
   async function sendMessage(){
     const text = el.input.value.trim();
     if(!text) return;
-    
     addUserMsg(text);
     el.input.value = "";
     el.typing.style.display = "flex";
     scrollToBottom();
 
-    // 1. Check Specific Social Links
-    const socialResponse = checkSocials(text.toLowerCase());
-    if(socialResponse){ 
-      setTimeout(() => { el.typing.style.display = "none"; addBotMsg(socialResponse); }, 500);
+    const localResponse = checkSocials(text.toLowerCase()) || checkGeneral(text.toLowerCase());
+    if(localResponse){ 
+      setTimeout(() => { el.typing.style.display = "none"; addBotMsg(localResponse); }, 500);
       return; 
     }
 
-    // 2. Check General Inquiries
-    const generalResponse = checkGeneral(text.toLowerCase());
-    if(generalResponse){ 
-      setTimeout(() => { el.typing.style.display = "none"; addBotMsg(generalResponse); }, 500);
-      return; 
-    }
-
-    // 3. Call AI
     const reply = await callPollinationsAI(text);
     el.typing.style.display = "none";
     addBotMsg(reply);
@@ -1579,7 +1595,6 @@
     if(t.includes("all link") || t.includes("all social")) {
         return `<b>Singh Kaizen Digital World</b><br>Stay connected with us across all platforms.<br><div class="action-card"><span class="action-title">All Social Media</span><a href="${ALL_SOCIAL_LINK}" target="_blank" class="btn-main" style="background:#000;">View All Links</a></div>`;
     }
-    
     for (const [platform, url] of Object.entries(SOCIAL_LINKS)) {
         if (t.includes(platform)) {
             return `Here is the official <b>${platform.toUpperCase()}</b> link:<br><div style="margin-top:8px;"><a href='${url}' target='_blank' class='btn-main' style='font-size:0.85rem;'>Open ${platform.charAt(0).toUpperCase() + platform.slice(1)}</a></div>`;
@@ -1598,7 +1613,7 @@
 
   // --- AI BRAIN (POLLINATIONS) ---
   async function callPollinationsAI(userPrompt) {
-    const systemPrompt = `You are SUKU AI, the virtual assistant for **Singh Kaizen Capital**.
+    const systemPrompt = `You are SUKU AI, the virtual assistant for **Singh Kaizen Capital** (Owner: Mr. Saurabh Singh).
     
     **KEY INFORMATION:**
     - **Owner/Founder:** Mr. Saurabh Singh.
